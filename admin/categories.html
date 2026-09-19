@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zavixbulk | Admin Categories</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#4f8cff;
+}
+
+.admin-label{
+    color:#8292b2;
+    font-size:12px;
+    margin-left:10px;
+}
+
+.admin-name{
+    color:#a9b8d5;
+    font-size:13px;
+}
+
+.menu-btn{
+    display:none;
+    border:0;
+    background:none;
+    color:#fff;
+    font-size:25px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    top:70px;
+    left:0;
+    bottom:0;
+    width:245px;
+    background:#080d20;
+    border-right:1px solid #1b2542;
+    padding:22px 14px;
+    z-index:900;
+}
+
+.sidebar-title{
+    color:#65769a;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin:0 12px 12px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px 14px;
+    margin-bottom:5px;
+    border-radius:10px;
+    color:#91a0bd;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.nav-link:hover{
+    background:#111a35;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+}
+
+.logout{
+    margin-top:20px;
+    color:#ff7180;
+    cursor:pointer;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:245px;
+    padding:95px 28px 40px;
+}
+
+.page-title{
+    font-size:27px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.page-subtitle{
+    color:#7586a8;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+/* LAYOUT */
+
+.grid{
+    display:grid;
+    grid-template-columns:360px 1fr;
+    gap:20px;
+    align-items:start;
+}
+
+/* CARD */
+
+.card{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:15px;
+    padding:22px;
+}
+
+.card-title{
+    font-size:17px;
+    font-weight:750;
+    margin-bottom:5px;
+}
+
+.card-description{
+    color:#6f809f;
+    font-size:12px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+/* FORM */
+
+.form-group{
+    margin-bottom:16px;
+}
+
+label{
+    display:block;
+    color:#9aa9c5;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+input,
+textarea{
+    width:100%;
+    border:1px solid #253252;
+    background:#070c1c;
+    color:#fff;
+    outline:none;
+    border-radius:9px;
+    padding:12px 13px;
+    font-size:13px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#4c80ff;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#53627f;
+}
+
+.button{
+    width:100%;
+    border:none;
+    border-radius:9px;
+    padding:13px;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.button:hover{
+    opacity:.92;
+}
+
+.button:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.cancel-btn{
+    display:none;
+    width:100%;
+    margin-top:9px;
+    border:1px solid #293653;
+    background:#11182d;
+    color:#b7c4dc;
+    border-radius:9px;
+    padding:12px;
+    cursor:pointer;
+}
+
+/* CATEGORY HEADER */
+
+.list-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.count{
+    color:#6f809f;
+    font-size:12px;
+}
+
+/* CATEGORY */
+
+.category-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.category{
+    border:1px solid #1b2947;
+    background:#080e21;
+    border-radius:12px;
+    padding:15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.category-left{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    min-width:0;
+}
+
+.category-icon{
+    width:45px;
+    height:45px;
+    flex-shrink:0;
+    border-radius:10px;
+    background:#111d3c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+}
+
+.category-info{
+    min-width:0;
+}
+
+.category-name{
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.category-description{
+    color:#6d7e9d;
+    font-size:11px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    max-width:420px;
+}
+
+.category-right{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-shrink:0;
+}
+
+.status{
+    padding:5px 8px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.status.active{
+    background:#123020;
+    color:#65df91;
+}
+
+.status.disabled{
+    background:#321820;
+    color:#ff7987;
+}
+
+.small-btn{
+    border:1px solid #293653;
+    background:#10182c;
+    color:#aab8d2;
+    padding:7px 9px;
+    border-radius:7px;
+    font-size:11px;
+    cursor:pointer;
+}
+
+.small-btn:hover{
+    border-color:#4c80ff;
+    color:#fff;
+}
+
+.small-btn.delete:hover{
+    border-color:#e05262;
+    color:#ff7785;
+}
+
+.empty{
+    text-align:center;
+    padding:40px 20px;
+    color:#657694;
+    font-size:13px;
+}
+
+/* LOADING */
+
+.loading{
+    position:fixed;
+    inset:0;
+    background:#050817;
+    z-index:5000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:14px;
+}
+
+.spinner{
+    width:38px;
+    height:38px;
+    border:3px solid #1b2847;
+    border-top-color:#4d83ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* TOAST */
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#111a31;
+    border:1px solid #29395d;
+    color:#fff;
+    padding:13px 17px;
+    border-radius:9px;
+    font-size:13px;
+    opacity:0;
+    transform:translateY(15px);
+    pointer-events:none;
+    transition:.25s;
+    z-index:6000;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.toast.success{
+    border-color:#23643d;
+}
+
+.toast.error{
+    border-color:#71303a;
+}
+
+/* OVERLAY */
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:70px 0 0;
+    background:rgba(0,0,0,.6);
+    z-index:850;
+}
+
+/* MOBILE */
+
+@media(max-width:950px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .header{
+        padding:0 16px;
+    }
+
+    .admin-label,
+    .admin-name{
+        display:none;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .overlay.show{
+        display:block;
+    }
+
+    .main{
+        margin-left:0;
+        padding:92px 15px 30px;
+    }
+
+    .page-title{
+        font-size:23px;
+    }
+
+    .category{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .category-right{
+        width:100%;
+        flex-wrap:wrap;
+    }
+
+    .category-description{
+        max-width:250px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOADING -->
+
+<div class="loading" id="loadingScreen">
+
+    <div class="spinner"></div>
+
+    <div style="color:#8192b4;font-size:13px;">
+        Loading categories...
+    </div>
+
+</div>
+
+
+<!-- HEADER -->
+
+<header class="header">
+
+    <div class="logo">
+        ZAVIX<span>BULK</span>
+        <span class="admin-label">ADMIN PANEL</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:18px;">
+
+        <div class="admin-name" id="adminName">
+            Admin
+        </div>
+
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- OVERLAY -->
+
+<div class="overlay" id="overlay"></div>
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-title">
+        Management
+    </div>
+
+    <a href="index.html" class="nav-link">
+        <span class="nav-icon">📊</span>
+        Dashboard
+    </a>
+
+    <a href="categories.html" class="nav-link active">
+        <span class="nav-icon">🗂️</span>
+        Categories
+    </a>
+
+    <a href="products.html" class="nav-link">
+        <span class="nav-icon">📦</span>
+        Products
+    </a>
+
+    <a href="orders.html" class="nav-link">
+        <span class="nav-icon">🛒</span>
+        Orders
+    </a>
+
+    <a href="customers.html" class="nav-link">
+        <span class="nav-icon">👥</span>
+        Customers
+    </a>
+
+    <a href="deposits.html" class="nav-link">
+        <span class="nav-icon">💰</span>
+        Deposits
+    </a>
+
+    <a href="transactions.html" class="nav-link">
+        <span class="nav-icon">💳</span>
+        Transactions
+    </a>
+
+    <div class="sidebar-title" style="margin-top:25px;">
+        System
+    </div>
+
+    <a href="settings.html" class="nav-link">
+        <span class="nav-icon">⚙️</span>
+        Settings
+    </a>
+
+    <div class="nav-link logout" id="logoutBtn">
+        <span class="nav-icon">🚪</span>
+        Logout
+    </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+    <h1 class="page-title">
+        Categories
+    </h1>
+
+    <p class="page-subtitle">
+        Create and manage the categories customers will see in the marketplace.
+    </p>
+
+
+    <div class="grid">
+
+        <!-- ADD CATEGORY -->
+
+        <section class="card">
+
+            <h2 class="card-title" id="formTitle">
+                Add Category
+            </h2>
+
+            <p class="card-description">
+                Create a category such as Google Voice, Instagram,
+                Facebook, VPN, or any other marketplace category.
+            </p>
+
+            <form id="categoryForm">
+
+                <div class="form-group">
+
+                    <label for="categoryName">
+                        Category Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="categoryName"
+                        placeholder="e.g. Google Voice"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="categoryIcon">
+                        Category Icon
+                    </label>
+
+                    <input
+                        type="text"
+                        id="categoryIcon"
+                        placeholder="e.g. 📱"
+                        value="📦"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="categoryDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="categoryDescription"
+                        placeholder="Short description of this category"
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="button"
+                    id="saveBtn"
+                >
+                    Add Category
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelBtn"
+                >
+                    Cancel Edit
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- CATEGORY LIST -->
+
+        <section class="card">
+
+            <div class="list-header">
+
+                <div>
+
+                    <h2 class="card-title">
+                        Your Categories
+                    </h2>
+
+                    <div class="count" id="categoryCount">
+                        0 categories
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="category-list"
+                id="categoryList"
+            >
+
+                <div class="empty">
+                    No categories yet.
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<div class="toast" id="toast"></div>
+
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    serverTimestamp,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
+    authDomain:
+        "zavixbulk.firebaseapp.com",
+
+    projectId:
+        "zavixbulk",
+
+    storageBucket:
+        "zavixbulk.firebasestorage.app",
+
+    messagingSenderId:
+        "819994897169",
+
+    appId:
+        "1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
+    measurementId:
+        "G-GJ8RY0WYBL"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const loadingScreen =
+    document.getElementById(
+        "loadingScreen"
+    );
+
+const categoryForm =
+    document.getElementById(
+        "categoryForm"
+    );
+
+const categoryName =
+    document.getElementById(
+        "categoryName"
+    );
+
+const categoryIcon =
+    document.getElementById(
+        "categoryIcon"
+    );
+
+const categoryDescription =
+    document.getElementById(
+        "categoryDescription"
+    );
+
+const categoryList =
+    document.getElementById(
+        "categoryList"
+    );
+
+const categoryCount =
+    document.getElementById(
+        "categoryCount"
+    );
+
+const saveBtn =
+    document.getElementById(
+        "saveBtn"
+    );
+
+const cancelBtn =
+    document.getElementById(
+        "cancelBtn"
+    );
+
+const formTitle =
+    document.getElementById(
+        "formTitle"
+    );
+
+const adminName =
+    document.getElementById(
+        "adminName"
+    );
+
+const toast =
+    document.getElementById(
+        "toast"
+    );
+
+
+let editingCategoryId = null;
+
+
+/* =========================
+   TOAST
+========================= */
+
+function showToast(
+    message,
+    type = "success"
+){
+
+    toast.textContent =
+        message;
+
+    toast.className =
+        "toast show " + type;
+
+    setTimeout(() => {
+
+        toast.className =
+            "toast";
+
+    },3000);
+
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+const sidebar =
+    document.getElementById(
+        "sidebar"
+    );
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+
+function closeMenu(){
+
+    sidebar.classList.remove(
+        "open"
+    );
+
+    overlay.classList.remove(
+        "show"
+    );
+
+}
+
+
+menuBtn.addEventListener(
+    "click",
+    () => {
+
+        sidebar.classList.toggle(
+            "open"
+        );
+
+        overlay.classList.toggle(
+            "show"
+        );
+
+    }
+);
+
+
+overlay.addEventListener(
+    "click",
+    closeMenu
+);
+
+
+/* =========================
+   LOAD CATEGORIES
+========================= */
+
+async function loadCategories(){
+
+    try{
+
+        const categoriesQuery =
+            query(
+                collection(
+                    db,
+                    "categories"
+                ),
+                orderBy(
+                    "createdAt",
+                    "desc"
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                categoriesQuery
+            );
+
+
+        categoryCount.textContent =
+            snapshot.size +
+            (
+                snapshot.size === 1
+                ? " category"
+                : " categories"
+            );
+
+
+        if(snapshot.empty){
+
+            categoryList.innerHTML = `
+                <div class="empty">
+                    No categories yet.<br>
+                    Add your first category.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        let html = "";
+
+
+        snapshot.forEach(
+            (categoryDoc) => {
+
+                const data =
+                    categoryDoc.data();
+
+
+                const active =
+                    data.active !== false;
+
+
+                html += `
+
+                    <div
+                        class="category"
+                        data-id="${categoryDoc.id}"
+                    >
+
+                        <div class="category-left">
+
+                            <div class="category-icon">
+
+                                ${escapeHTML(
+                                    data.icon || "📦"
+                                )}
+
+                            </div>
+
+
+                            <div class="category-info">
+
+                                <div class="category-name">
+
+                                    ${escapeHTML(
+                                        data.name ||
+                                        "Unnamed Category"
+                                    )}
+
+                                </div>
+
+
+                                <div class="category-description">
+
+                                    ${escapeHTML(
+                                        data.description ||
+                                        "No description"
+                                    )}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="category-right">
+
+                            <span
+                                class="status ${
+                                    active
+                                    ? "active"
+                                    : "disabled"
+                                }"
+                            >
+                                ${
+                                    active
+                                    ? "Active"
+                                    : "Disabled"
+                                }
+                            </span>
+
+
+                            <button
+                                class="small-btn edit-btn"
+                                data-id="${categoryDoc.id}"
+                            >
+                                Edit
+                            </button>
+
+
+                            <button
+                                class="small-btn toggle-btn"
+                                data-id="${categoryDoc.id}"
+                                data-active="${active}"
+                            >
+                                ${
+                                    active
+                                    ? "Disable"
+                                    : "Enable"
+                                }
+                            </button>
+
+
+                            <button
+                                class="small-btn delete delete-btn"
+                                data-id="${categoryDoc.id}"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        categoryList.innerHTML =
+            html;
+
+
+        attachCategoryEvents();
+
+
+    }catch(error){
+
+        console.error(
+            "Load categories error:",
+            error
+        );
+
+
+        categoryList.innerHTML = `
+            <div class="empty">
+                Unable to load categories.
+                Check your Firestore rules.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   CATEGORY EVENTS
+========================= */
+
+function attachCategoryEvents(){
+
+    document
+        .querySelectorAll(".edit-btn")
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    editCategory(
+                        button.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".toggle-btn")
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    toggleCategory(
+                        button.dataset.id,
+                        button.dataset.active === "true"
+                    );
+
+                }
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".delete-btn")
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    deleteCategory(
+                        button.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================
+   ADD / EDIT CATEGORY
+========================= */
+
+categoryForm.addEventListener(
+    "submit",
+    async (event) => {
+
+        event.preventDefault();
+
+
+        const name =
+            categoryName.value.trim();
+
+        const icon =
+            categoryIcon.value.trim() ||
+            "📦";
+
+        const description =
+            categoryDescription.value.trim();
+
+
+        if(!name){
+
+            showToast(
+                "Enter a category name.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        saveBtn.disabled = true;
+
+        saveBtn.textContent =
+            editingCategoryId
+            ? "Saving..."
+            : "Adding...";
+
+
+        try{
+
+            if(editingCategoryId){
+
+                await updateDoc(
+                    doc(
+                        db,
+                        "categories",
+                        editingCategoryId
+                    ),
+                    {
+                        name:name,
+                        icon:icon,
+                        description:description,
+                        updatedAt:
+                            serverTimestamp()
+                    }
+                );
+
+
+                showToast(
+                    "Category updated successfully."
+                );
+
+            }else{
+
+                await addDoc(
+                    collection(
+                        db,
+                        "categories"
+                    ),
+                    {
+                        name:name,
+                        icon:icon,
+                        description:description,
+                        active:true,
+                        createdAt:
+                            serverTimestamp()
+                    }
+                );
+
+
+                showToast(
+                    "Category added successfully."
+                );
+
+            }
+
+
+            resetForm();
+
+            await loadCategories();
+
+
+        }catch(error){
+
+            console.error(
+                "Save category error:",
+                error
+            );
+
+            showToast(
+                "Unable to save category.",
+                "error"
+            );
+
+        }finally{
+
+            saveBtn.disabled =
+                false;
+
+            saveBtn.textContent =
+                editingCategoryId
+                ? "Save Changes"
+                : "Add Category";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   EDIT CATEGORY
+========================= */
+
+async function editCategory(id){
+
+    try{
+
+        const categoryRef =
+            doc(
+                db,
+                "categories",
+                id
+            );
+
+        const snapshot =
+            await getDoc(
+                categoryRef
+            );
+
+
+        if(!snapshot.exists()){
+
+            showToast(
+                "Category no longer exists.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            snapshot.data();
+
+
+        editingCategoryId =
+            id;
+
+
+        categoryName.value =
+            data.name || "";
+
+        categoryIcon.value =
+            data.icon || "📦";
+
+        categoryDescription.value =
+            data.description || "";
+
+
+        formTitle.textContent =
+            "Edit Category";
+
+        saveBtn.textContent =
+            "Save Changes";
+
+        cancelBtn.style.display =
+            "block";
+
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+
+    }catch(error){
+
+        console.error(
+            "Edit category error:",
+            error
+        );
+
+        showToast(
+            "Unable to open category.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   CANCEL EDIT
+========================= */
+
+cancelBtn.addEventListener(
+    "click",
+    resetForm
+);
+
+
+function resetForm(){
+
+    editingCategoryId =
+        null;
+
+    categoryForm.reset();
+
+    categoryIcon.value =
+        "📦";
+
+    formTitle.textContent =
+        "Add Category";
+
+    saveBtn.textContent =
+        "Add Category";
+
+    cancelBtn.style.display =
+        "none";
+
+}
+
+
+/* =========================
+   ENABLE / DISABLE
+========================= */
+
+async function toggleCategory(
+    id,
+    currentlyActive
+){
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "categories",
+                id
+            ),
+            {
+                active:
+                    !currentlyActive,
+                updatedAt:
+                    serverTimestamp()
+            }
+        );
+
+
+        showToast(
+            currentlyActive
+            ? "Category disabled."
+            : "Category enabled."
+        );
+
+
+        await loadCategories();
+
+
+    }catch(error){
+
+        console.error(
+            "Toggle category error:",
+            error
+        );
+
+        showToast(
+            "Unable to change category status.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   DELETE CATEGORY
+========================= */
+
+async function deleteCategory(id){
+
+    const confirmed =
+        confirm(
+            "Delete this category?\n\nThis will remove the category from the marketplace."
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    try{
+
+        await deleteDoc(
+            doc(
+                db,
+                "categories",
+                id
+            )
+        );
+
+
+        showToast(
+            "Category deleted."
+        );
+
+
+        await loadCategories();
+
+
+    }catch(error){
+
+        console.error(
+            "Delete category error:",
+            error
+        );
+
+        showToast(
+            "Unable to delete category.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   ADMIN AUTHENTICATION
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async (user) => {
+
+        if(!user){
+
+            window.location.href =
+                "../login.html";
+
+            return;
+
+        }
+
+
+        try{
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                );
+
+            const userSnapshot =
+                await getDoc(
+                    userRef
+                );
+
+
+            if(!userSnapshot.exists()){
+
+                await signOut(auth);
+
+                window.location.href =
+                    "../login.html";
+
+                return;
+
+            }
+
+
+            const userData =
+                userSnapshot.data();
+
+
+            if(
+                userData.role !==
+                "admin"
+            ){
+
+                alert(
+                    "Access denied. Admin account required."
+                );
+
+                await signOut(auth);
+
+                window.location.href =
+                    "../login.html";
+
+                return;
+
+            }
+
+
+            adminName.textContent =
+                userData.fullname ||
+                userData.username ||
+                "Admin";
+
+
+            await loadCategories();
+
+
+            loadingScreen.style.display =
+                "none";
+
+
+        }catch(error){
+
+            console.error(
+                "Admin authentication error:",
+                error
+            );
+
+
+            alert(
+                "Unable to verify admin account."
+            );
+
+
+            await signOut(auth);
+
+            window.location.href =
+                "../login.html";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async () => {
+
+            try{
+
+                await signOut(auth);
+
+                window.location.href =
+                    "../login.html";
+
+            }catch(error){
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
