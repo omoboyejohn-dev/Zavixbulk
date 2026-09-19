@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zavixbulk | Admin Orders</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#4f8cff;
+}
+
+.admin-label{
+    color:#8292b2;
+    font-size:12px;
+    margin-left:10px;
+}
+
+.admin-name{
+    color:#a9b8d5;
+    font-size:13px;
+}
+
+.menu-btn{
+    display:none;
+    background:none;
+    border:0;
+    color:#fff;
+    font-size:25px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    position:fixed;
+    top:70px;
+    left:0;
+    bottom:0;
+    width:245px;
+    background:#080d20;
+    border-right:1px solid #1b2542;
+    padding:22px 14px;
+    z-index:900;
+}
+
+.sidebar-title{
+    color:#65769a;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin:0 12px 12px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px 14px;
+    margin-bottom:5px;
+    border-radius:10px;
+    color:#91a0bd;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.nav-link:hover{
+    background:#111a35;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+}
+
+.logout{
+    margin-top:20px;
+    color:#ff7180;
+    cursor:pointer;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:245px;
+    padding:95px 28px 40px;
+}
+
+.page-title{
+    font-size:27px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.page-subtitle{
+    color:#7586a8;
+    font-size:14px;
+    margin-bottom:24px;
+}
+
+/* FILTERS */
+
+.filters{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.filter{
+    border:1px solid #263454;
+    background:#0a1024;
+    color:#8fa0bd;
+    border-radius:20px;
+    padding:9px 14px;
+    font-size:12px;
+    cursor:pointer;
+}
+
+.filter.active{
+    background:#1d52dc;
+    border-color:#1d52dc;
+    color:#fff;
+}
+
+/* ORDER LIST */
+
+.orders{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.order{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:14px;
+    padding:18px;
+}
+
+.order-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.order-id{
+    color:#5d8dff;
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+.product-name{
+    font-size:16px;
+    font-weight:750;
+}
+
+.customer{
+    color:#8a9ab8;
+    font-size:12px;
+    margin-top:6px;
+}
+
+.order-right{
+    text-align:right;
+}
+
+.price{
+    font-size:17px;
+    font-weight:800;
+    margin-bottom:7px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:700;
+}
+
+.status.pending{
+    background:#302714;
+    color:#f4c65c;
+}
+
+.status.processing{
+    background:#142a43;
+    color:#6bb5ff;
+}
+
+.status.approved,
+.status.delivered{
+    background:#123020;
+    color:#65df91;
+}
+
+.status.rejected{
+    background:#34151b;
+    color:#ff7482;
+}
+
+.order-bottom{
+    border-top:1px solid #17223b;
+    margin-top:15px;
+    padding-top:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.order-date{
+    color:#657694;
+    font-size:11px;
+}
+
+.action-btn{
+    border:1px solid #2b3b5c;
+    background:#10182c;
+    color:#b5c3dc;
+    border-radius:8px;
+    padding:9px 12px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.action-btn:hover{
+    border-color:#4d82ff;
+    color:#fff;
+}
+
+.action-btn.approve{
+    background:#124425;
+    border-color:#235f39;
+    color:#71e49b;
+}
+
+.action-btn.reject{
+    color:#ff7d89;
+}
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    border:1px dashed #1b2947;
+    border-radius:14px;
+    color:#667796;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:3000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:550px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#0a1024;
+    border:1px solid #273657;
+    border-radius:16px;
+    padding:24px;
+}
+
+.modal-title{
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.detail{
+    background:#070c1c;
+    border:1px solid #1c2947;
+    border-radius:10px;
+    padding:13px;
+    margin-bottom:10px;
+}
+
+.detail-label{
+    color:#647695;
+    font-size:10px;
+    text-transform:uppercase;
+    margin-bottom:5px;
+}
+
+.detail-value{
+    color:#e5ebf8;
+    font-size:13px;
+    word-break:break-word;
+}
+
+.form-group{
+    margin-top:17px;
+}
+
+label{
+    display:block;
+    color:#9aa9c5;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+textarea{
+    width:100%;
+    min-height:140px;
+    resize:vertical;
+    background:#070c1c;
+    border:1px solid #253252;
+    color:#fff;
+    border-radius:9px;
+    padding:12px;
+    outline:none;
+    font-family:inherit;
+    font-size:13px;
+    line-height:1.5;
+}
+
+textarea:focus{
+    border-color:#4c80ff;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.modal-actions button{
+    flex:1;
+    padding:12px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.close-btn{
+    background:#11182c;
+    border:1px solid #293653;
+    color:#aab8d2;
+}
+
+.approve-btn{
+    background:#14572e;
+    border:0;
+    color:#fff;
+}
+
+.reject-btn{
+    background:#651f2a;
+    border:0;
+    color:#fff;
+}
+
+/* LOADING */
+
+.loading{
+    text-align:center;
+    padding:70px;
+    color:#7182a1;
+}
+
+.spinner{
+    width:37px;
+    height:37px;
+    border:3px solid #1a2846;
+    border-top-color:#4d82ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:0 auto 15px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* OVERLAY */
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:70px 0 0;
+    background:rgba(0,0,0,.6);
+    z-index:850;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .header{
+        padding:0 16px;
+    }
+
+    .admin-label,
+    .admin-name{
+        display:none;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .overlay.show{
+        display:block;
+    }
+
+    .main{
+        margin-left:0;
+        padding:92px 15px 30px;
+    }
+
+    .page-title{
+        font-size:23px;
+    }
+
+    .order-top{
+        flex-direction:column;
+    }
+
+    .order-right{
+        text-align:left;
+    }
+
+    .order-bottom{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .modal-actions{
+        flex-direction:column;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+
+        ZAVIX<span>BULK</span>
+
+        <span class="admin-label">
+            ADMIN PANEL
+        </span>
+
+    </div>
+
+
+    <div style="display:flex;align-items:center;gap:18px;">
+
+        <div
+            class="admin-name"
+            id="adminName"
+        >
+            Admin
+        </div>
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+        >
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<div
+    class="overlay"
+    id="overlay"
+></div>
+
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+    <div class="sidebar-title">
+        Management
+    </div>
+
+
+    <a
+        href="index.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">📊</span>
+        Dashboard
+    </a>
+
+
+    <a
+        href="categories.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">🗂️</span>
+        Categories
+    </a>
+
+
+    <a
+        href="products.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">📦</span>
+        Products
+    </a>
+
+
+    <a
+        href="orders.html"
+        class="nav-link active"
+    >
+        <span class="nav-icon">🛒</span>
+        Orders
+    </a>
+
+
+    <a
+        href="customers.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">👥</span>
+        Customers
+    </a>
+
+
+    <a
+        href="deposits.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">💰</span>
+        Deposits
+    </a>
+
+
+    <a
+        href="transactions.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">💳</span>
+        Transactions
+    </a>
+
+
+    <div
+        class="sidebar-title"
+        style="margin-top:25px;"
+    >
+        System
+    </div>
+
+
+    <a
+        href="settings.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">⚙️</span>
+        Settings
+    </a>
+
+
+    <div
+        class="nav-link logout"
+        id="logoutBtn"
+    >
+        <span class="nav-icon">🚪</span>
+        Logout
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <h1 class="page-title">
+        Orders
+    </h1>
+
+    <p class="page-subtitle">
+        Review customer orders and approve delivery.
+    </p>
+
+
+    <div class="filters">
+
+        <button
+            class="filter active"
+            data-status="all"
+        >
+            All
+        </button>
+
+        <button
+            class="filter"
+            data-status="pending"
+        >
+            Pending
+        </button>
+
+        <button
+            class="filter"
+            data-status="approved"
+        >
+            Approved
+        </button>
+
+        <button
+            class="filter"
+            data-status="delivered"
+        >
+            Delivered
+        </button>
+
+        <button
+            class="filter"
+            data-status="rejected"
+        >
+            Rejected
+        </button>
+
+    </div>
+
+
+    <div
+        class="orders"
+        id="ordersList"
+    >
+
+        <div class="loading">
+
+            <div class="spinner"></div>
+
+            Loading orders...
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- ORDER MODAL -->
+
+<div
+    class="modal"
+    id="orderModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-title">
+            Order Details
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Order ID
+            </div>
+
+            <div
+                class="detail-value"
+                id="detailOrderId"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Customer
+            </div>
+
+            <div
+                class="detail-value"
+                id="detailCustomer"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Product
+            </div>
+
+            <div
+                class="detail-value"
+                id="detailProduct"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Amount
+            </div>
+
+            <div
+                class="detail-value"
+                id="detailAmount"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Status
+            </div>
+
+            <div
+                class="detail-value"
+                id="detailStatus"
+            >
+                -
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label for="deliveryDetails">
+                Delivery Details
+            </label>
+
+            <textarea
+                id="deliveryDetails"
+                placeholder="Enter the details that should be delivered to the customer..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="close-btn"
+                id="closeModal"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="reject-btn"
+                id="rejectBtn"
+            >
+                Reject
+            </button>
+
+            <button
+                class="approve-btn"
+                id="approveBtn"
+            >
+                Approve & Deliver
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    updateDoc,
+    query,
+    orderBy,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
+    authDomain:
+        "zavixbulk.firebaseapp.com",
+
+    projectId:
+        "zavixbulk",
+
+    storageBucket:
+        "zavixbulk.firebasestorage.app",
+
+    messagingSenderId:
+        "819994897169",
+
+    appId:
+        "1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
+    measurementId:
+        "G-GJ8RY0WYBL"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+const adminName =
+    document.getElementById(
+        "adminName"
+    );
+
+const ordersList =
+    document.getElementById(
+        "ordersList"
+    );
+
+const orderModal =
+    document.getElementById(
+        "orderModal"
+    );
+
+const deliveryDetails =
+    document.getElementById(
+        "deliveryDetails"
+    );
+
+const approveBtn =
+    document.getElementById(
+        "approveBtn"
+    );
+
+const rejectBtn =
+    document.getElementById(
+        "rejectBtn"
+    );
+
+
+let allOrders = [];
+
+let selectedOrderId = null;
+
+let selectedStatus = "all";
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function formatMoney(value){
+
+    return "₦" + Number(
+        value || 0
+    ).toLocaleString(
+        "en-NG",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+
+}
+
+
+function getStatusClass(status){
+
+    if(status === "approved"){
+        return "approved";
+    }
+
+    if(status === "delivered"){
+        return "delivered";
+    }
+
+    if(status === "processing"){
+        return "processing";
+    }
+
+    if(status === "rejected"){
+        return "rejected";
+    }
+
+    return "pending";
+
+}
+
+
+function formatDate(timestamp){
+
+    if(!timestamp){
+        return "Date unavailable";
+    }
+
+    try{
+
+        const date =
+            timestamp.toDate
+            ? timestamp.toDate()
+            : new Date(timestamp);
+
+        return date.toLocaleString(
+            "en-NG",
+            {
+                dateStyle:"medium",
+                timeStyle:"short"
+            }
+        );
+
+    }catch(error){
+
+        return "Date unavailable";
+
+    }
+
+}
+
+
+/* =========================
+   LOAD ORDERS
+========================= */
+
+async function loadOrders(){
+
+    try{
+
+        const ordersQuery =
+            query(
+                collection(
+                    db,
+                    "orders"
+                ),
+                orderBy(
+                    "createdAt",
+                    "desc"
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                ordersQuery
+            );
+
+
+        allOrders = [];
+
+
+        snapshot.forEach(
+            orderDoc => {
+
+                allOrders.push({
+
+                    id:
+                        orderDoc.id,
+
+                    ...orderDoc.data()
+
+                });
+
+            }
+        );
+
+
+        renderOrders();
+
+    }catch(error){
+
+        console.error(
+            "Orders error:",
+            error
+        );
+
+
+        ordersList.innerHTML = `
+            <div class="empty">
+                Unable to load orders.
+                Check your Firestore rules.
+            </div>
+        `;
+
+    }
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function renderOrders(){
+
+    let orders =
+        allOrders;
+
+
+    if(selectedStatus !== "all"){
+
+        orders =
+            orders.filter(
+                order =>
+                    String(
+                        order.status ||
+                        "pending"
+                    ).toLowerCase() ===
+                    selectedStatus
+            );
+
+    }
+
+
+    if(orders.length === 0){
+
+        ordersList.innerHTML = `
+            <div class="empty">
+                No ${selectedStatus === "all" ? "" : selectedStatus + " "}orders found.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    orders.forEach(order => {
+
+        const status =
+            String(
+                order.status ||
+                "pending"
+            ).toLowerCase();
+
+
+        html += `
+
+            <div class="order">
+
+                <div class="order-top">
+
+                    <div>
+
+                        <div class="order-id">
+                            ORDER #${escapeHTML(
+                                order.id.slice(0,10)
+                            )}
+                        </div>
+
+                        <div class="product-name">
+                            ${escapeHTML(
+                                order.productName ||
+                                "Product"
+                            )}
+                        </div>
+
+                        <div class="customer">
+                            Customer:
+                            ${escapeHTML(
+                                order.customerName ||
+                                order.username ||
+                                order.userId ||
+                                "Customer"
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-right">
+
+                        <div class="price">
+                            ${formatMoney(
+                                order.price ||
+                                order.amount
+                            )}
+                        </div>
+
+                        <span
+                            class="status ${getStatusClass(status)}"
+                        >
+                            ${escapeHTML(
+                                status.charAt(0).toUpperCase() +
+                                status.slice(1)
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="order-bottom">
+
+                    <div class="order-date">
+                        ${formatDate(
+                            order.createdAt
+                        )}
+                    </div>
+
+
+                    <button
+                        class="action-btn"
+                        data-id="${order.id}"
+                    >
+                        View Order
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    ordersList.innerHTML =
+        html;
+
+
+    document
+        .querySelectorAll(
+            ".action-btn"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    openOrder(
+                        button.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================
+   OPEN ORDER
+========================= */
+
+function openOrder(id){
+
+    const order =
+        allOrders.find(
+            item =>
+                item.id === id
+        );
+
+
+    if(!order){
+        return;
+    }
+
+
+    selectedOrderId =
+        id;
+
+
+    document.getElementById(
+        "detailOrderId"
+    ).textContent =
+        order.id;
+
+
+    document.getElementById(
+        "detailCustomer"
+    ).textContent =
+        order.customerName ||
+        order.username ||
+        order.userId ||
+        "Customer";
+
+
+    document.getElementById(
+        "detailProduct"
+    ).textContent =
+        order.productName ||
+        "Product";
+
+
+    document.getElementById(
+        "detailAmount"
+    ).textContent =
+        formatMoney(
+            order.price ||
+            order.amount
+        );
+
+
+    const status =
+        String(
+            order.status ||
+            "pending"
+        ).toLowerCase();
+
+
+    document.getElementById(
+        "detailStatus"
+    ).textContent =
+        status;
+
+
+    deliveryDetails.value =
+        order.deliveryDetails ||
+        "";
+
+
+    /*
+     * Only pending/processing orders
+     * should be approved or rejected.
+     */
+
+    const canProcess =
+        status === "pending" ||
+        status === "processing";
+
+
+    approveBtn.style.display =
+        canProcess
+        ? "block"
+        : "none";
+
+
+    rejectBtn.style.display =
+        canProcess
+        ? "block"
+        : "none";
+
+
+    orderModal.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================
+   CLOSE MODAL
+========================= */
+
+document
+    .getElementById(
+        "closeModal"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            orderModal.classList.remove(
+                "show"
+            );
+
+            selectedOrderId =
+                null;
+
+        }
+    );
+
+
+/* =========================
+   APPROVE
+========================= */
+
+approveBtn.addEventListener(
+    "click",
+    async () => {
+
+        if(!selectedOrderId){
+            return;
+        }
+
+
+        const details =
+            deliveryDetails.value.trim();
+
+
+        if(!details){
+
+            alert(
+                "Enter the delivery details before approving this order."
+            );
+
+            return;
+
+        }
+
+
+        const confirmed =
+            confirm(
+                "Approve this order and deliver the entered details to the customer?"
+            );
+
+
+        if(!confirmed){
+            return;
+        }
+
+
+        approveBtn.disabled =
+            true;
+
+        approveBtn.textContent =
+            "Approving...";
+
+
+        try{
+
+            const orderRef =
+                doc(
+                    db,
+                    "orders",
+                    selectedOrderId
+                );
+
+
+            await updateDoc(
+                orderRef,
+                {
+
+                    status:"delivered",
+
+                    deliveryDetails:
+                        details,
+
+                    approvedAt:
+                        serverTimestamp(),
+
+                    approvedBy:
+                        auth.currentUser.uid
+
+                }
+            );
+
+
+            alert(
+                "Order approved and marked as delivered."
+            );
+
+
+            orderModal.classList.remove(
+                "show"
+            );
+
+
+            await loadOrders();
+
+        }catch(error){
+
+            console.error(
+                "Approve error:",
+                error
+            );
+
+            alert(
+                "Unable to approve this order."
+            );
+
+        }finally{
+
+            approveBtn.disabled =
+                false;
+
+            approveBtn.textContent =
+                "Approve & Deliver";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   REJECT
+========================= */
+
+rejectBtn.addEventListener(
+    "click",
+    async () => {
+
+        if(!selectedOrderId){
+            return;
+        }
+
+
+        const confirmed =
+            confirm(
+                "Reject this order?"
+            );
+
+
+        if(!confirmed){
+            return;
+        }
+
+
+        rejectBtn.disabled =
+            true;
+
+        rejectBtn.textContent =
+            "Rejecting...";
+
+
+        try{
+
+            await updateDoc(
+                doc(
+                    db,
+                    "orders",
+                    selectedOrderId
+                ),
+                {
+
+                    status:"rejected",
+
+                    rejectedAt:
+                        serverTimestamp(),
+
+                    rejectedBy:
+                        auth.currentUser.uid
+
+                }
+            );
+
+
+            alert(
+                "Order rejected."
+            );
+
+
+            orderModal.classList.remove(
+                "show"
+            );
+
+
+            await loadOrders();
+
+        }catch(error){
+
+            console.error(
+                "Reject error:",
+                error
+            );
+
+            alert(
+                "Unable to reject this order."
+            );
+
+        }finally{
+
+            rejectBtn.disabled =
+                false;
+
+            rejectBtn.textContent =
+                "Reject";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   FILTERS
+========================= */
+
+document
+    .querySelectorAll(".filter")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".filter")
+                    .forEach(
+                        item =>
+                            item.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                button.classList.add(
+                    "active"
+                );
+
+
+                selectedStatus =
+                    button.dataset.status;
+
+
+                renderOrders();
+
+            }
+        );
+
+    });
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+const sidebar =
+    document.getElementById(
+        "sidebar"
+    );
+
+const overlay =
+    document.getElementById(
+        "overlay"
+    );
+
+
+menuBtn.addEventListener(
+    "click",
+    () => {
+
+        sidebar.classList.toggle(
+            "open"
+        );
+
+        overlay.classList.toggle(
+            "show"
+        );
+
+    }
+);
+
+
+overlay.addEventListener(
+    "click",
+    () => {
+
+        sidebar.classList.remove(
+            "open"
+        );
+
+        overlay.classList.remove(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================
+   ADMIN AUTH
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            window.location.href =
+                "../login.html";
+
+            return;
+
+        }
+
+
+        try{
+
+            const userSnapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(
+                !userSnapshot.exists() ||
+                userSnapshot.data().role !== "admin"
+            ){
+
+                alert(
+                    "Access denied. Admin account required."
+                );
+
+                await signOut(auth);
+
+                window.location.href =
+                    "../login.html";
+
+                return;
+
+            }
+
+
+            const data =
+                userSnapshot.data();
+
+
+            adminName.textContent =
+                data.fullname ||
+                data.username ||
+                "Admin";
+
+
+            await loadOrders();
+
+        }catch(error){
+
+            console.error(error);
+
+            await signOut(auth);
+
+            window.location.href =
+                "../login.html";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+    .getElementById(
+        "logoutBtn"
+    )
+    .addEventListener(
+        "click",
+        async () => {
+
+            await signOut(auth);
+
+            window.location.href =
+                "../login.html";
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
