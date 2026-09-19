@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zavixbulk | Admin Dashboard</title>
+<title>Zavixbulk | Admin Login</title>
 
 <style>
 *{
@@ -15,380 +15,215 @@
 
 body{
     font-family:Inter,Arial,sans-serif;
-    background:#050817;
-    color:#fff;
     min-height:100vh;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-.header{
-    height:70px;
-    background:#0a1024;
-    border-bottom:1px solid #1b2542;
+    background:
+        radial-gradient(circle at top right, rgba(55,90,255,.16), transparent 35%),
+        #050817;
+    color:#fff;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    padding:0 25px;
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    z-index:1000;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+    background:#0b1025;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+    padding:35px 28px;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
 }
 
 .logo{
-    font-size:22px;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo h1{
+    font-size:30px;
     font-weight:900;
     letter-spacing:1px;
-    color:#fff;
+    background:linear-gradient(90deg,#6c63ff,#00d4ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
-.logo span{
-    color:#4f8cff;
-}
-
-.admin-label{
-    font-size:13px;
-    color:#8fa3c7;
-    margin-left:10px;
-}
-
-.header-right{
-    display:flex;
-    align-items:center;
-    gap:15px;
-}
-
-.admin-name{
+.logo p{
+    margin-top:7px;
+    color:#8e98b8;
     font-size:14px;
-    color:#dbe5ff;
 }
 
-.menu-btn{
-    display:none;
-    background:none;
-    border:none;
-    color:#fff;
-    font-size:25px;
-    cursor:pointer;
-}
-
-/* =========================
-   SIDEBAR
-========================= */
-
-.sidebar{
-    position:fixed;
-    top:70px;
-    left:0;
-    bottom:0;
-    width:245px;
-    background:#080d20;
-    border-right:1px solid #1b2542;
-    padding:22px 14px;
-    z-index:900;
-    overflow-y:auto;
-}
-
-.sidebar-title{
-    font-size:11px;
-    color:#65769a;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    margin:0 12px 12px;
-}
-
-.nav-link{
-    display:flex;
-    align-items:center;
-    gap:13px;
-    padding:13px 14px;
-    margin-bottom:5px;
-    border-radius:10px;
-    color:#91a0bd;
-    text-decoration:none;
-    font-size:14px;
-    transition:.2s;
-}
-
-.nav-link:hover{
-    background:#111a35;
-    color:#fff;
-}
-
-.nav-link.active{
-    background:linear-gradient(135deg,#1c4ed8,#2868ff);
-    color:#fff;
-    box-shadow:0 8px 20px rgba(38,101,255,.18);
-}
-
-.nav-icon{
-    width:22px;
-    text-align:center;
-    font-size:17px;
-}
-
-.logout{
-    margin-top:20px;
-    color:#ff7180;
-    cursor:pointer;
-}
-
-.logout:hover{
-    background:#28131b;
-    color:#ff8c98;
-}
-
-/* =========================
-   MAIN
-========================= */
-
-.main{
-    margin-left:245px;
-    padding:95px 28px 40px;
-}
-
-.page-title{
-    font-size:27px;
-    font-weight:800;
-    margin-bottom:7px;
-}
-
-.page-subtitle{
-    color:#7586a8;
-    font-size:14px;
-    margin-bottom:28px;
-}
-
-/* =========================
-   STAT CARDS
-========================= */
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:18px;
-    margin-bottom:25px;
-}
-
-.stat-card{
-    background:#0a1024;
-    border:1px solid #1b2542;
-    border-radius:15px;
-    padding:21px;
-    min-height:130px;
-}
-
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.stat-title{
-    color:#8192b4;
-    font-size:13px;
-}
-
-.stat-icon{
-    width:40px;
-    height:40px;
-    border-radius:11px;
-    background:#111d3c;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:19px;
-}
-
-.stat-number{
-    font-size:27px;
-    font-weight:800;
-    margin-top:16px;
-}
-
-.stat-note{
-    color:#647594;
-    font-size:11px;
-    margin-top:5px;
-}
-
-/* =========================
-   QUICK ACTIONS
-========================= */
-
-.section-title{
-    font-size:18px;
-    font-weight:750;
-    margin-bottom:15px;
-}
-
-.quick-actions{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
-    margin-bottom:28px;
-}
-
-.action{
-    background:#0a1024;
-    border:1px solid #1b2542;
-    border-radius:13px;
-    padding:18px;
-    text-decoration:none;
-    color:#fff;
-    transition:.2s;
-}
-
-.action:hover{
-    border-color:#3268e8;
-    transform:translateY(-2px);
-}
-
-.action-icon{
-    font-size:24px;
-    margin-bottom:11px;
-}
-
-.action-name{
-    font-size:14px;
-    font-weight:700;
-}
-
-.action-desc{
-    color:#7182a4;
-    font-size:11px;
-    margin-top:5px;
-}
-
-/* =========================
-   TABLES
-========================= */
-
-.panel{
-    background:#0a1024;
-    border:1px solid #1b2542;
-    border-radius:15px;
-    overflow:hidden;
-    margin-bottom:25px;
-}
-
-.panel-header{
-    padding:18px 20px;
-    border-bottom:1px solid #1b2542;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.panel-header h2{
-    font-size:16px;
-}
-
-.view-link{
-    color:#5d8fff;
-    text-decoration:none;
-    font-size:12px;
-}
-
-.table-wrapper{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-    min-width:650px;
-}
-
-th,
-td{
-    padding:15px 20px;
-    text-align:left;
-    border-bottom:1px solid #151f38;
-    font-size:13px;
-}
-
-th{
-    color:#7182a4;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.5px;
-}
-
-td{
-    color:#dbe4fa;
-}
-
-tr:last-child td{
-    border-bottom:none;
-}
-
-.empty{
-    text-align:center;
-    color:#667796;
-    padding:30px;
-}
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-    display:inline-flex;
-    padding:5px 9px;
+.admin-badge{
+    display:inline-block;
+    margin-top:12px;
+    padding:7px 13px;
     border-radius:20px;
-    font-size:10px;
+    background:rgba(108,99,255,.12);
+    border:1px solid rgba(108,99,255,.25);
+    color:#9d98ff;
+    font-size:12px;
     font-weight:700;
 }
 
-.status.pending{
-    background:#302714;
-    color:#f4c65c;
+.form-group{
+    margin-bottom:18px;
 }
 
-.status.approved,
-.status.delivered{
-    background:#123020;
-    color:#65df91;
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#dce2f5;
+    font-size:14px;
+    font-weight:600;
 }
 
-.status.processing{
-    background:#142a43;
-    color:#6bb5ff;
+input{
+    width:100%;
+    height:52px;
+    border:none;
+    outline:none;
+    border-radius:12px;
+    padding:0 15px;
+    background:#060a19;
+    border:1px solid #1c2544;
+    color:#fff;
+    font-size:15px;
+    transition:.2s;
 }
 
-.status.rejected{
-    background:#34151b;
-    color:#ff7482;
+input:focus{
+    border-color:#6670ff;
+    box-shadow:0 0 0 3px rgba(102,112,255,.10);
 }
 
-/* =========================
-   LOADING
-========================= */
+input::placeholder{
+    color:#59627f;
+}
 
-.loading-screen{
+.password-wrap{
+    position:relative;
+}
+
+.password-wrap input{
+    padding-right:75px;
+}
+
+.show-password{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:transparent;
+    color:#7e88aa;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:700;
+}
+
+.login-btn{
+    width:100%;
+    height:52px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#6157ff,#00bfe8);
+    color:#fff;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+    transition:.2s;
+    margin-top:5px;
+}
+
+.login-btn:hover{
+    transform:translateY(-1px);
+    opacity:.95;
+}
+
+.login-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.message{
+    display:none;
+    padding:12px 14px;
+    border-radius:10px;
+    margin-bottom:18px;
+    font-size:13px;
+    line-height:1.5;
+}
+
+.message.error{
+    display:block;
+    background:rgba(255,70,90,.10);
+    border:1px solid rgba(255,70,90,.25);
+    color:#ff9ca8;
+}
+
+.message.success{
+    display:block;
+    background:rgba(0,220,150,.10);
+    border:1px solid rgba(0,220,150,.25);
+    color:#72efc2;
+}
+
+.back-link{
+    display:block;
+    text-align:center;
+    margin-top:22px;
+    color:#7e88aa;
+    text-decoration:none;
+    font-size:13px;
+}
+
+.back-link:hover{
+    color:#fff;
+}
+
+.security-note{
+    margin-top:25px;
+    padding:13px;
+    border-radius:11px;
+    background:#070c1d;
+    border:1px solid #151d38;
+    color:#68728f;
+    font-size:11px;
+    line-height:1.6;
+    text-align:center;
+}
+
+.loading{
     position:fixed;
     inset:0;
     background:#050817;
-    z-index:5000;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
-    gap:15px;
+    z-index:9999;
+}
+
+.loading-box{
+    text-align:center;
 }
 
 .spinner{
-    width:38px;
-    height:38px;
-    border:3px solid #1a2748;
-    border-top-color:#4d83ff;
+    width:35px;
+    height:35px;
+    border:3px solid #202943;
+    border-top-color:#6670ff;
     border-radius:50%;
     animation:spin .8s linear infinite;
+    margin:0 auto 12px;
+}
+
+.loading-box p{
+    color:#7e88aa;
+    font-size:13px;
 }
 
 @keyframes spin{
@@ -397,100 +232,14 @@ tr:last-child td{
     }
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-.overlay{
-    display:none;
-    position:fixed;
-    inset:70px 0 0 0;
-    background:rgba(0,0,0,.55);
-    z-index:850;
-}
-
-@media(max-width:1000px){
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
+@media(max-width:480px){
+    .login-box{
+        padding:28px 20px;
+        border-radius:18px;
     }
 
-    .quick-actions{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:700px){
-
-    .header{
-        padding:0 16px;
-    }
-
-    .admin-label{
-        display:none;
-    }
-
-    .admin-name{
-        display:none;
-    }
-
-    .menu-btn{
-        display:block;
-    }
-
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.25s;
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .overlay.show{
-        display:block;
-    }
-
-    .main{
-        margin-left:0;
-        padding:92px 15px 30px;
-    }
-
-    .page-title{
-        font-size:23px;
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-    }
-
-    .stat-card{
-        padding:16px;
-    }
-
-    .stat-number{
-        font-size:22px;
-    }
-
-    .quick-actions{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-    }
-
-    .action{
-        padding:15px;
-    }
-}
-
-@media(max-width:430px){
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .quick-actions{
-        grid-template-columns:1fr;
+    .logo h1{
+        font-size:26px;
     }
 }
 </style>
@@ -498,447 +247,98 @@ tr:last-child td{
 
 <body>
 
-<!-- =========================
-     LOADING
-========================= -->
-
-<div class="loading-screen" id="loadingScreen">
-    <div class="spinner"></div>
-    <div style="color:#8192b4;font-size:13px;">
-        Loading admin panel...
+<div class="loading" id="loadingScreen">
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <p>Checking admin session...</p>
     </div>
 </div>
 
-<!-- =========================
-     HEADER
-========================= -->
-
-<header class="header">
+<div class="login-box">
 
     <div class="logo">
-        ZAVIX<span>BULK</span>
-        <span class="admin-label">ADMIN PANEL</span>
+        <h1>ZAVIXBULK</h1>
+        <p>Digital Products Marketplace</p>
+        <span class="admin-badge">ADMIN PANEL</span>
     </div>
 
-    <div class="header-right">
-        <div class="admin-name" id="adminName">
-            Admin
+    <div id="message" class="message"></div>
+
+    <form id="loginForm">
+
+        <div class="form-group">
+            <label for="email">Admin Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter admin email"
+                autocomplete="email"
+                required
+            >
         </div>
 
-        <button class="menu-btn" id="menuBtn">
-            ☰
+        <div class="form-group">
+            <label for="password">Password</label>
+
+            <div class="password-wrap">
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-password"
+                    id="showPassword"
+                >
+                    Show
+                </button>
+            </div>
+        </div>
+
+        <button
+            type="submit"
+            class="login-btn"
+            id="loginBtn"
+        >
+            Login to Admin
         </button>
+
+    </form>
+
+    <a href="../login.html" class="back-link">
+        ← Back to customer login
+    </a>
+
+    <div class="security-note">
+        Admin access is restricted to accounts with
+        <strong>role: admin</strong> in the Zavixbulk Firestore users collection.
     </div>
 
-</header>
-
-<!-- =========================
-     OVERLAY
-========================= -->
-
-<div class="overlay" id="overlay"></div>
-
-<!-- =========================
-     SIDEBAR
-========================= -->
-
-<aside class="sidebar" id="sidebar">
-
-    <div class="sidebar-title">
-        Management
-    </div>
-
-    <a href="index.html" class="nav-link active">
-        <span class="nav-icon">📊</span>
-        Dashboard
-    </a>
-
-    <a href="categories.html" class="nav-link">
-        <span class="nav-icon">🗂️</span>
-        Categories
-    </a>
-
-    <a href="products.html" class="nav-link">
-        <span class="nav-icon">📦</span>
-        Products
-    </a>
-
-    <a href="orders.html" class="nav-link">
-        <span class="nav-icon">🛒</span>
-        Orders
-    </a>
-
-    <a href="customers.html" class="nav-link">
-        <span class="nav-icon">👥</span>
-        Customers
-    </a>
-
-    <a href="deposits.html" class="nav-link">
-        <span class="nav-icon">💰</span>
-        Deposits
-    </a>
-
-    <a href="transactions.html" class="nav-link">
-        <span class="nav-icon">💳</span>
-        Transactions
-    </a>
-
-    <div class="sidebar-title" style="margin-top:25px;">
-        System
-    </div>
-
-    <a href="settings.html" class="nav-link">
-        <span class="nav-icon">⚙️</span>
-        Settings
-    </a>
-
-    <div class="nav-link logout" id="logoutBtn">
-        <span class="nav-icon">🚪</span>
-        Logout
-    </div>
-
-</aside>
-
-<!-- =========================
-     MAIN
-========================= -->
-
-<main class="main">
-
-    <h1 class="page-title">
-        Admin Dashboard
-    </h1>
-
-    <p class="page-subtitle">
-        Manage Zavixbulk products, customers, orders and payments.
-    </p>
-
-    <!-- =====================
-         STATS
-    ====================== -->
-
-    <section class="stats">
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-                <div class="stat-title">
-                    Total Customers
-                </div>
-
-                <div class="stat-icon">
-                    👥
-                </div>
-            </div>
-
-            <div class="stat-number" id="customersCount">
-                0
-            </div>
-
-            <div class="stat-note">
-                Registered customers
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-                <div class="stat-title">
-                    Total Products
-                </div>
-
-                <div class="stat-icon">
-                    📦
-                </div>
-            </div>
-
-            <div class="stat-number" id="productsCount">
-                0
-            </div>
-
-            <div class="stat-note">
-                Products in marketplace
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-                <div class="stat-title">
-                    Pending Orders
-                </div>
-
-                <div class="stat-icon">
-                    🛒
-                </div>
-            </div>
-
-            <div class="stat-number" id="pendingOrdersCount">
-                0
-            </div>
-
-            <div class="stat-note">
-                Waiting for approval
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-                <div class="stat-title">
-                    Delivered Orders
-                </div>
-
-                <div class="stat-icon">
-                    ✅
-                </div>
-            </div>
-
-            <div class="stat-number" id="deliveredOrdersCount">
-                0
-            </div>
-
-            <div class="stat-note">
-                Completed orders
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-                <div class="stat-title">
-                    Pending Deposits
-                </div>
-
-                <div class="stat-icon">
-                    💰
-                </div>
-            </div>
-
-            <div class="stat-number" id="pendingDepositsCount">
-                0
-            </div>
-
-            <div class="stat-note">
-                Deposit requests
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-top">
-                <div class="stat-title">
-                    Total Sales
-                </div>
-
-                <div class="stat-icon">
-                    💵
-                </div>
-            </div>
-
-            <div class="stat-number" id="totalSales">
-                ₦0.00
-            </div>
-
-            <div class="stat-note">
-                From delivered orders
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================
-         QUICK ACTIONS
-    ====================== -->
-
-    <h2 class="section-title">
-        Quick Actions
-    </h2>
-
-    <section class="quick-actions">
-
-        <a href="categories.html" class="action">
-            <div class="action-icon">🗂️</div>
-            <div class="action-name">
-                Add Category
-            </div>
-            <div class="action-desc">
-                Create marketplace categories
-            </div>
-        </a>
-
-        <a href="products.html" class="action">
-            <div class="action-icon">📦</div>
-            <div class="action-name">
-                Add Product
-            </div>
-            <div class="action-desc">
-                Add products customers can see
-            </div>
-        </a>
-
-        <a href="orders.html" class="action">
-            <div class="action-icon">🛒</div>
-            <div class="action-name">
-                Manage Orders
-            </div>
-            <div class="action-desc">
-                Review and approve orders
-            </div>
-        </a>
-
-        <a href="deposits.html" class="action">
-            <div class="action-icon">💰</div>
-            <div class="action-name">
-                Deposits
-            </div>
-            <div class="action-desc">
-                Review deposit requests
-            </div>
-        </a>
-
-    </section>
-
-
-    <!-- =====================
-         RECENT ORDERS
-    ====================== -->
-
-    <section class="panel">
-
-        <div class="panel-header">
-
-            <h2>
-                Recent Orders
-            </h2>
-
-            <a href="orders.html" class="view-link">
-                View All
-            </a>
-
-        </div>
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Order</th>
-                        <th>Customer</th>
-                        <th>Product</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-
-                <tbody id="ordersTable">
-
-                    <tr>
-                        <td colspan="5" class="empty">
-                            No orders yet
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================
-         RECENT DEPOSITS
-    ====================== -->
-
-    <section class="panel">
-
-        <div class="panel-header">
-
-            <h2>
-                Recent Deposits
-            </h2>
-
-            <a href="deposits.html" class="view-link">
-                View All
-            </a>
-
-        </div>
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>Reference</th>
-                        <th>Customer</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="depositsTable">
-
-                    <tr>
-                        <td colspan="4" class="empty">
-                            No deposits yet
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<!-- =========================
-     FIREBASE
-========================= -->
+</div>
 
 <script type="module">
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
 import {
     getAuth,
+    signInWithEmailAndPassword,
     onAuthStateChanged,
     signOut
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+} from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
 
 import {
     getFirestore,
     doc,
-    getDoc,
-    collection,
-    getDocs,
-    query,
-    orderBy,
-    limit
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+    getDoc
+} from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
 
 /* =========================
@@ -963,7 +363,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
 
@@ -974,244 +373,107 @@ const db = getFirestore(app);
 const loadingScreen =
     document.getElementById("loadingScreen");
 
-const adminName =
-    document.getElementById("adminName");
+const loginForm =
+    document.getElementById("loginForm");
 
-const customersCount =
-    document.getElementById("customersCount");
+const emailInput =
+    document.getElementById("email");
 
-const productsCount =
-    document.getElementById("productsCount");
+const passwordInput =
+    document.getElementById("password");
 
-const pendingOrdersCount =
-    document.getElementById("pendingOrdersCount");
+const loginBtn =
+    document.getElementById("loginBtn");
 
-const deliveredOrdersCount =
-    document.getElementById("deliveredOrdersCount");
+const message =
+    document.getElementById("message");
 
-const pendingDepositsCount =
-    document.getElementById("pendingDepositsCount");
-
-const totalSales =
-    document.getElementById("totalSales");
-
-const ordersTable =
-    document.getElementById("ordersTable");
-
-const depositsTable =
-    document.getElementById("depositsTable");
+const showPassword =
+    document.getElementById("showPassword");
 
 
 /* =========================
-   MOBILE MENU
+   MESSAGE
 ========================= */
 
-const menuBtn =
-    document.getElementById("menuBtn");
+function showMessage(text, type = "error"){
 
-const sidebar =
-    document.getElementById("sidebar");
+    message.textContent = text;
 
-const overlay =
-    document.getElementById("overlay");
+    message.className =
+        "message " + type;
 
+}
 
-function openMenu(){
+function clearMessage(){
 
-    sidebar.classList.add("open");
+    message.textContent = "";
 
-    overlay.classList.add("show");
+    message.className = "message";
 
 }
 
 
-function closeMenu(){
+/* =========================
+   SHOW / HIDE PASSWORD
+========================= */
 
-    sidebar.classList.remove("open");
+showPassword.addEventListener("click", () => {
 
-    overlay.classList.remove("show");
+    if(passwordInput.type === "password"){
 
-}
+        passwordInput.type = "text";
+        showPassword.textContent = "Hide";
 
-
-menuBtn.addEventListener("click", () => {
-
-    if(sidebar.classList.contains("open")){
-        closeMenu();
     }else{
-        openMenu();
+
+        passwordInput.type = "password";
+        showPassword.textContent = "Show";
+
     }
 
 });
 
 
-overlay.addEventListener("click", closeMenu);
-
-
 /* =========================
-   FORMAT MONEY
+   CHECK ADMIN ACCOUNT
 ========================= */
 
-function formatMoney(amount){
+async function checkAdmin(user){
 
-    return "₦" + Number(amount || 0).toLocaleString(
-        "en-NG",
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    );
+    if(!user){
 
-}
+        return false;
 
-
-/* =========================
-   ESCAPE HTML
-========================= */
-
-function escapeHTML(value){
-
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================
-   LOAD DASHBOARD
-========================= */
-
-async function loadDashboard(){
+    }
 
     try{
 
-        const usersSnap =
-            await getDocs(collection(db,"users"));
+        const userRef =
+            doc(db, "users", user.uid);
 
-        let customers = 0;
+        const userSnap =
+            await getDoc(userRef);
 
-        usersSnap.forEach((item) => {
+        if(!userSnap.exists()){
 
-            const data = item.data();
+            return false;
 
-            if(data.role !== "admin"){
-                customers++;
-            }
+        }
 
-        });
+        const userData =
+            userSnap.data();
 
-        customersCount.textContent = customers;
-
-
-        /* PRODUCTS */
-
-        const productsSnap =
-            await getDocs(collection(db,"products"));
-
-        let productTotal = 0;
-
-        productsSnap.forEach(() => {
-
-            productTotal++;
-
-        });
-
-        productsCount.textContent = productTotal;
-
-
-        /* ORDERS */
-
-        const ordersSnap =
-            await getDocs(collection(db,"orders"));
-
-        let pendingOrders = 0;
-
-        let deliveredOrders = 0;
-
-        let sales = 0;
-
-
-        ordersSnap.forEach((item) => {
-
-            const order = item.data();
-
-            const status =
-                String(order.status || "")
-                .toLowerCase();
-
-            if(
-                status === "pending"
-            ){
-                pendingOrders++;
-            }
-
-
-            if(
-                status === "approved" ||
-                status === "delivered"
-            ){
-
-                deliveredOrders++;
-
-                sales += Number(order.price || order.amount || 0);
-
-            }
-
-        });
-
-
-        pendingOrdersCount.textContent =
-            pendingOrders;
-
-        deliveredOrdersCount.textContent =
-            deliveredOrders;
-
-        totalSales.textContent =
-            formatMoney(sales);
-
-
-        /* DEPOSITS */
-
-        const depositsSnap =
-            await getDocs(collection(db,"deposits"));
-
-        let pendingDeposits = 0;
-
-        depositsSnap.forEach((item) => {
-
-            const deposit = item.data();
-
-            const status =
-                String(deposit.status || "")
-                .toLowerCase();
-
-            if(status === "pending"){
-
-                pendingDeposits++;
-
-            }
-
-        });
-
-
-        pendingDepositsCount.textContent =
-            pendingDeposits;
-
-
-        await loadRecentOrders();
-
-        await loadRecentDeposits();
+        return userData.role === "admin";
 
     }catch(error){
 
         console.error(
-            "Dashboard error:",
+            "Admin check error:",
             error
         );
+
+        return false;
 
     }
 
@@ -1219,404 +481,187 @@ async function loadDashboard(){
 
 
 /* =========================
-   RECENT ORDERS
+   CHECK CURRENT SESSION
 ========================= */
 
-async function loadRecentOrders(){
+onAuthStateChanged(auth, async (user) => {
 
-    try{
+    if(user){
 
-        const ordersQuery = query(
-            collection(db,"orders"),
-            orderBy("createdAt","desc"),
-            limit(8)
-        );
+        const isAdmin =
+            await checkAdmin(user);
 
-        const snapshot =
-            await getDocs(ordersQuery);
+        if(isAdmin){
 
-
-        if(snapshot.empty){
-
-            ordersTable.innerHTML = `
-                <tr>
-                    <td colspan="5" class="empty">
-                        No orders yet
-                    </td>
-                </tr>
-            `;
+            window.location.href = "dashboard.html";
 
             return;
 
         }
 
-
-        let html = "";
-
-
-        snapshot.forEach((item) => {
-
-            const order = item.data();
-
-            const status =
-                String(order.status || "pending")
-                .toLowerCase();
-
-
-            let statusClass =
-                "pending";
-
-
-            if(
-                status === "approved" ||
-                status === "delivered"
-            ){
-
-                statusClass = "delivered";
-
-            }else if(
-                status === "processing"
-            ){
-
-                statusClass = "processing";
-
-            }else if(
-                status === "rejected"
-            ){
-
-                statusClass = "rejected";
-
-            }
-
-
-            html += `
-
-                <tr>
-
-                    <td>
-                        #${escapeHTML(item.id.slice(0,8))}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            order.customerName ||
-                            order.username ||
-                            order.userId ||
-                            "Customer"
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            order.productName ||
-                            "Product"
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatMoney(
-                            order.price ||
-                            order.amount ||
-                            0
-                        )}
-                    </td>
-
-                    <td>
-
-                        <span class="status ${statusClass}">
-                            ${escapeHTML(
-                                status.charAt(0).toUpperCase() +
-                                status.slice(1)
-                            )}
-                        </span>
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        });
-
-
-        ordersTable.innerHTML = html;
-
-    }catch(error){
-
-        console.error(
-            "Orders error:",
-            error
-        );
-
-        ordersTable.innerHTML = `
-            <tr>
-                <td colspan="5" class="empty">
-                    Unable to load orders
-                </td>
-            </tr>
-        `;
-
-    }
-
-}
-
-
-/* =========================
-   RECENT DEPOSITS
-========================= */
-
-async function loadRecentDeposits(){
-
-    try{
-
-        const depositsQuery = query(
-            collection(db,"deposits"),
-            orderBy("createdAt","desc"),
-            limit(8)
-        );
-
-        const snapshot =
-            await getDocs(depositsQuery);
-
-
-        if(snapshot.empty){
-
-            depositsTable.innerHTML = `
-                <tr>
-                    <td colspan="4" class="empty">
-                        No deposits yet
-                    </td>
-                </tr>
-            `;
-
-            return;
-
-        }
-
-
-        let html = "";
-
-
-        snapshot.forEach((item) => {
-
-            const deposit = item.data();
-
-            const status =
-                String(
-                    deposit.status || "pending"
-                ).toLowerCase();
-
-
-            let statusClass =
-                "pending";
-
-
-            if(status === "approved"){
-                statusClass = "approved";
-            }
-
-            if(status === "completed"){
-                statusClass = "approved";
-            }
-
-            if(status === "rejected"){
-                statusClass = "rejected";
-            }
-
-
-            html += `
-
-                <tr>
-
-                    <td>
-                        ${escapeHTML(
-                            deposit.reference ||
-                            item.id.slice(0,10)
-                        )}
-                    </td>
-
-                    <td>
-                        ${escapeHTML(
-                            deposit.customerName ||
-                            deposit.username ||
-                            deposit.userId ||
-                            "Customer"
-                        )}
-                    </td>
-
-                    <td>
-                        ${formatMoney(
-                            deposit.amount || 0
-                        )}
-                    </td>
-
-                    <td>
-
-                        <span class="status ${statusClass}">
-                            ${escapeHTML(
-                                status.charAt(0).toUpperCase() +
-                                status.slice(1)
-                            )}
-                        </span>
-
-                    </td>
-
-                </tr>
-
-            `;
-
-        });
-
-
-        depositsTable.innerHTML = html;
-
-    }catch(error){
-
-        console.error(
-            "Deposits error:",
-            error
-        );
-
-        depositsTable.innerHTML = `
-            <tr>
-                <td colspan="4" class="empty">
-                    Unable to load deposits
-                </td>
-            </tr>
-        `;
-
-    }
-
-}
-
-
-/* =========================
-   AUTH + ADMIN CHECK
-========================= */
-
-onAuthStateChanged(
-    auth,
-    async (user) => {
-
-        if(!user){
-
-            window.location.href =
-                "../login.html";
-
-            return;
-
-        }
-
+        /*
+         * A normal customer must not
+         * remain signed in on admin page.
+         */
 
         try{
 
-            const userRef =
-                doc(db,"users",user.uid);
-
-            const userSnap =
-                await getDoc(userRef);
-
-
-            if(!userSnap.exists()){
-
-                await signOut(auth);
-
-                window.location.href =
-                    "../login.html";
-
-                return;
-
-            }
-
-
-            const userData =
-                userSnap.data();
-
-
-            /*
-             * IMPORTANT:
-             * Only users with role = admin
-             * can access this page.
-             */
-
-            if(userData.role !== "admin"){
-
-                alert(
-                    "Access denied. Admin account required."
-                );
-
-                await signOut(auth);
-
-                window.location.href =
-                    "../login.html";
-
-                return;
-
-            }
-
-
-            adminName.textContent =
-                userData.fullname ||
-                userData.username ||
-                "Admin";
-
-
-            await loadDashboard();
-
-
-            loadingScreen.style.display =
-                "none";
+            await signOut(auth);
 
         }catch(error){
 
-            console.error(
-                "Authentication error:",
-                error
-            );
-
-            alert(
-                "Unable to load admin account."
-            );
-
-            await signOut(auth);
-
-            window.location.href =
-                "../login.html";
+            console.error(error);
 
         }
 
     }
-);
+
+    loadingScreen.style.display = "none";
+
+});
 
 
 /* =========================
-   LOGOUT
+   LOGIN
 ========================= */
 
-document
-    .getElementById("logoutBtn")
-    .addEventListener(
-        "click",
-        async () => {
+loginForm.addEventListener("submit", async (event) => {
 
-            try{
+    event.preventDefault();
 
-                await signOut(auth);
+    clearMessage();
 
-                window.location.href =
-                    "../login.html";
+    const email =
+        emailInput.value.trim();
 
-            }catch(error){
+    const password =
+        passwordInput.value;
 
-                console.error(
-                    "Logout error:",
-                    error
-                );
+    if(!email || !password){
 
-            }
+        showMessage(
+            "Please enter your email and password."
+        );
+
+        return;
+
+    }
+
+    loginBtn.disabled = true;
+
+    loginBtn.textContent =
+        "Checking...";
+
+    try{
+
+        /*
+         * Firebase Authentication login
+         */
+
+        const credential =
+            await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+        /*
+         * Check Firestore role
+         */
+
+        const isAdmin =
+            await checkAdmin(
+                credential.user
+            );
+
+        if(!isAdmin){
+
+            await signOut(auth);
+
+            showMessage(
+                "This account does not have admin access."
+            );
+
+            loginBtn.disabled = false;
+
+            loginBtn.textContent =
+                "Login to Admin";
+
+            return;
 
         }
-    );
+
+        showMessage(
+            "Admin login successful. Opening dashboard...",
+            "success"
+        );
+
+        setTimeout(() => {
+
+            window.location.href =
+                "dashboard.html";
+
+        }, 700);
+
+    }catch(error){
+
+        console.error(error);
+
+        let errorMessage =
+            "Unable to login. Please check your details.";
+
+        if(
+            error.code ===
+            "auth/invalid-credential"
+        ){
+
+            errorMessage =
+                "Incorrect email or password.";
+
+        }else if(
+            error.code ===
+            "auth/user-not-found"
+        ){
+
+            errorMessage =
+                "No account exists with this email.";
+
+        }else if(
+            error.code ===
+            "auth/wrong-password"
+        ){
+
+            errorMessage =
+                "Incorrect password.";
+
+        }else if(
+            error.code ===
+            "auth/invalid-email"
+        ){
+
+            errorMessage =
+                "Please enter a valid email address.";
+
+        }else if(
+            error.code ===
+            "auth/too-many-requests"
+        ){
+
+            errorMessage =
+                "Too many login attempts. Please try again later.";
+
+        }
+
+        showMessage(errorMessage);
+
+        loginBtn.disabled = false;
+
+        loginBtn.textContent =
+            "Login to Admin";
+
+    }
+
+});
 
 </script>
 
