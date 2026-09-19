@@ -1,0 +1,1943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zavixbulk | Digital Products Marketplace</title>
+
+<meta name="description"
+content="Zavixbulk is a digital products marketplace with fast delivery, secure payments and reliable customer support.">
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    background:#050817;
+    color:#ffffff;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+/* =========================
+   COLORS
+========================= */
+
+:root{
+    --bg:#050817;
+    --bg2:#080d22;
+    --card:#0b1230;
+    --card2:#0d1638;
+    --border:rgba(100,130,255,.22);
+    --purple:#8b3dff;
+    --blue:#1677ff;
+    --cyan:#13cfff;
+    --text:#ffffff;
+    --muted:#9ba8c7;
+    --green:#22d88a;
+}
+
+/* =========================
+   BACKGROUND EFFECT
+========================= */
+
+body::before{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#5420ff;
+    filter:blur(180px);
+    opacity:.12;
+    top:-200px;
+    left:-150px;
+    z-index:-1;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    width:500px;
+    height:500px;
+    background:#008cff;
+    filter:blur(180px);
+    opacity:.10;
+    right:-200px;
+    bottom:-200px;
+    z-index:-1;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(5,8,23,.88);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.navbar{
+    height:76px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:800;
+}
+
+.logo-icon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+    font-weight:900;
+    background:linear-gradient(135deg,#6b21ff,#168cff);
+    box-shadow:0 0 25px rgba(105,45,255,.4);
+}
+
+.logo span{
+    background:linear-gradient(90deg,#ffffff,#a6c8ff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.nav-links a{
+    color:#aeb9d6;
+    font-size:14px;
+    transition:.25s;
+}
+
+.nav-links a:hover{
+    color:white;
+}
+
+.nav-buttons{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.btn{
+    border:none;
+    cursor:pointer;
+    padding:11px 20px;
+    border-radius:11px;
+    font-size:14px;
+    font-weight:700;
+    transition:.25s;
+}
+
+.btn-outline{
+    color:white;
+    background:transparent;
+    border:1px solid #7250ff;
+}
+
+.btn-outline:hover{
+    background:rgba(114,80,255,.12);
+}
+
+.btn-primary{
+    color:white;
+    background:linear-gradient(90deg,#8538ff,#177dff);
+    box-shadow:0 8px 25px rgba(86,47,255,.25);
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 12px 30px rgba(86,47,255,.4);
+}
+
+.menu-btn{
+    display:none;
+    background:none;
+    border:0;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:650px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    align-items:center;
+    gap:60px;
+    padding:80px 0 70px;
+}
+
+.hero-content{
+    max-width:600px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 13px;
+    border-radius:50px;
+    background:rgba(93,62,255,.12);
+    border:1px solid rgba(119,89,255,.25);
+    color:#b9a7ff;
+    font-size:12px;
+    margin-bottom:20px;
+}
+
+.badge-dot{
+    width:7px;
+    height:7px;
+    background:#21df8b;
+    border-radius:50%;
+    box-shadow:0 0 10px #21df8b;
+}
+
+.hero h1{
+    font-size:58px;
+    line-height:1.08;
+    letter-spacing:-2px;
+    margin-bottom:22px;
+}
+
+.gradient-text{
+    background:linear-gradient(90deg,#8d39ff,#247dff,#13cfff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    color:#9ca9c8;
+    font-size:17px;
+    max-width:560px;
+    margin-bottom:30px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:13px;
+    flex-wrap:wrap;
+}
+
+.hero-btn{
+    padding:14px 24px;
+}
+
+.trust-row{
+    display:flex;
+    gap:25px;
+    flex-wrap:wrap;
+    margin-top:30px;
+}
+
+.trust-item{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#a9b5d1;
+    font-size:13px;
+}
+
+.trust-icon{
+    width:25px;
+    height:25px;
+    border-radius:7px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#101b42;
+}
+
+/* =========================
+   HERO VISUAL
+========================= */
+
+.hero-visual{
+    position:relative;
+    min-height:450px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.glow{
+    position:absolute;
+    width:330px;
+    height:330px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#641dff,#007bff);
+    filter:blur(80px);
+    opacity:.27;
+}
+
+.phone{
+    position:relative;
+    width:270px;
+    height:500px;
+    border-radius:34px;
+    padding:12px;
+    background:linear-gradient(145deg,#202957,#080c20);
+    border:1px solid rgba(255,255,255,.16);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.6),
+        0 0 50px rgba(72,47,255,.22);
+    transform:rotate(4deg);
+}
+
+.phone-screen{
+    width:100%;
+    height:100%;
+    border-radius:25px;
+    overflow:hidden;
+    background:#070b1d;
+    padding:22px 16px;
+}
+
+.phone-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+}
+
+.phone-brand{
+    font-size:13px;
+    font-weight:800;
+}
+
+.phone-icon{
+    width:30px;
+    height:30px;
+    border-radius:9px;
+    background:linear-gradient(135deg,#7b32ff,#0d8fff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.wallet-card{
+    padding:20px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#4e1de7,#136be7);
+    margin-bottom:18px;
+}
+
+.wallet-card small{
+    color:#d8dfff;
+}
+
+.wallet-amount{
+    font-size:28px;
+    font-weight:800;
+    margin-top:5px;
+}
+
+.mini-product{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px;
+    border-radius:12px;
+    background:#0d1430;
+    border:1px solid rgba(255,255,255,.06);
+    margin-bottom:9px;
+}
+
+.mini-icon{
+    width:35px;
+    height:35px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#152050;
+}
+
+.mini-product strong{
+    display:block;
+    font-size:11px;
+}
+
+.mini-product small{
+    color:#7f8cad;
+    font-size:9px;
+}
+
+/* Floating icons */
+
+.float-icon{
+    position:absolute;
+    width:60px;
+    height:60px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    background:#0d1638;
+    border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.float-1{
+    top:50px;
+    left:25px;
+}
+
+.float-2{
+    top:140px;
+    right:10px;
+}
+
+.float-3{
+    bottom:75px;
+    left:15px;
+}
+
+.float-4{
+    bottom:20px;
+    right:35px;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:80px 0;
+}
+
+.section-heading{
+    text-align:center;
+    max-width:650px;
+    margin:0 auto 45px;
+}
+
+.section-heading h2{
+    font-size:36px;
+    margin-bottom:12px;
+}
+
+.section-heading p{
+    color:#8996b6;
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.product-card{
+    background:linear-gradient(145deg,#0b1230,#080d23);
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+    transition:.3s;
+}
+
+.product-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(126,88,255,.6);
+    box-shadow:0 15px 40px rgba(0,0,0,.3);
+}
+
+.product-icon{
+    width:55px;
+    height:55px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:25px;
+    margin-bottom:17px;
+    background:linear-gradient(135deg,#182454,#111a3c);
+}
+
+.product-card h3{
+    font-size:16px;
+    margin-bottom:5px;
+}
+
+.product-card p{
+    color:#7684a5;
+    font-size:12px;
+    min-height:38px;
+}
+
+.price{
+    font-size:21px;
+    font-weight:800;
+    margin:15px 0;
+}
+
+.stock{
+    display:inline-block;
+    color:#25dd8c;
+    background:rgba(37,221,140,.09);
+    border:1px solid rgba(37,221,140,.18);
+    border-radius:30px;
+    padding:4px 9px;
+    font-size:10px;
+}
+
+/* =========================
+   HOW IT WORKS
+========================= */
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.step{
+    text-align:center;
+    padding:28px 20px;
+    background:#090f28;
+    border:1px solid var(--border);
+    border-radius:17px;
+}
+
+.step-number{
+    width:52px;
+    height:52px;
+    margin:0 auto 18px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#7b32ff,#117cff);
+    font-weight:800;
+    font-size:18px;
+}
+
+.step h3{
+    margin-bottom:8px;
+    font-size:17px;
+}
+
+.step p{
+    color:#7f8cab;
+    font-size:13px;
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.feature{
+    padding:28px;
+    border-radius:18px;
+    background:linear-gradient(145deg,#0b1230,#080d22);
+    border:1px solid var(--border);
+}
+
+.feature-icon{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:linear-gradient(135deg,#5720df,#086fe0);
+    margin-bottom:17px;
+    font-size:21px;
+}
+
+.feature h3{
+    margin-bottom:8px;
+}
+
+.feature p{
+    color:#7f8ba9;
+    font-size:13px;
+}
+
+/* =========================
+   CRYPTO SECTION
+========================= */
+
+.crypto-box{
+    position:relative;
+    overflow:hidden;
+    padding:50px;
+    border-radius:25px;
+    background:
+        linear-gradient(110deg,rgba(94,38,255,.35),rgba(7,107,220,.18)),
+        #090e27;
+    border:1px solid rgba(122,86,255,.3);
+}
+
+.crypto-content{
+    max-width:650px;
+}
+
+.crypto-content h2{
+    font-size:35px;
+    margin-bottom:12px;
+}
+
+.crypto-content p{
+    color:#9aa7c4;
+    margin-bottom:25px;
+}
+
+.crypto-coins{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.coin{
+    padding:10px 15px;
+    border-radius:12px;
+    background:#10183a;
+    border:1px solid rgba(255,255,255,.08);
+    font-size:13px;
+    font-weight:700;
+}
+
+/* =========================
+   CTA
+========================= */
+
+.cta{
+    text-align:center;
+}
+
+.cta-box{
+    padding:60px 25px;
+    border-radius:25px;
+    background:linear-gradient(135deg,#15114a,#071d43);
+    border:1px solid rgba(110,91,255,.3);
+}
+
+.cta-box h2{
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.cta-box p{
+    color:#9ca8c2;
+    margin-bottom:25px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    border-top:1px solid rgba(255,255,255,.07);
+    padding:45px 0 25px;
+    background:#040713;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    gap:40px;
+}
+
+.footer-brand p{
+    color:#7f8ba7;
+    font-size:13px;
+    max-width:330px;
+    margin-top:15px;
+}
+
+.footer-col h4{
+    margin-bottom:15px;
+    font-size:14px;
+}
+
+.footer-col a{
+    display:block;
+    color:#77839f;
+    font-size:13px;
+    margin-bottom:9px;
+}
+
+.footer-col a:hover{
+    color:white;
+}
+
+.copyright{
+    border-top:1px solid rgba(255,255,255,.06);
+    margin-top:35px;
+    padding-top:20px;
+    text-align:center;
+    color:#59657f;
+    font-size:12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:1000px){
+
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .hero-content{
+        margin:auto;
+    }
+
+    .hero p{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .hero-buttons,
+    .trust-row{
+        justify-content:center;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .steps{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .features{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .footer-grid{
+        grid-template-columns:2fr 1fr 1fr;
+    }
+
+}
+
+@media(max-width:700px){
+
+    .navbar{
+        height:68px;
+    }
+
+    .nav-links{
+        display:none;
+        position:absolute;
+        top:68px;
+        left:0;
+        right:0;
+        padding:20px;
+        background:#070b1d;
+        border-bottom:1px solid rgba(255,255,255,.07);
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .nav-buttons{
+        display:none;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .hero{
+        padding-top:55px;
+    }
+
+    .hero h1{
+        font-size:41px;
+        letter-spacing:-1px;
+    }
+
+    .hero p{
+        font-size:15px;
+    }
+
+    .hero-visual{
+        min-height:420px;
+    }
+
+    .phone{
+        width:230px;
+        height:420px;
+    }
+
+    .float-icon{
+        width:48px;
+        height:48px;
+        border-radius:14px;
+        font-size:20px;
+    }
+
+    section{
+        padding:60px 0;
+    }
+
+    .section-heading h2{
+        font-size:29px;
+    }
+
+    .product-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .product-card{
+        padding:15px;
+    }
+
+    .product-card h3{
+        font-size:14px;
+    }
+
+    .price{
+        font-size:18px;
+    }
+
+    .steps,
+    .features{
+        grid-template-columns:1fr;
+    }
+
+    .crypto-box{
+        padding:35px 25px;
+    }
+
+    .crypto-content h2{
+        font-size:28px;
+    }
+
+    .cta-box h2{
+        font-size:29px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:430px){
+
+    .product-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero h1{
+        font-size:36px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="container navbar">
+
+    <a href="index.html" class="logo">
+
+        <div class="logo-icon">
+            Z
+        </div>
+
+        <span>Zavixbulk</span>
+
+    </a>
+
+
+    <nav class="nav-links" id="navLinks">
+
+        <a href="index.html">Home</a>
+
+        <a href="#products">Products</a>
+
+        <a href="#how">How It Works</a>
+
+        <a href="#features">Why Us</a>
+
+        <a href="#support">Support</a>
+
+    </nav>
+
+
+    <div class="nav-buttons">
+
+        <a href="login.html"
+           class="btn btn-outline">
+           Login
+        </a>
+
+        <a href="register.html"
+           class="btn btn-primary">
+           Register
+        </a>
+
+    </div>
+
+
+    <button
+        class="menu-btn"
+        onclick="toggleMenu()"
+        aria-label="Open menu">
+
+        ☰
+
+    </button>
+
+</div>
+
+</header>
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<main>
+
+<section class="hero">
+
+<div class="container hero" style="padding-top:0;padding-bottom:0;">
+
+    <div class="hero-content">
+
+        <div class="badge">
+
+            <span class="badge-dot"></span>
+
+            Trusted Digital Marketplace
+
+        </div>
+
+
+        <h1>
+
+            Your Trusted
+
+            <span class="gradient-text">
+                Digital Products
+            </span>
+
+            Marketplace
+
+        </h1>
+
+
+        <p>
+
+            Buy quality digital products and services
+            with fast processing, secure payments,
+            reliable delivery and customer support.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a href="products.html"
+               class="btn btn-primary hero-btn">
+
+                Browse Products →
+
+            </a>
+
+
+            <a href="register.html"
+               class="btn btn-outline hero-btn">
+
+                Create Account
+
+            </a>
+
+        </div>
+
+
+        <div class="trust-row">
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    ⚡
+                </div>
+
+                Fast Processing
+
+            </div>
+
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    🔒
+                </div>
+
+                Secure Payments
+
+            </div>
+
+
+            <div class="trust-item">
+
+                <div class="trust-icon">
+                    💬
+                </div>
+
+                Customer Support
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO PHONE -->
+
+    <div class="hero-visual">
+
+        <div class="glow"></div>
+
+
+        <div class="float-icon float-1">
+            G
+        </div>
+
+        <div class="float-icon float-2">
+            ▶
+        </div>
+
+        <div class="float-icon float-3">
+            ₿
+        </div>
+
+        <div class="float-icon float-4">
+            Ł
+        </div>
+
+
+        <div class="phone">
+
+            <div class="phone-screen">
+
+                <div class="phone-top">
+
+                    <div class="phone-brand">
+                        ZAVIXBULK
+                    </div>
+
+                    <div class="phone-icon">
+                        Z
+                    </div>
+
+                </div>
+
+
+                <div class="wallet-card">
+
+                    <small>
+                        Wallet Balance
+                    </small>
+
+                    <div class="wallet-amount">
+                        $250.00
+                    </div>
+
+                </div>
+
+
+                <div class="mini-product">
+
+                    <div class="mini-icon">
+                        G
+                    </div>
+
+                    <div>
+                        <strong>
+                            Google Voice
+                        </strong>
+
+                        <small>
+                            $10.00
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="mini-product">
+
+                    <div class="mini-icon">
+                        T
+                    </div>
+
+                    <div>
+                        <strong>
+                            TextNow
+                        </strong>
+
+                        <small>
+                            $8.00
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="mini-product">
+
+                    <div class="mini-icon">
+                        ▶
+                    </div>
+
+                    <div>
+                        <strong>
+                            YouTube
+                        </strong>
+
+                        <small>
+                            $15.00
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="mini-product">
+
+                    <div class="mini-icon">
+                        F
+                    </div>
+
+                    <div>
+                        <strong>
+                            Facebook
+                        </strong>
+
+                        <small>
+                            $20.00
+                        </small>
+                    </div>
+
+                </div>
+
+
+                <div class="mini-product">
+
+                    <div class="mini-icon">
+                        I
+                    </div>
+
+                    <div>
+                        <strong>
+                            Instagram
+                        </strong>
+
+                        <small>
+                            $20.00
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     PRODUCTS
+========================= -->
+
+<section id="products">
+
+<div class="container">
+
+    <div class="section-heading">
+
+        <h2>
+            Popular Products
+        </h2>
+
+        <p>
+            Browse our available digital products
+            and services.
+        </p>
+
+    </div>
+
+
+    <div class="product-grid">
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                G
+            </div>
+
+            <h3>
+                Google Voice
+            </h3>
+
+            <p>
+                Digital communication service.
+            </p>
+
+            <div class="price">
+                $10.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                T
+            </div>
+
+            <h3>
+                TextNow
+            </h3>
+
+            <p>
+                Digital communication service.
+            </p>
+
+            <div class="price">
+                $8.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                T+
+            </div>
+
+            <h3>
+                TextPlus
+            </h3>
+
+            <p>
+                Digital communication service.
+            </p>
+
+            <div class="price">
+                $7.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                ▶
+            </div>
+
+            <h3>
+                YouTube
+            </h3>
+
+            <p>
+                Digital video platform product.
+            </p>
+
+            <div class="price">
+                $15.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                F
+            </div>
+
+            <h3>
+                Facebook
+            </h3>
+
+            <p>
+                Authorized digital products.
+            </p>
+
+            <div class="price">
+                $20.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                I
+            </div>
+
+            <h3>
+                Instagram
+            </h3>
+
+            <p>
+                Authorized digital products.
+            </p>
+
+            <div class="price">
+                $20.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                ✉
+            </div>
+
+            <h3>
+                Email Products
+            </h3>
+
+            <p>
+                Digital email-related products.
+            </p>
+
+            <div class="price">
+                $5.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <div class="product-card">
+
+            <div class="product-icon">
+                +
+            </div>
+
+            <h3>
+                More Products
+            </h3>
+
+            <p>
+                New products added by Zavixbulk.
+            </p>
+
+            <div class="price">
+                From $5
+            </div>
+
+            <span class="stock">
+                ● Available
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section id="how">
+
+<div class="container">
+
+    <div class="section-heading">
+
+        <h2>
+            How Zavixbulk Works
+        </h2>
+
+        <p>
+            Getting your digital product is simple.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Create Account
+            </h3>
+
+            <p>
+                Register your Zavixbulk customer account.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Choose Product
+            </h3>
+
+            <p>
+                Browse available products and select what
+                you need.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Place Order
+            </h3>
+
+            <p>
+                Complete your payment and submit your order.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Receive Delivery
+            </h3>
+
+            <p>
+                Track your order from your customer dashboard.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     FEATURES
+========================= -->
+
+<section id="features">
+
+<div class="container">
+
+    <div class="section-heading">
+
+        <h2>
+            Why Zavixbulk?
+        </h2>
+
+        <p>
+            Everything you need in one digital marketplace.
+        </p>
+
+    </div>
+
+
+    <div class="features">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Fast Processing
+            </h3>
+
+            <p>
+                Orders are tracked through your dashboard
+                from payment to completion.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🔐
+            </div>
+
+            <h3>
+                Secure Account
+            </h3>
+
+            <p>
+                Your customer account and order information
+                are protected.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📦
+            </div>
+
+            <h3>
+                Stock Management
+            </h3>
+
+            <p>
+                Products and inventory are managed directly
+                by the Zavixbulk administrator.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📋
+            </div>
+
+            <h3>
+                Order History
+            </h3>
+
+            <p>
+                Customers can easily view previous and
+                current orders.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                💳
+            </div>
+
+            <h3>
+                Crypto Payments
+            </h3>
+
+            <p>
+                Support for selected cryptocurrency payment
+                methods can be connected to the platform.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                💬
+            </div>
+
+            <h3>
+                Customer Support
+            </h3>
+
+            <p>
+                Customers can contact Zavixbulk support
+                whenever they need assistance.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CRYPTO
+========================= -->
+
+<section>
+
+<div class="container">
+
+    <div class="crypto-box">
+
+        <div class="crypto-content">
+
+            <h2>
+                Pay With Crypto
+            </h2>
+
+            <p>
+                Zavixbulk can support cryptocurrency payments
+                through a secure payment integration. Customers
+                will be able to select an available cryptocurrency
+                during checkout.
+            </p>
+
+
+            <div class="crypto-coins">
+
+                <div class="coin">
+                    ₿ Bitcoin
+                </div>
+
+                <div class="coin">
+                    Ł Litecoin
+                </div>
+
+                <div class="coin">
+                    Ξ Ethereum
+                </div>
+
+                <div class="coin">
+                    USDT
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     CTA
+========================= -->
+
+<section class="cta" id="support">
+
+<div class="container">
+
+    <div class="cta-box">
+
+        <h2>
+            Ready to Get Started?
+        </h2>
+
+        <p>
+            Create your Zavixbulk account and explore
+            available digital products.
+        </p>
+
+        <a href="register.html"
+           class="btn btn-primary hero-btn">
+
+            Create Your Account →
+
+        </a>
+
+    </div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+<div class="container">
+
+    <div class="footer-grid">
+
+
+        <div class="footer-brand">
+
+            <a href="index.html" class="logo">
+
+                <div class="logo-icon">
+                    Z
+                </div>
+
+                <span>Zavixbulk</span>
+
+            </a>
+
+            <p>
+                A modern digital marketplace designed
+                for simple ordering, secure payments
+                and reliable customer service.
+            </p>
+
+        </div>
+
+
+        <div class="footer-col">
+
+            <h4>
+                Marketplace
+            </h4>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="products.html">
+                Categories
+            </a>
+
+            <a href="orders.html">
+                My Orders
+            </a>
+
+        </div>
+
+
+        <div class="footer-col">
+
+            <h4>
+                Account
+            </h4>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a href="register.html">
+                Register
+            </a>
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="footer-col">
+
+            <h4>
+                Support
+            </h4>
+
+            <a href="support.html">
+                Contact Support
+            </a>
+
+            <a href="#">
+                Terms
+            </a>
+
+            <a href="#">
+                Privacy
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © <span id="year"></span>
+        Zavixbulk. All rights reserved.
+
+    </div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+function toggleMenu(){
+
+    const menu =
+        document.getElementById("navLinks");
+
+    menu.classList.toggle("active");
+
+}
+
+
+/* =========================
+   YEAR
+========================= */
+
+document.getElementById("year")
+    .textContent = new Date().getFullYear();
+
+
+/* =========================
+   CLOSE MOBILE MENU
+========================= */
+
+document.querySelectorAll(".nav-links a")
+.forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        document
+            .getElementById("navLinks")
+            .classList.remove("active");
+
+    });
+
+});
+
+</script>
+
+</body>
+  </html>
