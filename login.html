@@ -6,7 +6,6 @@
 <title>Login | Zavixbulk</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -19,13 +18,15 @@ background:#050817;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
+min-height:100vh;
+padding:20px;
 }
 
 .container{
-width:400px;
+width:100%;
+max-width:400px;
 background:#0b1230;
-padding:35px;
+padding:30px;
 border-radius:15px;
 border:1px solid #1f3f8b;
 box-shadow:0 0 25px rgba(0,119,255,.25);
@@ -33,7 +34,7 @@ box-shadow:0 0 25px rgba(0,119,255,.25);
 
 .logo{
 text-align:center;
-font-size:32px;
+font-size:30px;
 font-weight:bold;
 color:#4da3ff;
 margin-bottom:10px;
@@ -46,14 +47,13 @@ margin-bottom:25px;
 }
 
 .input-box{
-margin-bottom:18px;
+margin-bottom:15px;
 }
 
 .input-box label{
 display:block;
 margin-bottom:6px;
 color:#ddd;
-font-size:14px;
 }
 
 .input-box input{
@@ -63,12 +63,7 @@ border:none;
 border-radius:8px;
 background:#16224d;
 color:#fff;
-font-size:15px;
 outline:none;
-}
-
-.input-box input:focus{
-border:1px solid #3399ff;
 }
 
 button{
@@ -77,31 +72,17 @@ padding:14px;
 background:linear-gradient(90deg,#2b6cff,#00b7ff);
 border:none;
 border-radius:8px;
-color:white;
+color:#fff;
 font-size:16px;
 font-weight:bold;
 cursor:pointer;
-margin-top:5px;
+margin-top:10px;
 }
 
-button:hover{
-opacity:.9;
-}
-
-.links{
-margin-top:18px;
-display:flex;
-justify-content:space-between;
-font-size:14px;
-}
-
-.links a{
-color:#4da3ff;
-text-decoration:none;
-}
-
-.links a:hover{
-text-decoration:underline;
+#message{
+margin-top:15px;
+text-align:center;
+color:red;
 }
 
 .bottom{
@@ -112,51 +93,45 @@ color:#ccc;
 
 .bottom a{
 color:#4da3ff;
-font-weight:bold;
 text-decoration:none;
 }
-
-.bottom a:hover{
-text-decoration:underline;
-}
-
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
 
 <div class="logo">ZAVIXBULK</div>
 
-<h2>Login to Your Account</h2>
+<h2>Login</h2>
 
-<form action="login.php" method="POST">
+<form id="loginForm">
 
 <div class="input-box">
-<label>Username or Gmail</label>
-<input type="text" name="username" placeholder="Enter Username or Gmail" required>
+<label>Email Address</label>
+<input type="email" id="email" required>
 </div>
 
 <div class="input-box">
 <label>Password</label>
-<input type="password" name="password" placeholder="Enter Password" required>
+<input type="password" id="password" required>
 </div>
 
 <button type="submit">Login</button>
 
+<div id="message"></div>
+
 </form>
 
-<div class="links">
-<a href="forgot-password.html">Forgot Password?</a>
-<a href="register.html">Create Account</a>
-</div>
-
 <div class="bottom">
-© 2025 <strong>Zavixbulk</strong>. All Rights Reserved.
+Don't have an account?
+<a href="register.html">Register</a>
 </div>
 
 </div>
+
+<!-- Firebase Login Script goes here -->
 
 </body>
 </html>
