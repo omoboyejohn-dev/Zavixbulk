@@ -614,7 +614,7 @@ body{
         <span>Browse Products</span>
     </a>
 
-    <!-- CHANGED TO deposit.html -->
+    <!-- DEPOSIT NOW OPENS deposit.html -->
     <a href="deposit.html" class="nav-item">
         <span class="nav-icon">💳</span>
         <span>Deposit</span>
@@ -680,10 +680,9 @@ body{
     </div>
 
     <div class="balance" id="balance">
-        ₦0.00
+        $0.00
     </div>
 
-    <!-- CHANGED TO deposit.html -->
     <a href="deposit.html" class="deposit-btn">
         + Deposit
     </a>
@@ -875,10 +874,9 @@ const productsContainer =
 const searchInput =
     document.getElementById("searchInput");
 
+
 let allProducts = [];
 
-
-/* MOBILE MENU */
 
 menuBtn.addEventListener("click",()=>{
 
@@ -887,13 +885,13 @@ menuBtn.addEventListener("click",()=>{
 });
 
 
-/* MONEY */
+/* USD FORMAT */
 
 function formatMoney(value){
 
-    return "₦" +
+    return "$" +
         Number(value || 0).toLocaleString(
-            "en-NG",
+            "en-US",
             {
                 minimumFractionDigits:2,
                 maximumFractionDigits:2
@@ -903,7 +901,7 @@ function formatMoney(value){
 }
 
 
-/* ESCAPE */
+/* ESCAPE HTML */
 
 function escapeHtml(value){
 
@@ -944,12 +942,12 @@ function startProductsListener(){
 
     onSnapshot(
         productsRef,
-        snapshot => {
+        (snapshot)=>{
 
             allProducts = [];
 
 
-            snapshot.forEach(productDoc => {
+            snapshot.forEach(productDoc=>{
 
                 const data =
                     productDoc.data();
@@ -987,11 +985,10 @@ function startProductsListener(){
             renderProducts();
 
         },
-
-        error => {
+        error=>{
 
             console.error(
-                "Products error:",
+                "Products loading error:",
                 error
             );
 
@@ -1004,8 +1001,9 @@ function startProductsListener(){
 
                     <br><br>
 
-                    Please check your Firestore
-                    products read permission.
+                    Please check your Firestore rules
+                    and make sure customers can read
+                    the products collection.
 
                 </div>
 
@@ -1034,7 +1032,7 @@ function renderProducts(){
     if(search){
 
         products =
-            products.filter(product => {
+            products.filter(product=>{
 
                 const name =
                     String(
@@ -1094,7 +1092,7 @@ function renderProducts(){
     const groups = {};
 
 
-    products.forEach(product => {
+    products.forEach(product=>{
 
         const categoryId =
             product.categoryId ||
@@ -1121,9 +1119,7 @@ function renderProducts(){
         }
 
 
-        groups[categoryId]
-            .products
-            .push(product);
+        groups[categoryId].products.push(product);
 
     });
 
@@ -1131,7 +1127,7 @@ function renderProducts(){
     let html = "";
 
 
-    Object.values(groups).forEach(group => {
+    Object.values(groups).forEach(group=>{
 
         html += `
 
@@ -1155,15 +1151,12 @@ function renderProducts(){
                             :
 
                             escapeHtml(group.icon)
-
                         }
 
                     </div>
 
                     <div class="category-title-text">
-
                         ${escapeHtml(group.name)}
-
                     </div>
 
                 </div>
@@ -1174,7 +1167,7 @@ function renderProducts(){
         `;
 
 
-        group.products.forEach(product => {
+        group.products.forEach(product=>{
 
             const image =
                 product.imageUrl ||
@@ -1215,7 +1208,6 @@ function renderProducts(){
                             :
 
                             `📦`
-
                         }
 
                     </div>
@@ -1224,25 +1216,19 @@ function renderProducts(){
                     <div class="product-info">
 
                         <div class="product-name">
-
                             ${escapeHtml(name)}
-
                         </div>
 
 
                         <div class="product-description">
-
                             ${escapeHtml(description)}
-
                         </div>
 
 
                         <div class="product-bottom">
 
                             <div class="product-price">
-
                                 ${formatMoney(product.price)}
-
                             </div>
 
 
@@ -1250,9 +1236,7 @@ function renderProducts(){
                                 href="product.html?id=${encodeURIComponent(product.id)}"
                                 class="buy-btn"
                             >
-
                                 Buy
-
                             </a>
 
                         </div>
@@ -1287,7 +1271,7 @@ function renderProducts(){
 
 onAuthStateChanged(
     auth,
-    async user => {
+    async user=>{
 
         if(!user){
 
@@ -1301,16 +1285,14 @@ onAuthStateChanged(
 
         try{
 
-            const userRef =
-                doc(
-                    db,
-                    "users",
-                    user.uid
-                );
-
-
             const userSnap =
-                await getDoc(userRef);
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
 
 
             if(userSnap.exists()){
@@ -1349,6 +1331,7 @@ onAuthStateChanged(
 
             startProductsListener();
 
+
         }catch(error){
 
             console.error(
@@ -1368,7 +1351,7 @@ document.getElementById(
     "logoutBtn"
 ).addEventListener(
     "click",
-    async e => {
+    async e=>{
 
         e.preventDefault();
 
@@ -1400,7 +1383,7 @@ searchInput.addEventListener(
 
 searchInput.addEventListener(
     "keypress",
-    e => {
+    e=>{
 
         if(e.key === "Enter"){
 
@@ -1424,5 +1407,4 @@ searchInput.addEventListener(
 </script>
 
 </body>
-
 </html>
