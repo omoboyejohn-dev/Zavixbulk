@@ -616,10 +616,7 @@ textarea::placeholder{
 
 <body>
 
-
-<!-- =========================
-     LOADING
-========================= -->
+<!-- LOADING -->
 
 <div class="loading" id="loadingScreen">
 
@@ -632,9 +629,7 @@ textarea::placeholder{
 </div>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+<!-- HEADER -->
 
 <header class="header">
 
@@ -647,7 +642,6 @@ textarea::placeholder{
         </span>
 
     </div>
-
 
     <div style="display:flex;align-items:center;gap:18px;">
 
@@ -664,23 +658,18 @@ textarea::placeholder{
 </header>
 
 
-<!-- =========================
-     OVERLAY
-========================= -->
+<!-- OVERLAY -->
 
 <div class="overlay" id="overlay"></div>
 
 
-<!-- =========================
-     SIDEBAR
-========================= -->
+<!-- SIDEBAR -->
 
 <aside class="sidebar" id="sidebar">
 
     <div class="sidebar-title">
         Management
     </div>
-
 
     <a href="index.html" class="nav-link">
 
@@ -692,7 +681,6 @@ textarea::placeholder{
 
     </a>
 
-
     <a href="categories.html" class="nav-link">
 
         <span class="nav-icon">
@@ -702,7 +690,6 @@ textarea::placeholder{
         Categories
 
     </a>
-
 
     <a href="products.html" class="nav-link active">
 
@@ -714,7 +701,6 @@ textarea::placeholder{
 
     </a>
 
-
     <a href="orders.html" class="nav-link">
 
         <span class="nav-icon">
@@ -724,7 +710,6 @@ textarea::placeholder{
         Orders
 
     </a>
-
 
     <a href="customers.html" class="nav-link">
 
@@ -736,7 +721,6 @@ textarea::placeholder{
 
     </a>
 
-
     <a href="deposits.html" class="nav-link">
 
         <span class="nav-icon">
@@ -746,7 +730,6 @@ textarea::placeholder{
         Deposits
 
     </a>
-
 
     <a href="transactions.html" class="nav-link">
 
@@ -758,11 +741,9 @@ textarea::placeholder{
 
     </a>
 
-
     <div class="sidebar-title" style="margin-top:25px;">
         System
     </div>
-
 
     <a href="settings.html" class="nav-link">
 
@@ -773,7 +754,6 @@ textarea::placeholder{
         Settings
 
     </a>
-
 
     <div class="nav-link logout" id="logoutBtn">
 
@@ -788,9 +768,7 @@ textarea::placeholder{
 </aside>
 
 
-<!-- =========================
-     MAIN
-========================= -->
+<!-- MAIN -->
 
 <main class="main">
 
@@ -802,13 +780,9 @@ textarea::placeholder{
         Add and manage the products customers can see in your marketplace.
     </p>
 
-
     <div class="grid">
 
-
-        <!-- =====================
-             PRODUCT FORM
-        ====================== -->
+        <!-- PRODUCT FORM -->
 
         <section class="card">
 
@@ -821,9 +795,7 @@ textarea::placeholder{
                 description. There is no stock or Pcs field.
             </p>
 
-
             <form id="productForm">
-
 
                 <div class="form-group">
 
@@ -839,7 +811,6 @@ textarea::placeholder{
                     >
 
                 </div>
-
 
                 <div class="form-group">
 
@@ -860,7 +831,6 @@ textarea::placeholder{
 
                 </div>
 
-
                 <div class="form-group">
 
                     <label for="imageUrl">
@@ -872,7 +842,6 @@ textarea::placeholder{
                         id="imageUrl"
                         placeholder="https://example.com/image.jpg"
                     >
-
 
                     <div
                         class="image-preview"
@@ -889,24 +858,22 @@ textarea::placeholder{
 
                 </div>
 
-
                 <div class="form-group">
 
                     <label>
                         Product Price
                     </label>
 
-
                     <div class="price-row">
 
                         <div class="currency-box">
-                            ₦ NGN
+                            $ USD
                         </div>
 
                         <input
                             type="number"
                             id="productPrice"
-                            placeholder="2500"
+                            placeholder="10.00"
                             min="0"
                             step="0.01"
                             required
@@ -915,7 +882,6 @@ textarea::placeholder{
                     </div>
 
                 </div>
-
 
                 <div class="form-group">
 
@@ -930,7 +896,6 @@ textarea::placeholder{
 
                 </div>
 
-
                 <button
                     type="submit"
                     class="button"
@@ -938,7 +903,6 @@ textarea::placeholder{
                 >
                     Add Product
                 </button>
-
 
                 <button
                     type="button"
@@ -953,9 +917,7 @@ textarea::placeholder{
         </section>
 
 
-        <!-- =====================
-             PRODUCT LIST
-        ====================== -->
+        <!-- PRODUCT LIST -->
 
         <section class="card">
 
@@ -976,7 +938,6 @@ textarea::placeholder{
 
                 </div>
 
-
                 <input
                     type="search"
                     id="searchInput"
@@ -985,7 +946,6 @@ textarea::placeholder{
                 >
 
             </div>
-
 
             <div
                 class="product-list"
@@ -1013,9 +973,7 @@ textarea::placeholder{
 ></div>
 
 
-<!-- =========================
-     FIREBASE
-========================= -->
+<!-- FIREBASE -->
 
 <script type="module">
 
@@ -1221,15 +1179,15 @@ function escapeHTML(value){
 
 
 /* =========================
-   MONEY
+   MONEY - USD
 ========================= */
 
 function formatMoney(value){
 
-    return "₦" + Number(
+    return "$" + Number(
         value || 0
     ).toLocaleString(
-        "en-NG",
+        "en-US",
         {
             minimumFractionDigits:2,
             maximumFractionDigits:2
@@ -1377,12 +1335,6 @@ async function loadCategories(){
                 const data =
                     categoryDoc.data();
 
-
-                /*
-                 * Only active categories
-                 * can be selected for new
-                 * products.
-                 */
 
                 if(data.active === false){
                     return;
@@ -1798,7 +1750,8 @@ productForm.addEventListener(
 
         const categoryName =
             selectedOption
-            ? selectedOption.dataset.name || selectedOption.textContent
+            ? selectedOption.dataset.name ||
+              selectedOption.textContent
             : "";
 
 
@@ -1877,7 +1830,7 @@ productForm.addEventListener(
 
                 price:price,
 
-                currency:"NGN",
+                currency:"USD",
 
                 description:description
 
@@ -2007,11 +1960,6 @@ async function editProduct(id){
         productName.value =
             data.name || "";
 
-
-        /*
-         * Make sure the category exists
-         * in the current dropdown.
-         */
 
         const categoryExists =
             [...productCategory.options]
@@ -2472,4 +2420,4 @@ document
 </script>
 
 </body>
-  </html>
+</html>
