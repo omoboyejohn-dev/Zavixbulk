@@ -1,7 +1,15 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dashboard | Zavixbulk</title><style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard | Zavixbulk</title>
+
+<style>
+
 *{
     margin:0;
     padding:0;
@@ -200,7 +208,7 @@ body{
 
 .search-box{
     position:relative;
-    margin-bottom:25px;
+    margin-bottom:30px;
 }
 
 .search-box input{
@@ -228,6 +236,215 @@ body{
     top:14px;
     font-size:18px;
     color:#6e7fa8;
+}
+
+/* MARKETPLACE */
+
+.marketplace{
+    margin-top:10px;
+}
+
+.marketplace-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.marketplace-header h2{
+    font-size:23px;
+}
+
+.marketplace-header p{
+    color:#7f8aa8;
+    font-size:13px;
+    margin-top:5px;
+}
+
+/* CATEGORY SECTION */
+
+.category-section{
+    margin-bottom:35px;
+}
+
+.category-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.category-title .category-icon{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:#101d45;
+    border:1px solid #1d3977;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.category-title .category-icon img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.category-title-text{
+    font-weight:bold;
+}
+
+/* PRODUCT GRID */
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:15px;
+}
+
+/* PRODUCT CARD */
+
+.product-card{
+    background:#0b1230;
+    border:1px solid #1b326b;
+    border-radius:13px;
+    overflow:hidden;
+    transition:.2s;
+    min-width:0;
+}
+
+.product-card:hover{
+    transform:translateY(-3px);
+    border-color:#347bce;
+    box-shadow:0 12px 30px rgba(0,80,180,.15);
+}
+
+.product-image{
+    width:100%;
+    height:170px;
+    background:#070d20;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.product-image.no-image{
+    font-size:45px;
+    color:#334b80;
+}
+
+.product-info{
+    padding:16px;
+}
+
+.product-name{
+    font-size:16px;
+    font-weight:bold;
+    line-height:1.35;
+    margin-bottom:9px;
+    color:#fff;
+}
+
+.product-description{
+    color:#8490ae;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:13px;
+
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+
+.product-bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.product-price{
+    font-size:17px;
+    font-weight:bold;
+    color:#4da3ff;
+}
+
+.buy-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(90deg,#2b6cff,#00b7ff);
+    color:#fff;
+    padding:9px 14px;
+    border-radius:7px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.buy-btn:hover{
+    opacity:.9;
+}
+
+/* EMPTY */
+
+.empty-products{
+    background:#0b1230;
+    border:1px dashed #29416f;
+    border-radius:12px;
+    padding:35px 20px;
+    text-align:center;
+    color:#7f8aa8;
+}
+
+.empty-products-icon{
+    font-size:40px;
+    margin-bottom:12px;
+}
+
+.empty-products h3{
+    color:#fff;
+    margin-bottom:7px;
+}
+
+.empty-products p{
+    font-size:13px;
+}
+
+/* LOADING */
+
+.loading-products{
+    background:#0b1230;
+    border:1px solid #1b326b;
+    border-radius:12px;
+    padding:30px;
+    text-align:center;
+    color:#7f8aa8;
+}
+
+/* ERROR */
+
+.products-error{
+    background:#26121a;
+    border:1px solid #6d2637;
+    border-radius:12px;
+    padding:20px;
+    color:#ff9aa9;
+    text-align:center;
 }
 
 /* MOBILE */
@@ -276,6 +493,40 @@ body{
         font-size:27px;
     }
 
+    .marketplace-header h2{
+        font-size:20px;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:10px;
+    }
+
+    .product-image{
+        height:130px;
+    }
+
+    .product-info{
+        padding:12px;
+    }
+
+    .product-name{
+        font-size:14px;
+    }
+
+    .product-description{
+        font-size:12px;
+    }
+
+    .product-price{
+        font-size:14px;
+    }
+
+    .buy-btn{
+        padding:8px 10px;
+        font-size:12px;
+    }
+
 }
 
 @media(max-width:450px){
@@ -289,110 +540,173 @@ body{
         padding:15px;
     }
 
+    .product-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+    }
+
+    .product-image{
+        height:115px;
+    }
+
+    .product-info{
+        padding:10px;
+    }
+
+    .product-name{
+        font-size:13px;
+    }
+
+    .product-description{
+        font-size:11px;
+        margin-bottom:9px;
+    }
+
+    .product-bottom{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .product-price{
+        font-size:14px;
+    }
+
+    .buy-btn{
+        width:100%;
+    }
+
 }
-</style></head><body><!-- HEADER --><header class="header"><div class="logo">
-    ZAVIXBULK
-</div>
 
-<div class="menu-btn" id="menuBtn">
-    ☰
-</div>
+</style>
 
-</header><div class="layout"><!-- SIDEBAR --><aside class="sidebar" id="sidebar"><div class="sidebar-title">
-    Menu
-</div>
+</head>
 
+<body>
 
-<a href="dashboard.html" class="nav-item active">
+<!-- HEADER -->
 
-    <span class="nav-icon">🏠</span>
+<header class="header">
 
-    <span>Dashboard</span>
+    <div class="logo">
+        ZAVIXBULK
+    </div>
 
-</a>
+    <div class="menu-btn" id="menuBtn">
+        ☰
+    </div>
 
-
-<a href="products.html" class="nav-item">
-
-    <span class="nav-icon">💎</span>
-
-    <span>Browse Products</span>
-
-</a>
+</header>
 
 
-<a href="wallet.html" class="nav-item">
+<div class="layout">
 
-    <span class="nav-icon">💳</span>
+<!-- SIDEBAR -->
 
-    <span>Deposit</span>
+<aside class="sidebar" id="sidebar">
 
-</a>
-
-
-<a href="profile.html" class="nav-item">
-
-    <span class="nav-icon">👤</span>
-
-    <span>Profile</span>
-
-</a>
+    <div class="sidebar-title">
+        Menu
+    </div>
 
 
-<a href="settings.html" class="nav-item">
+    <a href="dashboard.html" class="nav-item active">
 
-    <span class="nav-icon">⚙️</span>
+        <span class="nav-icon">🏠</span>
 
-    <span>Settings</span>
+        <span>Dashboard</span>
 
-</a>
-
-
-<a href="notifications.html" class="nav-item">
-
-    <span class="nav-icon">🔔</span>
-
-    <span>Notifications</span>
-
-</a>
+    </a>
 
 
-<a href="support.html" class="nav-item">
+    <a href="products.html" class="nav-item">
 
-    <span class="nav-icon">💬</span>
+        <span class="nav-icon">💎</span>
 
-    <span>Support</span>
+        <span>Browse Products</span>
 
-</a>
-
-
-<a href="transactions.html" class="nav-item">
-
-    <span class="nav-icon">💰</span>
-
-    <span>Payment History</span>
-
-</a>
+    </a>
 
 
-<a href="orders.html" class="nav-item">
+    <a href="wallet.html" class="nav-item">
 
-    <span class="nav-icon">📦</span>
+        <span class="nav-icon">💳</span>
 
-    <span>Order History</span>
+        <span>Deposit</span>
 
-</a>
+    </a>
 
 
-<a href="#" class="nav-item logout" id="logoutBtn">
+    <a href="profile.html" class="nav-item">
 
-    <span class="nav-icon">🚪</span>
+        <span class="nav-icon">👤</span>
 
-    <span>Logout</span>
+        <span>Profile</span>
 
-</a>
+    </a>
 
-</aside><!-- MAIN CONTENT --><main class="main"><!-- WELCOME -->
+
+    <a href="settings.html" class="nav-item">
+
+        <span class="nav-icon">⚙️</span>
+
+        <span>Settings</span>
+
+    </a>
+
+
+    <a href="notifications.html" class="nav-item">
+
+        <span class="nav-icon">🔔</span>
+
+        <span>Notifications</span>
+
+    </a>
+
+
+    <a href="support.html" class="nav-item">
+
+        <span class="nav-icon">💬</span>
+
+        <span>Support</span>
+
+    </a>
+
+
+    <a href="transactions.html" class="nav-item">
+
+        <span class="nav-icon">💰</span>
+
+        <span>Payment History</span>
+
+    </a>
+
+
+    <a href="orders.html" class="nav-item">
+
+        <span class="nav-icon">📦</span>
+
+        <span>Order History</span>
+
+    </a>
+
+
+    <a href="#" class="nav-item logout" id="logoutBtn">
+
+        <span class="nav-icon">🚪</span>
+
+        <span>Logout</span>
+
+    </a>
+
+</aside>
+
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+
+<!-- WELCOME -->
 
 <section class="welcome">
 
@@ -416,7 +730,7 @@ body{
     </div>
 
     <div class="balance" id="balance">
-        ₦0.00
+        $0.00
     </div>
 
     <a href="wallet.html" class="deposit-btn">
@@ -518,9 +832,50 @@ body{
 
 </div>
 
-</main></div><script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+<!-- MARKETPLACE -->
+
+<section class="marketplace">
+
+    <div class="marketplace-header">
+
+        <div>
+
+            <h2>
+                Available Products
+            </h2>
+
+            <p>
+                Products currently available in the Zavixbulk marketplace.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div id="productsContainer">
+
+        <div class="loading-products">
+            Loading available products...
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
 
 import {
     getAuth,
@@ -528,10 +883,13 @@ import {
     signOut
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
 
+
 import {
     getFirestore,
     doc,
-    getDoc
+    getDoc,
+    collection,
+    onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
 
@@ -565,12 +923,27 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 
+/* ELEMENTS */
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const sidebar =
+    document.getElementById("sidebar");
+
+const productsContainer =
+    document.getElementById("productsContainer");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+
+/* PRODUCT STORAGE */
+
+let allProducts = [];
+
+
 /* MOBILE MENU */
-
-const menuBtn = document.getElementById("menuBtn");
-
-const sidebar = document.getElementById("sidebar");
-
 
 menuBtn.addEventListener("click", ()=>{
 
@@ -579,76 +952,520 @@ menuBtn.addEventListener("click", ()=>{
 });
 
 
-/* CHECK LOGIN */
+/* MONEY FORMAT */
 
-onAuthStateChanged(auth, async (user)=>{
+function formatMoney(value){
 
-    if(!user){
+    return "$" +
+        Number(value || 0).toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
 
-        window.location.href = "login.html";
+}
+
+
+/* ESCAPE HTML */
+
+function escapeHtml(value){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* LOAD PRODUCTS */
+
+function startProductsListener(){
+
+    const productsRef =
+        collection(db,"products");
+
+
+    onSnapshot(
+        productsRef,
+        (snapshot)=>{
+
+            allProducts = [];
+
+
+            snapshot.forEach((productDoc)=>{
+
+                const data =
+                    productDoc.data();
+
+
+                /*
+                 Only show products that are active.
+                 Admin can control this from Admin Products.
+                */
+
+                if(data.active === false){
+
+                    return;
+
+                }
+
+
+                allProducts.push({
+
+                    id:productDoc.id,
+
+                    ...data
+
+                });
+
+            });
+
+
+            /*
+             Sort newest products first.
+             This does NOT require a Firestore index.
+            */
+
+            allProducts.sort((a,b)=>{
+
+                const aTime =
+                    a.createdAt?.seconds ||
+                    0;
+
+                const bTime =
+                    b.createdAt?.seconds ||
+                    0;
+
+                return bTime - aTime;
+
+            });
+
+
+            renderProducts();
+
+        },
+        (error)=>{
+
+            console.error(
+                "Products loading error:",
+                error
+            );
+
+
+            productsContainer.innerHTML = `
+
+                <div class="products-error">
+
+                    Unable to load products.
+
+                    <br><br>
+
+                    Please check your Firestore rules
+                    and make sure customers have
+                    permission to read products.
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* RENDER PRODUCTS */
+
+function renderProducts(){
+
+    const search =
+        searchInput.value
+        .trim()
+        .toLowerCase();
+
+
+    let products =
+        allProducts;
+
+
+    /* SEARCH */
+
+    if(search){
+
+        products =
+            products.filter(product=>{
+
+                const name =
+                    String(
+                        product.name || ""
+                    ).toLowerCase();
+
+
+                const description =
+                    String(
+                        product.description || ""
+                    ).toLowerCase();
+
+
+                const category =
+                    String(
+                        product.categoryName || ""
+                    ).toLowerCase();
+
+
+                return (
+                    name.includes(search) ||
+                    description.includes(search) ||
+                    category.includes(search)
+                );
+
+            });
+
+    }
+
+
+    /* NO PRODUCTS */
+
+    if(products.length === 0){
+
+        productsContainer.innerHTML = `
+
+            <div class="empty-products">
+
+                <div class="empty-products-icon">
+                    🛍️
+                </div>
+
+                <h3>
+                    No products available
+                </h3>
+
+                <p>
+                    Products added by the administrator
+                    will appear here automatically.
+                </p>
+
+            </div>
+
+        `;
 
         return;
 
     }
 
 
-    try{
+    /*
+     GROUP PRODUCTS BY CATEGORY
+    */
 
-        const userRef =
-            doc(db,"users",user.uid);
-
-        const userSnap =
-            await getDoc(userRef);
+    const groups = {};
 
 
-        if(userSnap.exists()){
+    products.forEach(product=>{
 
-            const userData =
-                userSnap.data();
-
-
-            const name =
-                userData.fullname ||
-                userData.username ||
-                "Customer";
+        const categoryId =
+            product.categoryId ||
+            product.categoryName ||
+            "other";
 
 
-            document.getElementById(
-                "welcomeName"
-            ).textContent =
-                "Welcome, " + name + " 👋";
+        if(!groups[categoryId]){
 
+            groups[categoryId] = {
 
-            /* CUSTOMER BALANCE */
+                name:
+                    product.categoryName ||
+                    "Other Products",
 
-            const balance =
-                Number(userData.balance || 0);
+                icon:
+                    product.categoryIcon ||
+                    "📦",
 
+                products:[]
 
-            document.getElementById(
-                "balance"
-            ).textContent =
-                "₦" +
-                balance.toLocaleString(
-                    "en-NG",
-                    {
-                        minimumFractionDigits:2,
-                        maximumFractionDigits:2
-                    }
-                );
+            };
 
         }
 
-    }catch(error){
 
-        console.error(
-            "Could not load customer:",
-            error
-        );
+        groups[categoryId]
+            .products
+            .push(product);
 
+    });
+
+
+    let html = "";
+
+
+    Object.values(groups).forEach(group=>{
+
+        html += `
+
+            <section class="category-section">
+
+                <div class="category-title">
+
+                    <div class="category-icon">
+
+                        ${
+                            isImageUrl(group.icon)
+
+                            ?
+
+                            `<img
+                                src="${escapeHtml(group.icon)}"
+                                alt=""
+                                onerror="this.style.display='none';this.parentElement.textContent='📦';"
+                            >`
+
+                            :
+
+                            escapeHtml(group.icon)
+                        }
+
+                    </div>
+
+                    <div class="category-title-text">
+
+                        ${escapeHtml(group.name)}
+
+                    </div>
+
+                </div>
+
+
+                <div class="product-grid">
+
+        `;
+
+
+        group.products.forEach(product=>{
+
+            const image =
+                product.imageUrl ||
+                product.image ||
+                "";
+
+
+            const name =
+                product.name ||
+                "Unnamed Product";
+
+
+            const description =
+                product.description ||
+                "Digital product";
+
+
+            const price =
+                formatMoney(product.price);
+
+
+            html += `
+
+                <article class="product-card">
+
+
+                    <div class="product-image ${
+                        image ? "" : "no-image"
+                    }">
+
+                        ${
+                            image
+
+                            ?
+
+                            `<img
+                                src="${escapeHtml(image)}"
+                                alt="${escapeHtml(name)}"
+                                loading="lazy"
+                                onerror="this.style.display='none';this.parentElement.classList.add('no-image');this.parentElement.innerHTML='📦';"
+                            >`
+
+                            :
+
+                            `📦`
+                        }
+
+                    </div>
+
+
+                    <div class="product-info">
+
+
+                        <div class="product-name">
+
+                            ${escapeHtml(name)}
+
+                        </div>
+
+
+                        <div class="product-description">
+
+                            ${escapeHtml(description)}
+
+                        </div>
+
+
+                        <div class="product-bottom">
+
+
+                            <div class="product-price">
+
+                                ${price}
+
+                            </div>
+
+
+                            <a
+                                href="product.html?id=${encodeURIComponent(product.id)}"
+                                class="buy-btn"
+                            >
+
+                                Buy
+
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+            `;
+
+        });
+
+
+        html += `
+
+                </div>
+
+            </section>
+
+        `;
+
+    });
+
+
+    productsContainer.innerHTML =
+        html;
+
+}
+
+
+/* CHECK IMAGE URL */
+
+function isImageUrl(value){
+
+    if(!value){
+        return false;
     }
 
-});
+    return (
+        String(value)
+        .startsWith("http://") ||
+        String(value)
+        .startsWith("https://")
+    );
+
+}
+
+
+/* CHECK LOGIN */
+
+onAuthStateChanged(
+    auth,
+    async(user)=>{
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        try{
+
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                );
+
+
+            const userSnap =
+                await getDoc(userRef);
+
+
+            if(userSnap.exists()){
+
+                const userData =
+                    userSnap.data();
+
+
+                const name =
+                    userData.fullname ||
+                    userData.username ||
+                    "Customer";
+
+
+                document.getElementById(
+                    "welcomeName"
+                ).textContent =
+                    "Welcome, " +
+                    name +
+                    " 👋";
+
+
+                /* CUSTOMER BALANCE */
+
+                const balance =
+                    Number(
+                        userData.balance || 0
+                    );
+
+
+                document.getElementById(
+                    "balance"
+                ).textContent =
+                    formatMoney(balance);
+
+            }
+
+
+            /*
+             Start the live products listener
+             after the customer is authenticated.
+            */
+
+            startProductsListener();
+
+
+        }catch(error){
+
+            console.error(
+                "Could not load customer:",
+                error
+            );
+
+        }
+
+    }
+);
 
 
 /* LOGOUT */
@@ -657,16 +1474,19 @@ document.getElementById(
     "logoutBtn"
 ).addEventListener(
     "click",
-    async (e)=>{
+    async(e)=>{
 
         e.preventDefault();
+
 
         try{
 
             await signOut(auth);
 
+
             window.location.href =
                 "login.html";
+
 
         }catch(error){
 
@@ -680,10 +1500,14 @@ document.getElementById(
 
 /* SEARCH */
 
-const searchInput =
-    document.getElementById(
-        "searchInput"
-    );
+searchInput.addEventListener(
+    "input",
+    ()=>{
+
+        renderProducts();
+
+    }
+);
 
 
 searchInput.addEventListener(
@@ -694,6 +1518,7 @@ searchInput.addEventListener(
 
             const search =
                 searchInput.value.trim();
+
 
             if(search){
 
@@ -708,5 +1533,8 @@ searchInput.addEventListener(
     }
 );
 
-</script></body>
+</script>
+
+</body>
+
 </html>
