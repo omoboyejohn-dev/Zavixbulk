@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | Zavixbulk</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#050817;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+width:400px;
+background:#0b1230;
+padding:35px;
+border-radius:15px;
+border:1px solid #1f3f8b;
+box-shadow:0 0 25px rgba(0,119,255,.25);
+}
+
+.logo{
+text-align:center;
+font-size:32px;
+font-weight:bold;
+color:#4da3ff;
+margin-bottom:10px;
+}
+
+h2{
+text-align:center;
+margin-bottom:25px;
+color:white;
+}
+
+.input-box{
+margin-bottom:15px;
+}
+
+.input-box label{
+display:block;
+margin-bottom:6px;
+color:#ddd;
+font-size:14px;
+}
+
+.input-box input{
+width:100%;
+padding:13px;
+border:none;
+border-radius:8px;
+background:#16224d;
+color:white;
+outline:none;
+font-size:15px;
+}
+
+.input-box input:focus{
+border:1px solid #3399ff;
+}
+
+button{
+width:100%;
+padding:14px;
+background:linear-gradient(90deg,#2b6cff,#00b7ff);
+border:none;
+border-radius:8px;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+opacity:.9;
+}
+
+.bottom{
+margin-top:20px;
+text-align:center;
+color:#ccc;
+}
+
+.bottom a{
+color:#4da3ff;
+text-decoration:none;
+font-weight:bold;
+}
+
+.bottom a:hover{
+text-decoration:underline;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="logo">ZAVIXBULK</div>
+
+<h2>Create Account</h2>
+
+<form action="register.php" method="POST">
+
+<div class="input-box">
+<label>Full Name</label>
+<input type="text" name="fullname" required>
+</div>
+
+<div class="input-box">
+<label>Username</label>
+<input type="text" name="username" required>
+</div>
+
+<div class="input-box">
+<label>Phone Number</label>
+<input type="tel" name="number" required>
+</div>
+
+<div class="input-box">
+<label>Gmail Address</label>
+<input type="email" name="gmail" placeholder="example@gmail.com" required>
+</div>
+
+<div class="input-box">
+<label>Password</label>
+<input type="password" name="password" required>
+</div>
+
+<div class="input-box">
+<label>Confirm Password</label>
+<input type="password" name="confirm_password" required>
+</div>
+
+<button type="submit">Create Account</button>
+
+</form>
+
+<div class="bottom">
+Already have an account?
+<a href="login.html">Login</a>
+</div>
+
+</div>
+
+</body>
+</html>
