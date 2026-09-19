@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zavixbulk | Product</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#4f8cff;
+}
+
+.header-right{
+    color:#9cacc9;
+    font-size:13px;
+}
+
+.main{
+    max-width:1100px;
+    margin:auto;
+    padding:105px 20px 50px;
+}
+
+.back{
+    display:inline-block;
+    color:#7393d7;
+    text-decoration:none;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.product-box{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:18px;
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.image-section{
+    min-height:450px;
+    background:#080e21;
+}
+
+.image-section img{
+    width:100%;
+    height:100%;
+    min-height:450px;
+    object-fit:cover;
+}
+
+.no-image{
+    min-height:450px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:80px;
+    color:#536583;
+}
+
+.details{
+    padding:35px;
+}
+
+.category{
+    color:#5d8dff;
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    margin-bottom:10px;
+}
+
+.title{
+    font-size:30px;
+    font-weight:850;
+    line-height:1.25;
+    margin-bottom:18px;
+}
+
+.description-title{
+    font-size:14px;
+    font-weight:750;
+    margin-bottom:9px;
+}
+
+.description{
+    color:#8b9bb8;
+    font-size:14px;
+    line-height:1.7;
+    white-space:pre-line;
+    margin-bottom:25px;
+}
+
+.price{
+    font-size:28px;
+    font-weight:850;
+    margin-bottom:22px;
+}
+
+.balance-box{
+    background:#070c1c;
+    border:1px solid #202e4c;
+    border-radius:11px;
+    padding:15px;
+    margin-bottom:18px;
+}
+
+.balance-label{
+    color:#7182a1;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.balance{
+    font-size:20px;
+    font-weight:800;
+}
+
+.buy-btn{
+    width:100%;
+    border:0;
+    border-radius:10px;
+    padding:15px;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+    font-size:14px;
+}
+
+.buy-btn:disabled{
+    opacity:.55;
+    cursor:not-allowed;
+}
+
+.note{
+    color:#657694;
+    font-size:11px;
+    line-height:1.5;
+    margin-top:13px;
+    text-align:center;
+}
+
+.loading{
+    text-align:center;
+    padding:100px 20px;
+    color:#7182a1;
+}
+
+.spinner{
+    width:38px;
+    height:38px;
+    border:3px solid #1a2846;
+    border-top-color:#4d82ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:0 auto 15px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:3000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:430px;
+    background:#0a1024;
+    border:1px solid #263555;
+    border-radius:16px;
+    padding:25px;
+}
+
+.modal-title{
+    font-size:19px;
+    font-weight:800;
+    margin-bottom:10px;
+}
+
+.modal-text{
+    color:#8798b6;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.modal-product{
+    background:#070c1c;
+    border:1px solid #1c2947;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:18px;
+}
+
+.modal-product-name{
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.modal-product-price{
+    color:#6590ff;
+    font-weight:800;
+}
+
+.modal-actions{
+    display:flex;
+    gap:10px;
+}
+
+.modal-actions button{
+    flex:1;
+    padding:12px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.cancel{
+    background:#11182c;
+    border:1px solid #293653;
+    color:#aab8d2;
+}
+
+.confirm{
+    background:#1c55df;
+    border:0;
+    color:#fff;
+}
+
+@media(max-width:750px){
+
+    .header{
+        padding:0 16px;
+    }
+
+    .header-right{
+        display:none;
+    }
+
+    .main{
+        padding:90px 15px 35px;
+    }
+
+    .product-box{
+        grid-template-columns:1fr;
+    }
+
+    .image-section,
+    .image-section img,
+    .no-image{
+        min-height:280px;
+        height:280px;
+    }
+
+    .details{
+        padding:24px;
+    }
+
+    .title{
+        font-size:24px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        ZAVIX<span>BULK</span>
+    </div>
+
+    <div class="header-right" id="userName">
+        Customer
+    </div>
+
+</header>
+
+
+<main class="main">
+
+    <a href="products.html" class="back">
+        ← Back to Products
+    </a>
+
+
+    <div id="content">
+
+        <div class="loading">
+
+            <div class="spinner"></div>
+
+            Loading product...
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- CONFIRM MODAL -->
+
+<div class="modal" id="buyModal">
+
+    <div class="modal-box">
+
+        <div class="modal-title">
+            Confirm Order
+        </div>
+
+        <div class="modal-text">
+            Your order will be submitted for admin approval.
+            Delivery details will be provided after the order
+            has been approved.
+        </div>
+
+        <div class="modal-product">
+
+            <div
+                class="modal-product-name"
+                id="modalProductName"
+            >
+                Product
+            </div>
+
+            <div
+                class="modal-product-price"
+                id="modalProductPrice"
+            >
+                ₦0.00
+            </div>
+
+        </div>
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel"
+                id="cancelBtn"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="confirm"
+                id="confirmBtn"
+            >
+                Confirm Order
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    addDoc,
+    collection,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    authDomain:"zavixbulk.firebaseapp.com",
+    projectId:"zavixbulk",
+    storageBucket:"zavixbulk.firebasestorage.app",
+    messagingSenderId:"819994897169",
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    measurementId:"G-GJ8RY0WYBL"
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+const content =
+    document.getElementById("content");
+
+const buyModal =
+    document.getElementById("buyModal");
+
+const modalProductName =
+    document.getElementById("modalProductName");
+
+const modalProductPrice =
+    document.getElementById("modalProductPrice");
+
+const confirmBtn =
+    document.getElementById("confirmBtn");
+
+const cancelBtn =
+    document.getElementById("cancelBtn");
+
+const userName =
+    document.getElementById("userName");
+
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const productId =
+    params.get("id");
+
+
+let currentUser = null;
+
+let currentProduct = null;
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+function formatMoney(value){
+
+    return "₦" + Number(value || 0).toLocaleString(
+        "en-NG",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+
+}
+
+
+async function loadProduct(){
+
+    if(!productId){
+
+        content.innerHTML = `
+            <div class="loading">
+                Product not found.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    try{
+
+        const productSnapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "products",
+                    productId
+                )
+            );
+
+
+        if(
+            !productSnapshot.exists() ||
+            productSnapshot.data().active === false
+        ){
+
+            content.innerHTML = `
+                <div class="loading">
+                    This product is no longer available.
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        currentProduct = {
+            id:productSnapshot.id,
+            ...productSnapshot.data()
+        };
+
+
+        const product =
+            currentProduct;
+
+
+        const image =
+            product.imageUrl ||
+            product.image ||
+            "";
+
+
+        content.innerHTML = `
+
+            <div class="product-box">
+
+                <div class="image-section">
+
+                    ${
+                        image
+
+                        ?
+
+                        `<img
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(product.name)}"
+                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                        >
+
+                        <div
+                            class="no-image"
+                            style="display:none;"
+                        >
+                            📦
+                        </div>`
+
+                        :
+
+                        `<div class="no-image">
+                            📦
+                        </div>`
+                    }
+
+                </div>
+
+
+                <div class="details">
+
+                    <div class="category">
+                        ${escapeHTML(
+                            product.categoryName ||
+                            "Product"
+                        )}
+                    </div>
+
+
+                    <h1 class="title">
+                        ${escapeHTML(
+                            product.name ||
+                            "Product"
+                        )}
+                    </h1>
+
+
+                    <div class="description-title">
+                        Product Details
+                    </div>
+
+
+                    <div class="description">
+                        ${escapeHTML(
+                            product.description ||
+                            "No additional details provided."
+                        )}
+                    </div>
+
+
+                    <div class="price">
+                        ${formatMoney(product.price)}
+                    </div>
+
+
+                    <div class="balance-box">
+
+                        <div class="balance-label">
+                            Your Wallet Balance
+                        </div>
+
+                        <div
+                            class="balance"
+                            id="walletBalance"
+                        >
+                            ₦0.00
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="buy-btn"
+                        id="buyButton"
+                    >
+                        Buy Now
+                    </button>
+
+
+                    <div class="note">
+                        Your order will remain pending until
+                        it is reviewed and approved by admin.
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        document
+            .getElementById("buyButton")
+            .addEventListener(
+                "click",
+                openBuyModal
+            );
+
+
+        await loadBalance();
+
+    }catch(error){
+
+        console.error(error);
+
+        content.innerHTML = `
+            <div class="loading">
+                Unable to load this product.
+            </div>
+        `;
+
+    }
+
+}
+
+
+async function loadBalance(){
+
+    if(!currentUser){
+        return;
+    }
+
+
+    try{
+
+        const snapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                )
+            );
+
+
+        if(snapshot.exists()){
+
+            const data =
+                snapshot.data();
+
+            const balance =
+                Number(data.balance || 0);
+
+
+            const element =
+                document.getElementById(
+                    "walletBalance"
+                );
+
+
+            if(element){
+
+                element.textContent =
+                    formatMoney(balance);
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+function openBuyModal(){
+
+    if(!currentProduct){
+        return;
+    }
+
+
+    modalProductName.textContent =
+        currentProduct.name ||
+        "Product";
+
+
+    modalProductPrice.textContent =
+        formatMoney(
+            currentProduct.price
+        );
+
+
+    buyModal.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeBuyModal(){
+
+    buyModal.classList.remove(
+        "show"
+    );
+
+}
+
+
+cancelBtn.addEventListener(
+    "click",
+    closeBuyModal
+);
+
+
+async function createOrder(){
+
+    if(!currentUser || !currentProduct){
+
+        return;
+
+    }
+
+
+    confirmBtn.disabled =
+        true;
+
+    confirmBtn.textContent =
+        "Submitting...";
+
+
+    try{
+
+        const userSnapshot =
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                )
+            );
+
+
+        if(!userSnapshot.exists()){
+
+            alert(
+                "Your account could not be found."
+            );
+
+            return;
+
+        }
+
+
+        const userData =
+            userSnapshot.data();
+
+
+        const price =
+            Number(
+                currentProduct.price || 0
+            );
+
+
+        /*
+         * The order is created as PENDING.
+         *
+         * Do NOT trust the browser to deduct
+         * wallet money. A secure backend/Cloud
+         * Function should perform the actual
+         * balance deduction and transaction.
+         */
+
+        const orderRef =
+            await addDoc(
+                collection(
+                    db,
+                    "orders"
+                ),
+                {
+
+                    userId:
+                        currentUser.uid,
+
+                    customerName:
+                        userData.fullname ||
+                        userData.username ||
+                        "Customer",
+
+                    username:
+                        userData.username ||
+                        "",
+
+                    productId:
+                        currentProduct.id,
+
+                    productName:
+                        currentProduct.name ||
+                        "Product",
+
+                    categoryId:
+                        currentProduct.categoryId ||
+                        "",
+
+                    categoryName:
+                        currentProduct.categoryName ||
+                        "",
+
+                    price:price,
+
+                    currency:"NGN",
+
+                    status:"pending",
+
+                    deliveryDetails:"",
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+        closeBuyModal();
+
+
+        alert(
+            "Order submitted successfully.\n\nOrder ID: " +
+            orderRef.id +
+            "\n\nYour order is now pending admin approval."
+        );
+
+
+        window.location.href =
+            "orders.html";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to submit order. Please try again."
+        );
+
+    }finally{
+
+        confirmBtn.disabled =
+            false;
+
+        confirmBtn.textContent =
+            "Confirm Order";
+
+    }
+
+}
+
+
+confirmBtn.addEventListener(
+    "click",
+    createOrder
+);
+
+
+/* AUTH */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser = user;
+
+
+        try{
+
+            const userSnapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(userSnapshot.exists()){
+
+                const data =
+                    userSnapshot.data();
+
+                userName.textContent =
+                    data.fullname ||
+                    data.username ||
+                    "Customer";
+
+            }
+
+        }catch(error){
+
+            console.error(error);
+
+        }
+
+
+        await loadProduct();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
