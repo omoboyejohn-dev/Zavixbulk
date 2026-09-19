@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zavixbulk | Settings</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+}
+
+.logo{font-size:22px;font-weight:900}
+.logo span{color:#4f8cff}
+
+.header-right{
+    color:#9cacc9;
+    font-size:13px;
+}
+
+.main{
+    max-width:750px;
+    margin:auto;
+    padding:105px 20px 50px;
+}
+
+.back{
+    color:#7393d7;
+    text-decoration:none;
+    font-size:13px;
+    display:inline-block;
+    margin-bottom:20px;
+}
+
+.card{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:18px;
+    padding:28px;
+    margin-bottom:18px;
+}
+
+.title{
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.subtitle{
+    color:#7182a1;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    color:#9aabc7;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+input{
+    width:100%;
+    background:#070c1c;
+    border:1px solid #202e4c;
+    border-radius:9px;
+    padding:13px;
+    color:#fff;
+    outline:none;
+    margin-bottom:16px;
+}
+
+input:focus{
+    border-color:#3f73ec;
+}
+
+.btn{
+    width:100%;
+    border:0;
+    border-radius:9px;
+    padding:13px;
+    background:#1c55df;
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.logout{
+    background:#211326;
+    color:#ff8290;
+}
+
+.message{
+    margin-top:15px;
+    font-size:13px;
+    color:#6fe0a2;
+    text-align:center;
+}
+
+.loading{
+    text-align:center;
+    padding:100px 20px;
+    color:#7182a1;
+}
+
+@media(max-width:600px){
+    .header{padding:0 16px}
+    .header-right{display:none}
+    .main{padding:90px 15px 35px}
+    .card{padding:22px}
+}
+</style></head><body><header class="header">
+    <div class="logo">ZAVIX<span>BULK</span></div>
+    <div class="header-right" id="headerName">Customer</div>
+</header><main class="main"><a href="dashboard.html" class="back">← Back to Dashboard</a>
+
+<div id="content"><div class="loading">Loading settings...</div></div></main><script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    updatePassword,
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    updateDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+const firebaseConfig={
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    authDomain:"zavixbulk.firebaseapp.com",
+    projectId:"zavixbulk",
+    storageBucket:"zavixbulk.firebasestorage.app",
+    messagingSenderId:"819994897169",
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    measurementId:"G-GJ8RY0WYBL"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const content=document.getElementById("content");
+const headerName=document.getElementById("headerName");
+
+let currentUser=null;
+
+onAuthStateChanged(auth,async user=>{
+
+    if(!user){
+        location.href="login.html";
+        return;
+    }
+
+    currentUser=user;
+
+    const snap=await getDoc(
+        doc(db,"users",user.uid)
+    );
+
+    const data=snap.exists()?snap.data():{};
+
+    const name=data.fullname||data.username||"Customer";
+
+    headerName.textContent=name;
+
+    content.innerHTML=`
+
+        <div class="card">
+
+            <div class="title">
+                Account Settings
+            </div>
+
+            <div class="subtitle">
+                Update the information connected to your Zavixbulk account.
+            </div>
+
+            <label>Full Name</label>
+
+            <input
+                id="fullname"
+                value="${data.fullname||""}"
+            >
+
+            <label>Username</label>
+
+            <input
+                id="username"
+                value="${data.username||""}"
+            >
+
+            <label>Phone</label>
+
+            <input
+                id="phone"
+                value="${data.phone||""}"
+            >
+
+            <button
+                class="btn"
+                id="saveBtn"
+            >
+                Save Changes
+            </button>
+
+            <div
+                class="message"
+                id="profileMessage"
+            ></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="title">
+                Change Password
+            </div>
+
+            <div class="subtitle">
+                Use a strong password that you do not use on another website.
+            </div>
+
+            <label>New Password</label>
+
+            <input
+                type="password"
+                id="newPassword"
+                placeholder="Enter new password"
+            >
+
+            <button
+                class="btn"
+                id="passwordBtn"
+            >
+                Change Password
+            </button>
+
+            <div
+                class="message"
+                id="passwordMessage"
+            ></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="title">
+                Sign Out
+            </div>
+
+            <div class="subtitle">
+                Sign out of your Zavixbulk account on this device.
+            </div>
+
+            <button
+                class="btn logout"
+                id="logoutBtn"
+            >
+                Logout
+            </button>
+
+        </div>
+    `;
+
+
+    document.getElementById("saveBtn").onclick=async()=>{
+
+        const btn=document.getElementById("saveBtn");
+
+        btn.disabled=true;
+        btn.textContent="Saving...";
+
+        try{
+
+            await updateDoc(
+                doc(db,"users",currentUser.uid),
+                {
+                    fullname:
+                        document.getElementById("fullname").value.trim(),
+
+                    username:
+                        document.getElementById("username").value.trim(),
+
+                    phone:
+                        document.getElementById("phone").value.trim()
+                }
+            );
+
+            document.getElementById("profileMessage").textContent=
+                "Changes saved successfully.";
+
+            headerName.textContent=
+                document.getElementById("fullname").value.trim()||
+                document.getElementById("username").value.trim()||
+                "Customer";
+
+        }catch(error){
+
+            console.error(error);
+
+            document.getElementById("profileMessage").textContent=
+                "Unable to save changes.";
+
+        }
+
+        btn.disabled=false;
+        btn.textContent="Save Changes";
+
+    };
+
+
+    document.getElementById("passwordBtn").onclick=async()=>{
+
+        const password=
+            document.getElementById("newPassword").value;
+
+        const message=
+            document.getElementById("passwordMessage");
+
+        if(password.length<6){
+
+            message.textContent=
+                "Password must contain at least 6 characters.";
+
+            return;
+
+        }
+
+        try{
+
+            await updatePassword(
+                currentUser,
+                password
+            );
+
+            message.textContent=
+                "Password changed successfully.";
+
+            document.getElementById("newPassword").value="";
+
+        }catch(error){
+
+            console.error(error);
+
+            if(error.code==="auth/requires-recent-login"){
+
+                message.textContent=
+                    "Please log out and log in again before changing your password.";
+
+            }else{
+
+                message.textContent=
+                    "Unable to change password.";
+
+            }
+
+        }
+
+    };
+
+
+    document.getElementById("logoutBtn").onclick=async()=>{
+
+        await signOut(auth);
+
+        location.href="login.html";
+
+    };
+
+});
+
+</script></body>
+</html>
