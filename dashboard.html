@@ -214,6 +214,10 @@ body{
     font-size:15px;
 }
 
+.search-box input::placeholder{
+    color:#71809f;
+}
+
 .search-box input:focus{
     border-color:#3399ff;
 }
@@ -226,87 +230,11 @@ body{
     color:#6e7fa8;
 }
 
-/* MARKETPLACE */
-
-.section-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
-
-.section-header h2{
-    font-size:20px;
-}
-
-.view-all{
-    color:#4da3ff;
-    text-decoration:none;
-    font-size:14px;
-}
-
-.categories{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:15px;
-}
-
-.category{
-    background:#0b1230;
-    border:1px solid #1b326b;
-    border-radius:12px;
-    padding:20px;
-    text-align:center;
-    text-decoration:none;
-    color:#fff;
-    transition:.2s;
-}
-
-.category:hover{
-    border-color:#347bce;
-    transform:translateY(-2px);
-}
-
-.category-icon{
-    width:50px;
-    height:50px;
-    margin:0 auto 12px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#122354;
-    border-radius:12px;
-    font-size:24px;
-}
-
-.category-name{
-    font-weight:bold;
-    font-size:14px;
-}
-
-.category-count{
-    color:#71809f;
-    font-size:12px;
-    margin-top:5px;
-}
-
-/* LOADING */
-
-.loading{
-    text-align:center;
-    color:#7f8aa8;
-    padding:30px;
-}
-
 /* MOBILE */
 
 @media(max-width:900px){
 
     .quick-actions{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .categories{
         grid-template-columns:repeat(2,1fr);
     }
 
@@ -357,81 +285,124 @@ body{
         gap:10px;
     }
 
-    .categories{
-        grid-template-columns:1fr 1fr;
-        gap:10px;
-    }
-
     .action{
         padding:15px;
     }
 
-    .category{
-        padding:15px 8px;
-    }
-
 }
-</style></head><body><!-- HEADER --><header class="header"><div class="logo">ZAVIXBULK</div>
+</style></head><body><!-- HEADER --><header class="header"><div class="logo">
+    ZAVIXBULK
+</div>
 
-<div class="menu-btn" id="menuBtn">☰</div>
+<div class="menu-btn" id="menuBtn">
+    ☰
+</div>
 
-</header><div class="layout"><!-- SIDEBAR --><aside class="sidebar" id="sidebar"><div class="sidebar-title">Menu</div>
+</header><div class="layout"><!-- SIDEBAR --><aside class="sidebar" id="sidebar"><div class="sidebar-title">
+    Menu
+</div>
+
 
 <a href="dashboard.html" class="nav-item active">
+
     <span class="nav-icon">🏠</span>
+
     <span>Dashboard</span>
+
 </a>
+
 
 <a href="products.html" class="nav-item">
+
     <span class="nav-icon">💎</span>
+
     <span>Browse Products</span>
+
 </a>
+
 
 <a href="wallet.html" class="nav-item">
+
     <span class="nav-icon">💳</span>
+
     <span>Deposit</span>
+
 </a>
+
 
 <a href="profile.html" class="nav-item">
+
     <span class="nav-icon">👤</span>
+
     <span>Profile</span>
+
 </a>
+
 
 <a href="settings.html" class="nav-item">
+
     <span class="nav-icon">⚙️</span>
+
     <span>Settings</span>
+
 </a>
+
 
 <a href="notifications.html" class="nav-item">
+
     <span class="nav-icon">🔔</span>
+
     <span>Notifications</span>
+
 </a>
+
 
 <a href="support.html" class="nav-item">
+
     <span class="nav-icon">💬</span>
+
     <span>Support</span>
+
 </a>
+
 
 <a href="transactions.html" class="nav-item">
+
     <span class="nav-icon">💰</span>
+
     <span>Payment History</span>
+
 </a>
+
 
 <a href="orders.html" class="nav-item">
+
     <span class="nav-icon">📦</span>
+
     <span>Order History</span>
+
 </a>
+
 
 <a href="#" class="nav-item logout" id="logoutBtn">
+
     <span class="nav-icon">🚪</span>
+
     <span>Logout</span>
+
 </a>
 
-</aside><!-- MAIN CONTENT --><main class="main"><section class="welcome">
+</aside><!-- MAIN CONTENT --><main class="main"><!-- WELCOME -->
 
-    <h1 id="welcomeName">Welcome 👋</h1>
+<section class="welcome">
 
-    <p>Manage your Zavixbulk account and browse available products.</p>
+    <h1 id="welcomeName">
+        Welcome 👋
+    </h1>
+
+    <p>
+        Manage your Zavixbulk account and browse available products.
+    </p>
 
 </section>
 
@@ -459,9 +430,12 @@ body{
 
 <section class="quick-actions">
 
+
     <a href="profile.html" class="action">
 
-        <div class="action-icon">👤</div>
+        <div class="action-icon">
+            👤
+        </div>
 
         <div class="action-title">
             Profile
@@ -476,7 +450,9 @@ body{
 
     <a href="products.html" class="action">
 
-        <div class="action-icon">💎</div>
+        <div class="action-icon">
+            💎
+        </div>
 
         <div class="action-title">
             Browse Products
@@ -491,7 +467,9 @@ body{
 
     <a href="orders.html" class="action">
 
-        <div class="action-icon">📦</div>
+        <div class="action-icon">
+            📦
+        </div>
 
         <div class="action-title">
             Order History
@@ -506,7 +484,9 @@ body{
 
     <a href="transactions.html" class="action">
 
-        <div class="action-icon">💰</div>
+        <div class="action-icon">
+            💰
+        </div>
 
         <div class="action-title">
             Payment History
@@ -518,6 +498,7 @@ body{
 
     </a>
 
+
 </section>
 
 
@@ -525,7 +506,9 @@ body{
 
 <div class="search-box">
 
-    <span class="search-icon">🔎</span>
+    <span class="search-icon">
+        🔎
+    </span>
 
     <input
         type="text"
@@ -534,95 +517,6 @@ body{
     >
 
 </div>
-
-
-<!-- MARKETPLACE CATEGORIES -->
-
-<section>
-
-    <div class="section-header">
-
-        <h2>Marketplace Categories</h2>
-
-        <a href="products.html" class="view-all">
-            View All
-        </a>
-
-    </div>
-
-
-    <div class="categories" id="categories">
-
-        <a href="products.html?category=google-voice" class="category">
-
-            <div class="category-icon">
-                📞
-            </div>
-
-            <div class="category-name">
-                Google Voice
-            </div>
-
-            <div class="category-count">
-                Available Products
-            </div>
-
-        </a>
-
-
-        <a href="products.html?category=email" class="category">
-
-            <div class="category-icon">
-                📧
-            </div>
-
-            <div class="category-name">
-                Email
-            </div>
-
-            <div class="category-count">
-                Available Products
-            </div>
-
-        </a>
-
-
-        <a href="products.html?category=social-media" class="category">
-
-            <div class="category-icon">
-                📱
-            </div>
-
-            <div class="category-name">
-                Social Media
-            </div>
-
-            <div class="category-count">
-                Available Products
-            </div>
-
-        </a>
-
-
-        <a href="products.html?category=other" class="category">
-
-            <div class="category-icon">
-                📦
-            </div>
-
-            <div class="category-name">
-                Other
-            </div>
-
-            <div class="category-count">
-                Available Products
-            </div>
-
-        </a>
-
-    </div>
-
-</section>
 
 </main></div><script type="module">
 
@@ -640,6 +534,8 @@ import {
     getDoc
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
+
+/* FIREBASE CONFIG */
 
 const firebaseConfig = {
 
@@ -660,6 +556,8 @@ const firebaseConfig = {
 };
 
 
+/* INITIALIZE FIREBASE */
+
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
@@ -673,6 +571,7 @@ const menuBtn = document.getElementById("menuBtn");
 
 const sidebar = document.getElementById("sidebar");
 
+
 menuBtn.addEventListener("click", ()=>{
 
     sidebar.classList.toggle("open");
@@ -680,13 +579,13 @@ menuBtn.addEventListener("click", ()=>{
 });
 
 
-/* CHECK LOGIN + LOAD CUSTOMER */
+/* CHECK LOGIN */
 
 onAuthStateChanged(auth, async (user)=>{
 
     if(!user){
 
-        window.location.href="login.html";
+        window.location.href = "login.html";
 
         return;
 
@@ -695,39 +594,57 @@ onAuthStateChanged(auth, async (user)=>{
 
     try{
 
-        const userRef = doc(db,"users",user.uid);
+        const userRef =
+            doc(db,"users",user.uid);
 
-        const userSnap = await getDoc(userRef);
+        const userSnap =
+            await getDoc(userRef);
 
 
         if(userSnap.exists()){
 
-            const userData = userSnap.data();
+            const userData =
+                userSnap.data();
+
 
             const name =
                 userData.fullname ||
                 userData.username ||
                 "Customer";
 
-            document.getElementById("welcomeName").textContent =
+
+            document.getElementById(
+                "welcomeName"
+            ).textContent =
                 "Welcome, " + name + " 👋";
 
-            /* Balance will be connected to the wallet system later */
 
-            document.getElementById("balance").textContent =
-                "₦" + Number(userData.balance || 0).toLocaleString("en-NG",{
+            /* CUSTOMER BALANCE */
 
-                    minimumFractionDigits:2,
+            const balance =
+                Number(userData.balance || 0);
 
-                    maximumFractionDigits:2
 
-                });
+            document.getElementById(
+                "balance"
+            ).textContent =
+                "₦" +
+                balance.toLocaleString(
+                    "en-NG",
+                    {
+                        minimumFractionDigits:2,
+                        maximumFractionDigits:2
+                    }
+                );
 
         }
 
     }catch(error){
 
-        console.error("Could not load user:",error);
+        console.error(
+            "Could not load customer:",
+            error
+        );
 
     }
 
@@ -736,57 +653,60 @@ onAuthStateChanged(auth, async (user)=>{
 
 /* LOGOUT */
 
-document.getElementById("logoutBtn").addEventListener("click", async (e)=>{
+document.getElementById(
+    "logoutBtn"
+).addEventListener(
+    "click",
+    async (e)=>{
 
-    e.preventDefault();
+        e.preventDefault();
 
-    try{
+        try{
 
-        await signOut(auth);
+            await signOut(auth);
 
-        window.location.href="login.html";
+            window.location.href =
+                "login.html";
 
-    }catch(error){
+        }catch(error){
 
-        console.error(error);
+            console.error(error);
+
+        }
 
     }
-
-});
+);
 
 
 /* SEARCH */
 
-const searchInput = document.getElementById("searchInput");
-
-const categoryCards =
-    document.querySelectorAll(".category");
-
-
-searchInput.addEventListener("input", ()=>{
-
-    const search =
-        searchInput.value.toLowerCase().trim();
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
 
 
-    categoryCards.forEach(card=>{
+searchInput.addEventListener(
+    "keypress",
+    (e)=>{
 
-        const text =
-            card.textContent.toLowerCase();
+        if(e.key === "Enter"){
 
-        if(text.includes(search)){
+            const search =
+                searchInput.value.trim();
 
-            card.style.display="block";
+            if(search){
 
-        }else{
+                window.location.href =
+                    "products.html?search=" +
+                    encodeURIComponent(search);
 
-            card.style.display="none";
+            }
 
         }
 
-    });
-
-});
+    }
+);
 
 </script></body>
 </html>
