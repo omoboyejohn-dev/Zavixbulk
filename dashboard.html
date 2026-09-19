@@ -7,7 +7,7 @@
 
 <title>Zavixbulk Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -19,143 +19,178 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#07111f;
+background:#071423;
 color:#fff;
 }
 
-a{
-text-decoration:none;
-color:white;
+.container{
+width:95%;
+max-width:1300px;
+margin:auto;
 }
 
-.wrapper{
-display:flex;
-min-height:100vh;
-}
+/* Header */
 
-/* SIDEBAR */
-
-.sidebar{
-width:260px;
-background:#08182d;
-position:fixed;
-left:0;
-top:0;
-bottom:0;
-padding:25px;
-overflow:auto;
-border-right:1px solid rgba(255,255,255,.08);
-}
-
-.logo{
-font-size:28px;
-font-weight:700;
-text-align:center;
-margin-bottom:35px;
-color:#39a6ff;
-}
-
-.menu{
-display:flex;
-flex-direction:column;
-gap:10px;
-}
-
-.menu a{
-padding:15px;
-border-radius:10px;
-transition:.3s;
-background:#10284b;
-}
-
-.menu a:hover{
-
-background:#1677ff;
-
-}
-
-/* MAIN */
-
-.main{
-margin-left:260px;
-flex:1;
-}
-
-/* TOPBAR */
-
-.topbar{
-height:70px;
-background:#08182d;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:0 30px;
+header{
+background:#0d1d35;
+padding:18px 0;
 border-bottom:1px solid rgba(255,255,255,.08);
 position:sticky;
 top:0;
-z-index:100;
+z-index:999;
 }
 
-.brand{
-font-size:22px;
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:30px;
 font-weight:700;
-color:#3da5ff;
+color:#1da1ff;
 }
 
-.top-right{
+.right{
 display:flex;
 align-items:center;
-gap:15px;
+gap:20px;
 }
 
 .user{
+font-size:16px;
 font-weight:600;
 }
 
 .logout{
 background:#1677ff;
-padding:10px 20px;
-border-radius:8px;
+padding:10px 22px;
+border-radius:10px;
 cursor:pointer;
+font-weight:600;
 transition:.3s;
 }
 
 .logout:hover{
-background:#0059d4;
+background:#0a5ed8;
 }
 
-/* CONTENT */
-
-.content{
-padding:30px;
-}
-
-.welcome{
-font-size:30px;
-font-weight:600;
-margin-bottom:25px;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-.sidebar{
-
-display:none;
-
-}
+/* Main */
 
 .main{
-
-margin-left:0;
-
+padding:30px 0;
 }
 
-.topbar{
+/* Wallet */
 
-padding:15px;
+.wallet{
+background:linear-gradient(135deg,#1677ff,#0a4ca4);
+border-radius:18px;
+padding:30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
 
+.wallet h3{
+font-size:18px;
+margin-bottom:10px;
+}
+
+.wallet h1{
+font-size:42px;
+}
+
+.deposit{
+background:#00c853;
+border:none;
+padding:14px 28px;
+border-radius:10px;
+font-size:16px;
+font-weight:600;
+color:white;
+cursor:pointer;
+}
+
+/* Menu */
+
+.menu{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:30px;
+}
+
+.menu button{
+background:#10284b;
+color:white;
+border:none;
+padding:18px;
+border-radius:12px;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.menu button:hover{
+background:#1677ff;
+}
+
+/* Search */
+
+.search{
+margin-bottom:30px;
+}
+
+.search input{
+width:100%;
+padding:16px;
+background:#10284b;
+border:none;
+border-radius:12px;
+color:white;
+font-size:16px;
+outline:none;
+}
+
+.search input::placeholder{
+color:#bdd5ff;
+}
+
+.title{
+font-size:28px;
+margin-bottom:20px;
+font-weight:700;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+@media(max-width:800px){
+
+.menu{
+grid-template-columns:repeat(2,1fr);
+}
+
+.products{
+grid-template-columns:1fr;
+}
+
+.wallet{
+flex-direction:column;
+gap:20px;
+text-align:center;
+}
+
+.navbar{
+flex-direction:column;
+gap:15px;
 }
 
 }
@@ -166,11 +201,9 @@ padding:15px;
 
 <body>
 
-<div class="wrapper">
+<header>
 
-<!-- SIDEBAR -->
-
-<div class="sidebar">
+<div class="container navbar">
 
 <div class="logo">
 
@@ -178,56 +211,17 @@ ZAVIXBULK
 
 </div>
 
-<div class="menu">
-
-<a href="#">🏠 Dashboard</a>
-
-<a href="#">👤 Profile</a>
-
-<a href="#">⚙ Settings</a>
-
-<a href="#">📦 Products</a>
-
-<a href="#">🛒 Orders</a>
-
-<a href="#">💰 Wallet</a>
-
-<a href="#">📄 Transactions</a>
-
-<a href="#">🔔 Notifications</a>
-
-<a href="#">💬 Support</a>
-
-<a href="#" id="logoutBtn">🚪 Logout</a>
-
-</div>
-
-</div>
-
-<!-- MAIN -->
-
-<div class="main">
-
-<div class="topbar">
-
-<div class="brand">
-
-ZAVIXBULK
-
-</div>
-
-<div class="top-right">
+<div class="right">
 
 <div class="user">
 
 Welcome,
-<span id="username">
-Customer
-</span>
+<span id="username">Customer</span>
+👋
 
 </div>
 
-<div class="logout">
+<div class="logout" id="logoutBtn">
 
 Logout
 
@@ -237,139 +231,21 @@ Logout
 
 </div>
 
-<div class="content">
+</header>
 
-<h2 class="welcome">
+<div class="container main">
 
-Dashboard 👋
-
-</h2>
-
-<!-- PART 2 STARTS HERE -->
-
-<!-- ===========================
-WALLET
-=========================== -->
-
-<style>
-
-.wallet-card{
-background:linear-gradient(135deg,#1677ff,#0a4fa6);
-padding:25px;
-border-radius:18px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:25px;
-box-shadow:0 15px 35px rgba(0,0,0,.3);
-}
-
-.wallet-title{
-font-size:15px;
-color:#dcecff;
-}
-
-.wallet-balance{
-font-size:38px;
-font-weight:bold;
-margin-top:8px;
-}
-
-.deposit-btn{
-padding:13px 28px;
-background:#00d084;
-color:#fff;
-border:none;
-border-radius:10px;
-font-size:15px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-}
-
-.deposit-btn:hover{
-background:#00b06f;
-}
-
-.stats{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:18px;
-margin-bottom:30px;
-}
-
-.stat-box{
-background:#10284b;
-padding:20px;
-border-radius:15px;
-text-align:center;
-transition:.3s;
-}
-
-.stat-box:hover{
-transform:translateY(-5px);
-}
-
-.stat-box h3{
-font-size:15px;
-color:#c5d9ff;
-margin-bottom:10px;
-}
-
-.stat-box h2{
-font-size:30px;
-}
-
-.quick-menu{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:15px;
-margin-bottom:35px;
-}
-
-.quick-item{
-background:#10284b;
-padding:18px;
-border-radius:15px;
-text-align:center;
-cursor:pointer;
-transition:.3s;
-font-weight:600;
-}
-
-.quick-item:hover{
-background:#1677ff;
-}
-
-@media(max-width:900px){
-
-.stats{
-grid-template-columns:repeat(2,1fr);
-}
-
-.quick-menu{
-grid-template-columns:repeat(2,1fr);
-}
-
-}
-
-</style>
-
-<div class="wallet-card">
+<div class="wallet">
 
 <div>
 
-<div class="wallet-title">
-Wallet Balance
-</div>
+<h3>Wallet Balance</h3>
 
-<div class="wallet-balance">
-$0.00
-</div>
+<h1 id="walletBalance">$0.00</h1>
 
 </div>
 
-<button class="deposit-btn">
+<button class="deposit">
 
 Deposit
 
@@ -377,133 +253,79 @@ Deposit
 
 </div>
 
-<div class="stats">
+<div class="menu">
 
-<div class="stat-box">
+<button>Browse Products</button>
 
-<h3>Total Orders</h3>
+<button>Profile</button>
 
-<h2 id="totalOrders">
-0
+<button>My Orders</button>
+
+<button>Transaction History</button>
+
+<button>Contact</button>
+
+<button>Rules</button>
+
+</div>
+
+<div class="search">
+
+<input
+type="text"
+placeholder="Search Products..."
+id="searchInput">
+
+</div>
+
+<h2 class="title">
+
+Marketplace Categories
+
 </h2>
 
-</div>
+<div class="products" id="productsContainer">
 
-<div class="stat-box">
-
-<h3>Pending</h3>
-
-<h2 id="pendingOrders">
-0
-</h2>
+<!-- Products will be loaded here -->
 
 </div>
 
-<div class="stat-box">
-
-<h3>Approved</h3>
-
-<h2 id="approvedOrders">
-0
-</h2>
-
-</div>
-
-<div class="stat-box">
-
-<h3>Wallet</h3>
-
-<h2>
-$0.00
-</h2>
-
-</div>
-
-</div>
-
-<div class="quick-menu">
-
-<div class="quick-item">
-🛍<br><br>
-Browse Products
-</div>
-
-<div class="quick-item">
-📦<br><br>
-Available Products
-</div>
-
-<div class="quick-item">
-🛒<br><br>
-My Orders
-</div>
-
-<div class="quick-item">
-🔔<br><br>
-Notifications
-</div>
-
-<div class="quick-item">
-💬<br><br>
-WhatsApp Channel
-</div>
-
-</div>
-
-<!-- PART 3 STARTS BELOW -->
-
-  <!-- ==========================
-SEARCH
-========================== -->
-
+<!-- PART 2 STARTS BELOW -->
 <style>
 
-.search-box{
-margin-bottom:30px;
+/* ================= PRODUCTS ================= */
+
+.category{
+margin-bottom:50px;
 }
 
-.search-box input{
-width:100%;
-padding:15px;
-border:none;
-outline:none;
-border-radius:12px;
-background:#10284b;
-color:#fff;
-font-size:16px;
-}
-
-.search-box input::placeholder{
-color:#b7c9e8;
-}
-
-.market-title{
-font-size:25px;
-font-weight:600;
+.category h2{
+font-size:28px;
 margin-bottom:20px;
+color:#fff;
 }
 
-.products{
+.product-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
-margin-bottom:30px;
 }
 
-.product{
+.product-card{
 background:#10284b;
 border-radius:15px;
 overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,.25);
 transition:.3s;
 }
 
-.product:hover{
+.product-card:hover{
 transform:translateY(-5px);
 }
 
-.product img{
+.product-card img{
 width:100%;
-height:170px;
+height:180px;
 object-fit:cover;
 }
 
@@ -512,10 +334,11 @@ padding:18px;
 }
 
 .product-info h3{
-margin-bottom:10px;
+font-size:18px;
+margin-bottom:8px;
 }
 
-.price{
+.product-price{
 font-size:22px;
 font-weight:bold;
 color:#00d084;
@@ -526,376 +349,90 @@ margin-bottom:15px;
 width:100%;
 padding:12px;
 background:#1677ff;
+color:white;
 border:none;
-color:#fff;
 border-radius:10px;
-font-size:15px;
-font-weight:bold;
+font-size:16px;
 cursor:pointer;
 transition:.3s;
 }
 
 .buy-btn:hover{
-background:#0058d8;
+background:#005fd6;
 }
 
 </style>
 
-<div class="search-box">
+<!-- GOOGLE VOICE -->
 
-<input
-type="text"
-id="search"
-placeholder="Search products...">
+<div class="category">
 
-</div>
+<h2>Buy Google Voice Accounts</h2>
 
-<h2 class="market-title">
+<div class="product-grid" id="googleVoiceProducts">
 
-Marketplace Categories
-
-</h2>
-
-<div class="products">
-
-  <div class="product">
-
-<img src="https://i.ibb.co/kVX0jNBW/www-google-com-1746161873.jpg">
-
-<div class="product-info">
-
-<h3>Google Voice</h3>
-
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
+<!-- Firebase products -->
 
 </div>
 
 </div>
 
-<div class="product">
+<!-- INSTAGRAM -->
 
-<img src="https://i.ibb.co/DPPzxWxY/www-google-com-478099221.jpg">
+<div class="category">
 
-<div class="product-info">
+<h2>Buy Instagram Accounts</h2>
 
-<h3>TextNow</h3>
+<div class="product-grid" id="instagramProducts">
 
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
+<!-- Firebase products -->
 
 </div>
 
 </div>
 
-<div class="product">
+<!-- FACEBOOK -->
 
-<img src="https://i.ibb.co/cKVMwg3r/1789842298814-1353982309.jpg">
+<div class="category">
 
-<div class="product-info">
+<h2>Facebook PVA Accounts</h2>
 
-<h3>TextPlus</h3>
+<div class="product-grid" id="facebookProducts">
 
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
+<!-- Firebase products -->
 
 </div>
 
 </div>
 
-<div class="product">
+<!-- YOUTUBE -->
 
-<img src="https://i.ibb.co/93GkF1RF/www-google-com-499771236.png">
+<div class="category">
 
-<div class="product-info">
+<h2>YouTube Accounts</h2>
 
-<h3>YouTube</h3>
+<div class="product-grid" id="youtubeProducts">
 
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
+<!-- Firebase products -->
 
 </div>
 
 </div>
 
-<div class="product">
+<!-- OTHER PRODUCTS -->
 
-<img src="https://i.ibb.co/vxb56R4v/www-google-com-1420802700.jpg">
+<div class="category">
 
-<div class="product-info">
+<h2>Other Products</h2>
 
-<h3>Facebook Old</h3>
+<div class="product-grid" id="otherProducts">
 
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
+<!-- Firebase products -->
 
 </div>
 
 </div>
 
-<div class="product">
-
-<img src="https://i.ibb.co/d06d1Lzx/1789842365667-1243978385.jpg">
-
-<div class="product-info">
-
-<h3>Instagram Old</h3>
-
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
-
-</div>
-
-</div>
-
-<div class="product">
-
-<img src="https://i.ibb.co/SwQPbsvm/www-google-com-161451819.png">
-
-<div class="product-info">
-
-<h3>Others</h3>
-
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
-
-</div>
-
-</div>
-
-<div class="product">
-
-<img src="https://i.ibb.co/9kJ0h0bN/1789842623635-1754231248.jpg">
-
-<div class="product-info">
-
-<h3>Premium Accounts</h3>
-
-<div class="price">$0.00</div>
-
-<button class="buy-btn">
-Buy Now
-</button>
-
-</div>
-
-</div>
-
-</div>
-  <!-- ==========================
-MY ORDERS
-========================== -->
-
-<style>
-
-.section-title{
-font-size:25px;
-font-weight:600;
-margin:35px 0 20px;
-}
-
-.orders{
-
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
-margin-bottom:35px;
-
-}
-
-.order-card{
-
-background:#10284b;
-
-padding:20px;
-
-border-radius:15px;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-}
-
-.order-left h3{
-
-margin-bottom:8px;
-
-}
-
-.order-left p{
-
-color:#b8c9ea;
-
-font-size:14px;
-
-}
-
-.status{
-
-padding:8px 18px;
-
-border-radius:30px;
-
-font-size:14px;
-
-font-weight:bold;
-
-}
-
-.pending{
-
-background:#ff9800;
-
-color:white;
-
-}
-
-.approved{
-
-background:#00c853;
-
-color:white;
-
-}
-
-.notifications{
-
-display:flex;
-
-flex-direction:column;
-
-gap:15px;
-
-margin-bottom:40px;
-
-}
-
-.notify{
-
-background:#10284b;
-
-padding:18px;
-
-border-radius:12px;
-
-border-left:5px solid #1677ff;
-
-}
-
-.notify h4{
-
-margin-bottom:8px;
-
-}
-
-.notify p{
-
-color:#bfd0ef;
-
-font-size:14px;
-
-}
-
-</style>
-
-<h2 class="section-title">
-
-My Orders
-
-</h2>
-
-<div class="orders">
-
-<div class="order-card">
-
-<div class="order-left">
-
-<h3>Google Voice</h3>
-
-<p>Waiting for admin approval</p>
-
-</div>
-
-<div class="status pending">
-
-Pending
-
-</div>
-
-</div>
-
-<div class="order-card">
-
-<div class="order-left">
-
-<h3>Facebook Old Account</h3>
-
-<p>Successfully delivered</p>
-
-</div>
-
-<div class="status approved">
-
-Approved
-
-</div>
-
-</div>
-
-</div>
-
-<h2 class="section-title">
-
-Notifications
-
-</h2>
-
-<div class="notifications">
-
-<div class="notify">
-
-<h4>Welcome to Zavixbulk 🎉</h4>
-
-<p>Your account has been created successfully.</p>
-
-</div>
-
-<div class="notify">
-
-<h4>Order Update</h4>
-
-<p>Your approved products will appear here after the administrator approves them.</p>
-
-</div>
-
-</div>
   <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
@@ -908,37 +445,37 @@ signOut
 
 import {
 getFirestore,
-doc,
-getDoc,
 collection,
-addDoc,
-serverTimestamp
+query,
+getDocs,
+doc,
+getDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-const firebaseConfig = {
+const firebaseConfig={
 
-apiKey: "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
 
-authDomain: "zavixbulk.firebaseapp.com",
+authDomain:"zavixbulk.firebaseapp.com",
 
-projectId: "zavixbulk",
+projectId:"zavixbulk",
 
-storageBucket: "zavixbulk.firebasestorage.app",
+storageBucket:"zavixbulk.firebasestorage.app",
 
-messagingSenderId: "819994897169",
+messagingSenderId:"819994897169",
 
-appId: "1:819994897169:web:4aab1bcc15fbe439f6fab0",
+appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
 
-measurementId: "G-GJ8RY0WYBL"
+measurementId:"G-GJ8RY0WYBL"
 
 };
 
-const app = initializeApp(firebaseConfig);
+const app=initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth=getAuth(app);
 
-const db = getFirestore(app);
-    onAuthStateChanged(auth, async(user)=>{
+const db=getFirestore(app);
+    onAuthStateChanged(auth,async(user)=>{
 
 if(!user){
 
@@ -948,52 +485,107 @@ return;
 
 }
 
-const ref = doc(db,"users",user.uid);
+const ref=doc(db,"users",user.uid);
 
-const snap = await getDoc(ref);
+const snap=await getDoc(ref);
 
 if(snap.exists()){
 
-document.getElementById("username").textContent =
+document.getElementById("username").innerHTML=
+
 snap.data().fullname;
 
-}
+document.getElementById("walletBalance").innerHTML=
 
-});
-    document.querySelectorAll(".buy-btn").forEach(button=>{
-
-button.onclick = async ()=>{
-
-const user = auth.currentUser;
-
-if(!user){
-
-return;
+"$"+Number(snap.data().wallet||0).toFixed(2);
 
 }
 
-const product = button.parentElement.querySelector("h3").innerText;
+loadProducts();
 
-await addDoc(collection(db,"orders"),{
+});
+    async function loadProducts(){
 
-uid:user.uid,
+const snap=await getDocs(collection(db,"products"));
 
-product:product,
+snap.forEach((doc)=>{
 
-price:0,
+const p=doc.data();
 
-status:"Pending",
+let box;
 
-createdAt:serverTimestamp()
+if(p.category=="Google Voice"){
+
+box=document.getElementById("googleVoiceProducts");
+
+}
+
+else if(p.category=="Instagram"){
+
+box=document.getElementById("instagramProducts");
+
+}
+
+else if(p.category=="Facebook"){
+
+box=document.getElementById("facebookProducts");
+
+}
+
+else if(p.category=="YouTube"){
+
+box=document.getElementById("youtubeProducts");
+
+}
+
+else{
+
+box=document.getElementById("otherProducts");
+
+}
+
+box.innerHTML+=`
+
+<div class="product-card">
+
+<img src="${p.image}">
+
+<div class="product-info">
+
+<h3>${p.title}</h3>
+
+<div class="product-price">
+
+$${Number(p.price).toFixed(2)}
+
+</div>
+
+<button
+class="buy-btn"
+onclick="buyProduct('${doc.id}')">
+
+Buy Now
+
+</button>
+
+</div>
+
+</div>
+
+`;
 
 });
 
-alert(product + " order submitted successfully.");
+    }
+    window.buyProduct=function(id){
 
-};
+localStorage.setItem("buyProduct",id);
 
-});
-    document.getElementById("logoutBtn").onclick=()=>{
+window.location="product.html";
+
+}
+
+document.getElementById("logoutBtn").onclick=()=>{
 
 signOut(auth).then(()=>{
 
@@ -1001,9 +593,10 @@ window.location="login.html";
 
 });
 
-};
+}
 
 </script>
 
 </body>
+
 </html>
