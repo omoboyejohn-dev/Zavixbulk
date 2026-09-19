@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zavixbulk | Notifications</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+}
+
+.logo{font-size:22px;font-weight:900}
+.logo span{color:#4f8cff}
+
+.header-right{
+    color:#9cacc9;
+    font-size:13px;
+}
+
+.main{
+    max-width:850px;
+    margin:auto;
+    padding:105px 20px 50px;
+}
+
+.back{
+    color:#7393d7;
+    text-decoration:none;
+    font-size:13px;
+    display:inline-block;
+    margin-bottom:20px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.title{
+    font-size:25px;
+    font-weight:850;
+}
+
+.mark{
+    background:none;
+    border:0;
+    color:#5d8dff;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.notification{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:12px;
+    display:flex;
+    gap:15px;
+}
+
+.icon{
+    width:42px;
+    height:42px;
+    flex-shrink:0;
+    border-radius:11px;
+    background:#101d3b;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.notification.unread{
+    border-color:#3156a4;
+}
+
+.notification-title{
+    font-size:14px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.notification-text{
+    color:#8798b6;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.date{
+    color:#586b8c;
+    font-size:10px;
+    margin-top:8px;
+}
+
+.empty{
+    text-align:center;
+    padding:80px 20px;
+    color:#7182a1;
+}
+
+@media(max-width:600px){
+    .header{padding:0 16px}
+    .header-right{display:none}
+    .main{padding:90px 15px 35px}
+    .title{font-size:22px}
+}
+</style></head><body><header class="header">
+    <div class="logo">ZAVIX<span>BULK</span></div>
+    <div class="header-right" id="headerName">Customer</div>
+</header><main class="main"><a href="dashboard.html" class="back">← Back to Dashboard</a>
+
+<div class="top">
+    <div class="title">Notifications</div><button class="mark" id="markAll">
+    Mark all as read
+</button>
+
+</div><div id="list">
+    <div class="empty">Loading notifications...</div>
+</div></main><script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    orderBy,
+    onSnapshot,
+    doc,
+    updateDoc,
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+const firebaseConfig={
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    authDomain:"zavixbulk.firebaseapp.com",
+    projectId:"zavixbulk",
+    storageBucket:"zavixbulk.firebasestorage.app",
+    messagingSenderId:"819994897169",
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    measurementId:"G-GJ8RY0WYBL"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const list=document.getElementById("list");
+const headerName=document.getElementById("headerName");
+
+let notifications=[];
+
+function dateText(value){
+
+    if(!value) return "Recently";
+
+    const date=value.toDate
+        ? value.toDate()
+        : new Date(value);
+
+    return date.toLocaleString();
+
+}
+
+onAuthStateChanged(auth,async user=>{
+
+    if(!user){
+        location.href="login.html";
+        return;
+    }
+
+    const userSnap=await getDoc(
+        doc(db,"users",user.uid)
+    );
+
+    if(userSnap.exists()){
+
+        const data=userSnap.data();
+
+        headerName.textContent=
+            data.fullname||
+            data.username||
+            "Customer";
+
+    }
+
+    const q=query(
+        collection(db,"notifications"),
+        where("userId","==",user.uid),
+        orderBy("createdAt","desc")
+    );
+
+    onSnapshot(q,snapshot=>{
+
+        notifications=[];
+
+        snapshot.forEach(item=>{
+
+            notifications.push({
+                id:item.id,
+                ...item.data()
+            });
+
+        });
+
+        render();
+
+    },error=>{
+
+        console.error(error);
+
+        list.innerHTML=`
+            <div class="empty">
+                Unable to load notifications.
+            </div>
+        `;
+
+    });
+
+});
+
+
+function render(){
+
+    if(!notifications.length){
+
+        list.innerHTML=`
+            <div class="empty">
+                🔔<br><br>
+                You have no notifications yet.
+            </div>
+        `;
+
+        return;
+
+    }
+
+    list.innerHTML=notifications.map(item=>`
+
+        <div
+            class="notification ${item.read===false?"unread":""}"
+            data-id="${item.id}"
+        >
+
+            <div class="icon">
+                🔔
+            </div>
+
+            <div>
+
+                <div class="notification-title">
+                    ${item.title||"Notification"}
+                </div>
+
+                <div class="notification-text">
+                    ${item.message||""}
+                </div>
+
+                <div class="date">
+                    ${dateText(item.createdAt)}
+                </div>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+document.getElementById("markAll").onclick=async()=>{
+
+    for(const item of notifications){
+
+        if(item.read===false){
+
+            await updateDoc(
+                doc(db,"notifications",item.id),
+                {
+                    read:true
+                }
+            );
+
+        }
+
+    }
+
+};
+
+</script></body>
+</html>
