@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zavixbulk | Deposit</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#080612;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0e0a1d;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:800;
+    background:linear-gradient(90deg,#9b5cff,#00e5ff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+.back{
+    margin-left:auto;
+    text-decoration:none;
+    color:#fff;
+    background:#171126;
+    border:1px solid rgba(255,255,255,.1);
+    padding:10px 16px;
+    border-radius:10px;
+    font-size:14px;
+}
+
+.container{
+    width:100%;
+    max-width:650px;
+    margin:0 auto;
+    padding:35px 18px 60px;
+}
+
+.title{
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#a9a3b8;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.balance-card{
+    background:linear-gradient(135deg,#17102b,#0f1830);
+    border:1px solid rgba(155,92,255,.25);
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.balance-label{
+    color:#aaa4b8;
+    font-size:13px;
+    margin-bottom:8px;
+}
+
+.balance{
+    font-size:32px;
+    font-weight:800;
+}
+
+.card{
+    background:#100b1f;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+.card h2{
+    font-size:20px;
+    margin-bottom:8px;
+}
+
+.card-description{
+    color:#9e98ad;
+    font-size:13px;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    font-size:13px;
+    color:#c7c1d2;
+    margin-bottom:8px;
+}
+
+.input-wrap{
+    position:relative;
+}
+
+.currency{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#a9a1b8;
+    font-weight:700;
+}
+
+input{
+    width:100%;
+    height:52px;
+    background:#080612;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+    color:#fff;
+    font-size:17px;
+    padding:0 15px 0 38px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#8e55ff;
+    box-shadow:0 0 0 3px rgba(142,85,255,.1);
+}
+
+.quick-title{
+    color:#aaa4b8;
+    font-size:12px;
+    margin:18px 0 10px;
+}
+
+.quick{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+
+.quick button{
+    border:1px solid rgba(255,255,255,.1);
+    background:#171126;
+    color:#fff;
+    padding:11px 5px;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.quick button:hover{
+    border-color:#8e55ff;
+}
+
+.create-btn{
+    width:100%;
+    height:53px;
+    margin-top:22px;
+    border:0;
+    border-radius:12px;
+    background:linear-gradient(90deg,#8d4dff,#00cfe8);
+    color:#fff;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.create-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.status{
+    display:none;
+    margin-top:18px;
+    padding:15px;
+    border-radius:12px;
+    background:#171126;
+    border:1px solid rgba(255,255,255,.08);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.status.show{
+    display:block;
+}
+
+.status.success{
+    border-color:rgba(0,229,255,.35);
+}
+
+.status.error{
+    border-color:rgba(255,70,100,.35);
+    color:#ff9baa;
+}
+
+.payment-box{
+    display:none;
+    margin-top:18px;
+    padding:18px;
+    border-radius:14px;
+    background:#0b0815;
+    border:1px solid rgba(0,229,255,.2);
+}
+
+.payment-box.show{
+    display:block;
+}
+
+.payment-box h3{
+    font-size:17px;
+    margin-bottom:8px;
+}
+
+.payment-box p{
+    color:#aaa4b8;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.pay-btn{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    margin-top:15px;
+    padding:13px;
+    border-radius:10px;
+    background:#fff;
+    color:#080612;
+    font-weight:800;
+}
+
+.note{
+    margin-top:18px;
+    color:#777184;
+    font-size:11px;
+    line-height:1.6;
+}
+
+@media(max-width:500px){
+    .quick{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+    .title h1{
+        font-size:26px;
+    }
+
+    .balance{
+        font-size:27px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">Zavixbulk</div>
+    <a href="dashboard.html" class="back">← Dashboard</a>
+</header>
+
+<main class="container">
+
+    <div class="title">
+        <h1>Deposit</h1>
+        <p>
+            Fund your Zavixbulk wallet using a secure crypto payment invoice.
+        </p>
+    </div>
+
+    <div class="balance-card">
+        <div class="balance-label">Current Wallet Balance</div>
+        <div class="balance" id="balance">$0.00</div>
+    </div>
+
+    <div class="card">
+
+        <h2>Fund Wallet</h2>
+
+        <p class="card-description">
+            Enter the amount you want to deposit. You will be redirected to the
+            secure payment page after the invoice is created.
+        </p>
+
+        <label for="amount">Deposit Amount (USD)</label>
+
+        <div class="input-wrap">
+            <span class="currency">$</span>
+            <input
+                type="number"
+                id="amount"
+                min="1"
+                step="0.01"
+                placeholder="10.00"
+            >
+        </div>
+
+        <div class="quick-title">Quick Amount</div>
+
+        <div class="quick">
+            <button type="button" onclick="setAmount(5)">$5</button>
+            <button type="button" onclick="setAmount(10)">$10</button>
+            <button type="button" onclick="setAmount(20)">$20</button>
+            <button type="button" onclick="setAmount(50)">$50</button>
+            <button type="button" onclick="setAmount(100)">$100</button>
+        </div>
+
+        <button
+            type="button"
+            class="create-btn"
+            id="createBtn"
+            onclick="createInvoice()"
+        >
+            Create Payment
+        </button>
+
+        <div class="status" id="status"></div>
+
+        <div class="payment-box" id="paymentBox">
+            <h3>Payment Invoice Created</h3>
+
+            <p>
+                Your payment invoice has been created. Click the button below
+                to continue with your payment.
+            </p>
+
+            <a
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="pay-btn"
+                id="payBtn"
+            >
+                Continue to Payment
+            </a>
+        </div>
+
+        <div class="note">
+            Your wallet should only be credited after the payment is verified
+            by the payment provider. Do not close the payment page before
+            completing your payment.
+        </div>
+
+    </div>
+
+</main>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    authDomain: "zavixbulk.firebaseapp.com",
+    projectId: "zavixbulk",
+    storageBucket: "zavixbulk.firebasestorage.app",
+    messagingSenderId: "819994897169",
+    appId: "1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    measurementId: "G-GJ8RY0WYBL"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+
+
+onAuthStateChanged(auth, async (user) => {
+
+    if (!user) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    currentUser = user;
+
+    try {
+
+        const userRef = doc(db, "users", user.uid);
+        const snap = await getDoc(userRef);
+
+        if (snap.exists()) {
+
+            const data = snap.data();
+
+            const balance = Number(data.balance || 0);
+
+            document.getElementById("balance").textContent =
+                "$" + balance.toFixed(2);
+        }
+
+    } catch (error) {
+
+        console.error("Could not load balance:", error);
+
+    }
+
+});
+
+
+window.setAmount = function(amount){
+
+    document.getElementById("amount").value =
+        Number(amount).toFixed(2);
+
+};
+
+
+window.createInvoice = async function(){
+
+    const amountInput =
+        document.getElementById("amount");
+
+    const amount =
+        Number(amountInput.value);
+
+    const button =
+        document.getElementById("createBtn");
+
+    const status =
+        document.getElementById("status");
+
+    const paymentBox =
+        document.getElementById("paymentBox");
+
+    const payBtn =
+        document.getElementById("payBtn");
+
+
+    paymentBox.classList.remove("show");
+
+    status.className = "status show";
+    status.textContent = "";
+
+    if (!amount || amount < 1) {
+
+        status.classList.add("error");
+
+        status.textContent =
+            "Please enter a deposit amount of at least $1.";
+
+        return;
+    }
+
+
+    if (!currentUser) {
+
+        status.classList.add("error");
+
+        status.textContent =
+            "Please login before making a deposit.";
+
+        return;
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Creating Payment...";
+
+    status.className = "status show";
+    status.textContent =
+        "Creating your secure payment invoice...";
+
+
+    try {
+
+        const response = await fetch(
+            "/api/create-invoice",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    amount_usd: amount,
+                    description: "Zavixbulk Wallet Deposit"
+                })
+            }
+        );
+
+
+        const result = await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                "Unable to create payment invoice."
+            );
+        }
+
+
+        /*
+         IMPORTANT:
+
+         We are intentionally not guessing the MG Crypto
+         response field containing the checkout URL.
+
+         The API response is temporarily displayed below
+         so we can see the exact response returned by MG Crypto.
+        */
+
+        status.className = "status show success";
+
+        status.textContent =
+            "Invoice created successfully. We are checking the payment response...";
+
+
+        console.log(
+            "MG Crypto invoice response:",
+            result
+        );
+
+
+        /*
+         If the API returns a checkout URL under one of these
+         common names, the page will automatically use it.
+
+         If MG Crypto uses another field, we will adjust it
+         after seeing the actual response.
+        */
+
+        const paymentUrl =
+            result.payment_url ||
+            result.checkout_url ||
+            result.url ||
+            result.invoice_url;
+
+
+        if (paymentUrl) {
+
+            paymentBox.classList.add("show");
+
+            payBtn.href = paymentUrl;
+
+            status.textContent =
+                "Invoice created successfully. Click Continue to Payment.";
+        } else {
+
+            status.className = "status show";
+
+            status.textContent =
+                "Invoice created, but the payment URL field was not identified yet. Open the browser console and check the MG Crypto response.";
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        status.className = "status show error";
+
+        status.textContent =
+            error.message ||
+            "Something went wrong while creating the invoice.";
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "Create Payment";
+    }
+
+};
+
+</script>
+
+</body>
+</html>
