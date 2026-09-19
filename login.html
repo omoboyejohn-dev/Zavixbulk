@@ -3,851 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Zavixbulk | Login</title>
+<title>Login | Zavixbulk</title>
 
 <style>
 *{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-    font-family:Inter,Arial,sans-serif;
-    min-height:100vh;
-    background:
-        radial-gradient(circle at top right, rgba(70,90,255,.18), transparent 35%),
-        radial-gradient(circle at bottom left, rgba(0,200,255,.10), transparent 35%),
-        #050817;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
+background:#050817;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
 }
 
-.login-box{
-    width:100%;
-    max-width:430px;
-    background:#0b1025;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:22px;
-    padding:35px 28px;
-    box-shadow:0 20px 60px rgba(0,0,0,.45);
+.container{
+width:100%;
+max-width:400px;
+background:#0b1230;
+padding:30px;
+border-radius:15px;
+border:1px solid #1f3f8b;
+box-shadow:0 0 25px rgba(0,119,255,.25);
 }
 
 .logo{
-    text-align:center;
-    margin-bottom:30px;
+text-align:center;
+font-size:30px;
+font-weight:bold;
+color:#4da3ff;
+margin-bottom:10px;
 }
 
-.logo h1{
-    font-size:30px;
-    font-weight:900;
-    letter-spacing:1px;
-    background:linear-gradient(90deg,#6c63ff,#00d4ff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+h2{
+text-align:center;
+color:#fff;
+margin-bottom:25px;
 }
 
-.logo p{
-    margin-top:7px;
-    color:#8e98b8;
-    font-size:14px;
+.input-box{
+margin-bottom:15px;
 }
 
-.form-group{
-    margin-bottom:18px;
+.input-box label{
+display:block;
+margin-bottom:6px;
+color:#ddd;
 }
 
-label{
-    display:block;
-    margin-bottom:8px;
-    color:#dce2f5;
-    font-size:14px;
-    font-weight:600;
+.input-box input{
+width:100%;
+padding:13px;
+border:none;
+border-radius:8px;
+background:#16224d;
+color:#fff;
+outline:none;
 }
 
-input{
-    width:100%;
-    height:52px;
-    border:none;
-    outline:none;
-    border-radius:12px;
-    padding:0 15px;
-    background:#060a19;
-    border:1px solid #1c2544;
-    color:#fff;
-    font-size:15px;
-    transition:.2s;
+button{
+width:100%;
+padding:14px;
+background:linear-gradient(90deg,#2b6cff,#00b7ff);
+border:none;
+border-radius:8px;
+color:#fff;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
 }
 
-input:focus{
-    border-color:#6670ff;
-    box-shadow:0 0 0 3px rgba(102,112,255,.10);
+#message{
+margin-top:15px;
+text-align:center;
+color:red;
 }
 
-input::placeholder{
-    color:#59627f;
+.bottom{
+text-align:center;
+margin-top:20px;
+color:#ccc;
 }
 
-.password-wrap{
-    position:relative;
-}
-
-.password-wrap input{
-    padding-right:75px;
-}
-
-.show-password{
-    position:absolute;
-    right:12px;
-    top:50%;
-    transform:translateY(-50%);
-    border:none;
-    background:transparent;
-    color:#7e88aa;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:700;
-}
-
-.login-btn{
-    width:100%;
-    height:52px;
-    border:none;
-    border-radius:12px;
-    background:linear-gradient(90deg,#6157ff,#00bfe8);
-    color:#fff;
-    font-size:15px;
-    font-weight:800;
-    cursor:pointer;
-    transition:.2s;
-    margin-top:5px;
-}
-
-.login-btn:hover{
-    transform:translateY(-1px);
-    opacity:.95;
-}
-
-.login-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-    transform:none;
-}
-
-.message{
-    display:none;
-    padding:12px 14px;
-    border-radius:10px;
-    margin-bottom:18px;
-    font-size:13px;
-    line-height:1.5;
-}
-
-.message.error{
-    display:block;
-    background:rgba(255,70,90,.10);
-    border:1px solid rgba(255,70,90,.25);
-    color:#ff9ca8;
-}
-
-.message.success{
-    display:block;
-    background:rgba(0,220,150,.10);
-    border:1px solid rgba(0,220,150,.25);
-    color:#72efc2;
-}
-
-.links{
-    text-align:center;
-    margin-top:22px;
-}
-
-.links p{
-    color:#7e88aa;
-    font-size:13px;
-}
-
-.links a{
-    color:#7d8cff;
-    text-decoration:none;
-    font-weight:700;
-}
-
-.links a:hover{
-    color:#fff;
-}
-
-.loading{
-    position:fixed;
-    inset:0;
-    background:#050817;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-}
-
-.loading-box{
-    text-align:center;
-}
-
-.spinner{
-    width:35px;
-    height:35px;
-    border:3px solid #202943;
-    border-top-color:#6670ff;
-    border-radius:50%;
-    animation:spin .8s linear infinite;
-    margin:0 auto 12px;
-}
-
-.loading-box p{
-    color:#7e88aa;
-    font-size:13px;
-}
-
-@keyframes spin{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-@media(max-width:480px){
-
-    .login-box{
-        padding:28px 20px;
-        border-radius:18px;
-    }
-
-    .logo h1{
-        font-size:26px;
-    }
-
+.bottom a{
+color:#4da3ff;
+text-decoration:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOADING SCREEN -->
-<div class="loading" id="loadingScreen">
+<div class="container">
 
-    <div class="loading-box">
+<div class="logo">ZAVIXBULK</div>
 
-        <div class="spinner"></div>
+<h2>Login</h2>
 
-        <p>Checking your account...</p>
+<form id="loginForm">
 
-    </div>
+<div class="input-box">
+<label>Email Address</label>
+<input type="email" id="email" required>
+</div>
+
+<div class="input-box">
+<label>Password</label>
+<input type="password" id="password" required>
+</div>
+
+<button type="submit">Login</button>
+
+<div id="message"></div>
+
+</form>
+
+<div class="bottom">
+Don't have an account?
+<a href="register.html">Register</a>
+</div>
 
 </div>
 
-
-<!-- LOGIN BOX -->
-<div class="login-box">
-
-    <div class="logo">
-
-        <h1>ZAVIXBULK</h1>
-
-        <p>Digital Products Marketplace</p>
-
-    </div>
-
-
-    <div id="message" class="message"></div>
-
-
-    <form id="loginForm">
-
-        <div class="form-group">
-
-            <label for="email">
-                Email Address
-            </label>
-
-            <input
-                type="email"
-                id="email"
-                placeholder="Enter your email"
-                autocomplete="email"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label for="password">
-                Password
-            </label>
-
-            <div class="password-wrap">
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Enter your password"
-                    autocomplete="current-password"
-                    required
-                >
-
-                <button
-                    type="button"
-                    class="show-password"
-                    id="showPassword"
-                >
-                    Show
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <button
-            type="submit"
-            class="login-btn"
-            id="loginBtn"
-        >
-            Login
-        </button>
-
-    </form>
-
-
-    <div class="links">
-
-        <p>
-            Don't have an account?
-            <a href="register.html">
-                Create Account
-            </a>
-        </p>
-
-    </div>
-
-</div>
-
-
-<script type="module">
-
-/* =====================================================
-   FIREBASE IMPORTS
-===================================================== */
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
-
-import {
-    getAuth,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    signOut
-} from
-"https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
-
-import {
-    getFirestore,
-    doc,
-    getDoc
-} from
-"https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
-
-
-/* =====================================================
-   FIREBASE CONFIG
-===================================================== */
-
-const firebaseConfig = {
-
-    apiKey:
-    "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
-
-    authDomain:
-    "zavixbulk.firebaseapp.com",
-
-    projectId:
-    "zavixbulk",
-
-    storageBucket:
-    "zavixbulk.firebasestorage.app",
-
-    messagingSenderId:
-    "819994897169",
-
-    appId:
-    "1:819994897169:web:4aab1bcc15fbe439f6fab0",
-
-    measurementId:
-    "G-GJ8RY0WYBL"
-
-};
-
-
-/* =====================================================
-   INITIALIZE FIREBASE
-===================================================== */
-
-const app =
-    initializeApp(firebaseConfig);
-
-const auth =
-    getAuth(app);
-
-const db =
-    getFirestore(app);
-
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
-const loadingScreen =
-    document.getElementById("loadingScreen");
-
-const loginForm =
-    document.getElementById("loginForm");
-
-const emailInput =
-    document.getElementById("email");
-
-const passwordInput =
-    document.getElementById("password");
-
-const loginBtn =
-    document.getElementById("loginBtn");
-
-const message =
-    document.getElementById("message");
-
-const showPassword =
-    document.getElementById("showPassword");
-
-
-/* =====================================================
-   MESSAGE FUNCTION
-===================================================== */
-
-function showMessage(text, type = "error"){
-
-    message.textContent = text;
-
-    message.className =
-        "message " + type;
-
-}
-
-
-/* =====================================================
-   SHOW / HIDE PASSWORD
-===================================================== */
-
-showPassword.addEventListener("click", () => {
-
-    if(passwordInput.type === "password"){
-
-        passwordInput.type = "text";
-
-        showPassword.textContent =
-            "Hide";
-
-    }else{
-
-        passwordInput.type = "password";
-
-        showPassword.textContent =
-            "Show";
-
-    }
-
-});
-
-
-/* =====================================================
-   GET USER ROLE
-===================================================== */
-
-async function getUserRole(user){
-
-    try{
-
-        const userRef =
-            doc(db, "users", user.uid);
-
-        const userSnap =
-            await getDoc(userRef);
-
-
-        if(!userSnap.exists()){
-
-            return null;
-
-        }
-
-
-        const userData =
-            userSnap.data();
-
-
-        return userData.role || "customer";
-
-
-    }catch(error){
-
-        console.error(
-            "Could not get user role:",
-            error
-        );
-
-        return null;
-
-    }
-
-}
-
-
-/* =====================================================
-   REDIRECT USER BASED ON ROLE
-===================================================== */
-
-async function redirectUser(user){
-
-    if(!user){
-
-        loadingScreen.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    const role =
-        await getUserRole(user);
-
-
-    console.log(
-        "Logged in user:",
-        user.email
-    );
-
-    console.log(
-        "User role:",
-        role
-    );
-
-
-    /*
-     * ADMIN
-     */
-
-    if(role === "admin"){
-
-        window.location.href =
-            "admin/dashboard.html";
-
-        return;
-
-    }
-
-
-    /*
-     * CUSTOMER
-     */
-
-    if(
-        role === "customer" ||
-        role === null
-    ){
-
-        window.location.href =
-            "dashboard.html";
-
-        return;
-
-    }
-
-
-    /*
-     * UNKNOWN ROLE
-     */
-
-    await signOut(auth);
-
-    showMessage(
-        "Your account role is not configured correctly."
-    );
-
-    loadingScreen.style.display =
-        "none";
-
-}
-
-
-/* =====================================================
-   CHECK EXISTING LOGIN
-===================================================== */
-
-onAuthStateChanged(
-    auth,
-    async (user) => {
-
-        /*
-         * If user is already logged in,
-         * automatically send them to the
-         * correct dashboard.
-         */
-
-        if(user){
-
-            await redirectUser(user);
-
-            return;
-
-        }
-
-
-        loadingScreen.style.display =
-            "none";
-
-    }
-);
-
-
-/* =====================================================
-   LOGIN FORM
-===================================================== */
-
-loginForm.addEventListener(
-    "submit",
-    async (event) => {
-
-        event.preventDefault();
-
-
-        message.className =
-            "message";
-
-        message.textContent =
-            "";
-
-
-        const email =
-            emailInput.value.trim();
-
-        const password =
-            passwordInput.value;
-
-
-        if(!email || !password){
-
-            showMessage(
-                "Please enter your email and password."
-            );
-
-            return;
-
-        }
-
-
-        loginBtn.disabled =
-            true;
-
-        loginBtn.textContent =
-            "Logging in...";
-
-
-        try{
-
-            /*
-             * Firebase Authentication
-             */
-
-            const result =
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-
-
-            /*
-             * Get role from Firestore
-             */
-
-            const role =
-                await getUserRole(
-                    result.user
-                );
-
-
-            /*
-             * ADMIN
-             */
-
-            if(role === "admin"){
-
-                showMessage(
-                    "Admin login successful. Opening admin dashboard...",
-                    "success"
-                );
-
-
-                setTimeout(() => {
-
-                    window.location.href =
-                        "admin/dashboard.html";
-
-                }, 500);
-
-
-                return;
-
-            }
-
-
-            /*
-             * CUSTOMER
-             */
-
-            if(
-                role === "customer" ||
-                role === null
-            ){
-
-                showMessage(
-                    "Login successful. Opening your dashboard...",
-                    "success"
-                );
-
-
-                setTimeout(() => {
-
-                    window.location.href =
-                        "dashboard.html";
-
-                }, 500);
-
-
-                return;
-
-            }
-
-
-            /*
-             * UNKNOWN ROLE
-             */
-
-            await signOut(auth);
-
-            showMessage(
-                "Your account role is not configured correctly."
-            );
-
-
-            loginBtn.disabled =
-                false;
-
-            loginBtn.textContent =
-                "Login";
-
-
-        }catch(error){
-
-            console.error(
-                "Login error:",
-                error
-            );
-
-
-            let errorMessage =
-                "Unable to login. Please check your email and password.";
-
-
-            if(
-                error.code ===
-                "auth/invalid-credential"
-            ){
-
-                errorMessage =
-                    "Incorrect email or password.";
-
-            }
-
-            else if(
-                error.code ===
-                "auth/user-not-found"
-            ){
-
-                errorMessage =
-                    "No account exists with this email.";
-
-            }
-
-            else if(
-                error.code ===
-                "auth/wrong-password"
-            ){
-
-                errorMessage =
-                    "Incorrect password.";
-
-            }
-
-            else if(
-                error.code ===
-                "auth/invalid-email"
-            ){
-
-                errorMessage =
-                    "Please enter a valid email address.";
-
-            }
-
-            else if(
-                error.code ===
-                "auth/too-many-requests"
-            ){
-
-                errorMessage =
-                    "Too many login attempts. Please try again later.";
-
-            }
-
-            else if(
-                error.code ===
-                "auth/network-request-failed"
-            ){
-
-                errorMessage =
-                    "Network error. Check your internet connection.";
-
-            }
-
-
-            showMessage(
-                errorMessage
-            );
-
-
-            loginBtn.disabled =
-                false;
-
-            loginBtn.textContent =
-                "Login";
-
-        }
-
-    }
-);
-
-</script>
+<!-- Firebase Login Script goes here -->
 
 </body>
 </html>
