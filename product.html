@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Zavixbulk | Product</title>
-
-<style>
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Zavixbulk | Product</title><style>
 
 *{
     box-sizing:border-box;
@@ -200,10 +193,13 @@ body{
     }
 }
 
+
+/* MODAL */
+
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.72);
+    background:rgba(0,0,0,.76);
     display:none;
     align-items:center;
     justify-content:center;
@@ -222,10 +218,37 @@ body{
     border:1px solid #263555;
     border-radius:16px;
     padding:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.modal-icon{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+    margin-bottom:15px;
+}
+
+.icon-blue{
+    background:rgba(55,108,255,.14);
+    border:1px solid rgba(55,108,255,.3);
+}
+
+.icon-green{
+    background:rgba(40,200,120,.14);
+    border:1px solid rgba(40,200,120,.3);
+}
+
+.icon-red{
+    background:rgba(255,75,75,.14);
+    border:1px solid rgba(255,75,75,.3);
 }
 
 .modal-title{
-    font-size:19px;
+    font-size:20px;
     font-weight:800;
     margin-bottom:10px;
 }
@@ -233,7 +256,7 @@ body{
 .modal-text{
     color:#8798b6;
     font-size:13px;
-    line-height:1.6;
+    line-height:1.7;
     margin-bottom:20px;
 }
 
@@ -260,12 +283,16 @@ body{
     gap:10px;
 }
 
-.modal-actions button{
+.modal-actions button,
+.modal-actions a{
     flex:1;
     padding:12px;
     border-radius:9px;
     cursor:pointer;
     font-weight:700;
+    font-size:13px;
+    text-align:center;
+    text-decoration:none;
 }
 
 .cancel{
@@ -279,6 +306,61 @@ body{
     border:0;
     color:#fff;
 }
+
+.fund-btn{
+    background:#1c55df;
+    color:#fff;
+    border:0;
+}
+
+.success-btn{
+    background:#1c55df;
+    border:0;
+    color:#fff;
+}
+
+.close-btn{
+    background:#11182c;
+    border:1px solid #293653;
+    color:#aab8d2;
+}
+
+
+/* PROCESSING */
+
+.processing{
+    display:none;
+    text-align:center;
+}
+
+.processing.show{
+    display:block;
+}
+
+.processing-spinner{
+    width:45px;
+    height:45px;
+    border:3px solid #1b2b4d;
+    border-top-color:#4d82ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:0 auto 18px;
+}
+
+.processing-title{
+    font-size:19px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.processing-text{
+    color:#8293b1;
+    font-size:13px;
+    line-height:1.6;
+}
+
+
+/* MOBILE */
 
 @media(max-width:750px){
 
@@ -315,104 +397,137 @@ body{
 
 }
 
-</style>
-</head>
+</style></head><body><header class="header"><div class="logo">
+    ZAVIX<span>BULK</span>
+</div>
 
-<body>
+<div class="header-right" id="userName">
+    Customer
+</div>
 
-<header class="header">
+</header><main class="main"><a href="products.html" class="back">
+    ← Back to Products
+</a>
 
-    <div class="logo">
-        ZAVIX<span>BULK</span>
+<div id="content">
+
+    <div class="loading">
+
+        <div class="spinner"></div>
+
+        Loading product...
+
     </div>
 
-    <div class="header-right" id="userName">
-        Customer
+</div>
+
+</main><!-- CONFIRM ORDER MODAL --><div class="modal" id="buyModal"><div class="modal-box">
+
+    <div
+        class="modal-icon icon-blue"
+        id="confirmIcon"
+    >
+        🛒
     </div>
 
-</header>
+    <div class="modal-title">
+        Confirm Order
+    </div>
 
+    <div class="modal-text">
+        Your wallet will be charged for this product
+        and your order will be sent to admin for approval.
+    </div>
 
-<main class="main">
+    <div class="modal-product">
 
-    <a href="products.html" class="back">
-        ← Back to Products
-    </a>
+        <div
+            class="modal-product-name"
+            id="modalProductName"
+        >
+            Product
+        </div>
 
-
-    <div id="content">
-
-        <div class="loading">
-
-            <div class="spinner"></div>
-
-            Loading product...
-
+        <div
+            class="modal-product-price"
+            id="modalProductPrice"
+        >
+            $0.00
         </div>
 
     </div>
 
-</main>
+    <div class="modal-actions">
 
+        <button
+            class="cancel"
+            id="cancelBtn"
+        >
+            Cancel
+        </button>
 
-<!-- CONFIRM MODAL -->
-
-<div class="modal" id="buyModal">
-
-    <div class="modal-box">
-
-        <div class="modal-title">
+        <button
+            class="confirm"
+            id="confirmBtn"
+        >
             Confirm Order
+        </button>
+
+    </div>
+
+</div>
+
+</div><!-- RESULT MODAL --><div class="modal" id="resultModal"><div class="modal-box">
+
+    <div
+        class="modal-icon"
+        id="resultIcon"
+    >
+        ✓
+    </div>
+
+    <div
+        class="modal-title"
+        id="resultTitle"
+    >
+        Order Successful
+    </div>
+
+    <div
+        class="modal-text"
+        id="resultText"
+    >
+        Your order has been submitted successfully.
+    </div>
+
+    <div
+        class="modal-actions"
+        id="resultActions"
+    >
+    </div>
+
+</div>
+
+</div><!-- PROCESSING MODAL --><div class="modal" id="processingModal"><div class="modal-box">
+
+    <div class="processing show">
+
+        <div class="processing-spinner"></div>
+
+        <div class="processing-title">
+            Processing Order
         </div>
 
-        <div class="modal-text">
-            Your order will be submitted for admin approval.
-            Delivery details will be provided after the order
-            has been approved.
-        </div>
-
-        <div class="modal-product">
-
-            <div
-                class="modal-product-name"
-                id="modalProductName"
-            >
-                Product
-            </div>
-
-            <div
-                class="modal-product-price"
-                id="modalProductPrice"
-            >
-                ₦0.00
-            </div>
-
-        </div>
-
-        <div class="modal-actions">
-
-            <button
-                class="cancel"
-                id="cancelBtn"
-            >
-                Cancel
-            </button>
-
-            <button
-                class="confirm"
-                id="confirmBtn"
-            >
-                Confirm Order
-            </button>
-
+        <div class="processing-text">
+            Please wait while we securely process
+            your wallet payment and create your order.
         </div>
 
     </div>
 
 </div>
 
-
-<script type="module">
+</div><script type="module">
 
 import {
     initializeApp
@@ -427,20 +542,28 @@ import {
     getFirestore,
     doc,
     getDoc,
-    addDoc,
+    runTransaction,
     collection,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
+
     apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
     authDomain:"zavixbulk.firebaseapp.com",
+
     projectId:"zavixbulk",
+
     storageBucket:"zavixbulk.firebasestorage.app",
+
     messagingSenderId:"819994897169",
+
     appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
     measurementId:"G-GJ8RY0WYBL"
+
 };
 
 
@@ -460,6 +583,12 @@ const content =
 const buyModal =
     document.getElementById("buyModal");
 
+const resultModal =
+    document.getElementById("resultModal");
+
+const processingModal =
+    document.getElementById("processingModal");
+
 const modalProductName =
     document.getElementById("modalProductName");
 
@@ -474,6 +603,18 @@ const cancelBtn =
 
 const userName =
     document.getElementById("userName");
+
+const resultIcon =
+    document.getElementById("resultIcon");
+
+const resultTitle =
+    document.getElementById("resultTitle");
+
+const resultText =
+    document.getElementById("resultText");
+
+const resultActions =
+    document.getElementById("resultActions");
 
 
 const params =
@@ -490,6 +631,10 @@ let currentUser = null;
 let currentProduct = null;
 
 
+/* =========================
+   HELPERS
+========================= */
+
 function escapeHTML(value){
 
     return String(value ?? "")
@@ -504,8 +649,8 @@ function escapeHTML(value){
 
 function formatMoney(value){
 
-    return "₦" + Number(value || 0).toLocaleString(
-        "en-NG",
+    return "$" + Number(value || 0).toLocaleString(
+        "en-US",
         {
             minimumFractionDigits:2,
             maximumFractionDigits:2
@@ -514,6 +659,72 @@ function formatMoney(value){
 
 }
 
+
+function showResult(
+    title,
+    message,
+    type = "success",
+    actions = ""
+){
+
+    resultTitle.textContent =
+        title;
+
+    resultText.textContent =
+        message;
+
+    resultActions.innerHTML =
+        actions;
+
+    if(type === "success"){
+
+        resultIcon.textContent =
+            "✓";
+
+        resultIcon.className =
+            "modal-icon icon-green";
+
+    }
+
+    else if(type === "error"){
+
+        resultIcon.textContent =
+            "!";
+
+        resultIcon.className =
+            "modal-icon icon-red";
+
+    }
+
+    else{
+
+        resultIcon.textContent =
+            "i";
+
+        resultIcon.className =
+            "modal-icon icon-blue";
+
+    }
+
+    resultModal.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeResultModal(){
+
+    resultModal.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================
+   LOAD PRODUCT
+========================= */
 
 async function loadProduct(){
 
@@ -559,8 +770,12 @@ async function loadProduct(){
 
 
         currentProduct = {
-            id:productSnapshot.id,
+
+            id:
+                productSnapshot.id,
+
             ...productSnapshot.data()
+
         };
 
 
@@ -588,7 +803,10 @@ async function loadProduct(){
                         `<img
                             src="${escapeHTML(image)}"
                             alt="${escapeHTML(product.name)}"
-                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                            onerror="
+                                this.style.display='none';
+                                this.nextElementSibling.style.display='flex';
+                            "
                         >
 
                         <div
@@ -654,7 +872,7 @@ async function loadProduct(){
                             class="balance"
                             id="walletBalance"
                         >
-                            ₦0.00
+                            $0.00
                         </div>
 
                     </div>
@@ -669,8 +887,9 @@ async function loadProduct(){
 
 
                     <div class="note">
-                        Your order will remain pending until
-                        it is reviewed and approved by admin.
+                        After payment, your order will be
+                        reviewed by admin and delivered within
+                        1–20 minutes after approval.
                     </div>
 
                 </div>
@@ -690,13 +909,19 @@ async function loadProduct(){
 
         await loadBalance();
 
-    }catch(error){
+    }
 
-        console.error(error);
+    catch(error){
+
+        console.error(
+            "Product loading error:",
+            error
+        );
 
         content.innerHTML = `
             <div class="loading">
                 Unable to load this product.
+                Please try again.
             </div>
         `;
 
@@ -705,10 +930,16 @@ async function loadProduct(){
 }
 
 
+/* =========================
+   LOAD BALANCE
+========================= */
+
 async function loadBalance(){
 
     if(!currentUser){
+
         return;
+
     }
 
 
@@ -729,8 +960,11 @@ async function loadBalance(){
             const data =
                 snapshot.data();
 
+
             const balance =
-                Number(data.balance || 0);
+                Number(
+                    data.balance || 0
+                );
 
 
             const element =
@@ -748,19 +982,30 @@ async function loadBalance(){
 
         }
 
-    }catch(error){
+    }
 
-        console.error(error);
+    catch(error){
+
+        console.error(
+            "Balance error:",
+            error
+        );
 
     }
 
 }
 
 
+/* =========================
+   OPEN CONFIRM MODAL
+========================= */
+
 function openBuyModal(){
 
     if(!currentProduct){
+
         return;
+
     }
 
 
@@ -797,9 +1042,36 @@ cancelBtn.addEventListener(
 );
 
 
+/* =========================
+   CREATE ORDER
+========================= */
+
 async function createOrder(){
 
-    if(!currentUser || !currentProduct){
+    if(!currentUser){
+
+        closeBuyModal();
+
+        showResult(
+            "Login Required",
+            "Please log in to your Zavixbulk account before placing an order.",
+            "error",
+            `
+                <a
+                    href="login.html"
+                    class="success-btn"
+                >
+                    Login
+                </a>
+            `
+        );
+
+        return;
+
+    }
+
+
+    if(!currentProduct){
 
         return;
 
@@ -810,124 +1082,564 @@ async function createOrder(){
         true;
 
     confirmBtn.textContent =
-        "Submitting...";
+        "Processing...";
+
+
+    closeBuyModal();
+
+    processingModal.classList.add(
+        "show"
+    );
 
 
     try{
 
-        const userSnapshot =
-            await getDoc(
-                doc(
+        const userRef =
+            doc(
+                db,
+                "users",
+                currentUser.uid
+            );
+
+
+        const productRef =
+            doc(
+                db,
+                "products",
+                currentProduct.id
+            );
+
+
+        const orderRef =
+            doc(
+                collection(
                     db,
-                    "users",
-                    currentUser.uid
+                    "orders"
                 )
             );
 
 
-        if(!userSnapshot.exists()){
-
-            alert(
-                "Your account could not be found."
-            );
-
-            return;
-
-        }
-
-
-        const userData =
-            userSnapshot.data();
-
-
-        const price =
-            Number(
-                currentProduct.price || 0
-            );
-
-
-        /*
-         * The order is created as PENDING.
-         *
-         * Do NOT trust the browser to deduct
-         * wallet money. A secure backend/Cloud
-         * Function should perform the actual
-         * balance deduction and transaction.
-         */
-
-        const orderRef =
-            await addDoc(
+        const transactionRef =
+            doc(
                 collection(
                     db,
-                    "orders"
-                ),
-                {
+                    "transactions"
+                )
+            );
 
-                    userId:
-                        currentUser.uid,
 
-                    customerName:
-                        userData.fullname ||
-                        userData.username ||
-                        "Customer",
+        const result =
+            await runTransaction(
+                db,
+                async transaction => {
 
-                    username:
-                        userData.username ||
-                        "",
+                    /*
+                     * READ EVERYTHING FIRST
+                     */
 
-                    productId:
-                        currentProduct.id,
+                    const userSnapshot =
+                        await transaction.get(
+                            userRef
+                        );
 
-                    productName:
-                        currentProduct.name ||
-                        "Product",
 
-                    categoryId:
-                        currentProduct.categoryId ||
-                        "",
+                    const productSnapshot =
+                        await transaction.get(
+                            productRef
+                        );
 
-                    categoryName:
-                        currentProduct.categoryName ||
-                        "",
 
-                    price:price,
+                    if(!userSnapshot.exists()){
 
-                    currency:"NGN",
+                        throw new Error(
+                            "ACCOUNT_NOT_FOUND"
+                        );
 
-                    status:"pending",
+                    }
 
-                    deliveryDetails:"",
 
-                    createdAt:
-                        serverTimestamp()
+                    if(!productSnapshot.exists()){
+
+                        throw new Error(
+                            "PRODUCT_NOT_FOUND"
+                        );
+
+                    }
+
+
+                    const userData =
+                        userSnapshot.data();
+
+
+                    const productData =
+                        productSnapshot.data();
+
+
+                    if(
+                        productData.active === false
+                    ){
+
+                        throw new Error(
+                            "PRODUCT_UNAVAILABLE"
+                        );
+
+                    }
+
+
+                    const price =
+                        Number(
+                            productData.price || 0
+                        );
+
+
+                    if(
+                        !Number.isFinite(price) ||
+                        price <= 0
+                    ){
+
+                        throw new Error(
+                            "INVALID_PRICE"
+                        );
+
+                    }
+
+
+                    const balance =
+                        Number(
+                            userData.balance || 0
+                        );
+
+
+                    /*
+                     * INSUFFICIENT BALANCE
+                     */
+
+                    if(balance < price){
+
+                        throw new Error(
+                            "INSUFFICIENT_BALANCE"
+                        );
+
+                    }
+
+
+                    const newBalance =
+                        balance - price;
+
+
+                    /*
+                     * UPDATE CUSTOMER WALLET
+                     */
+
+                    transaction.update(
+                        userRef,
+                        {
+
+                            balance:
+                                newBalance
+
+                        }
+                    );
+
+
+                    /*
+                     * CREATE PENDING ORDER
+                     */
+
+                    transaction.set(
+                        orderRef,
+                        {
+
+                            userId:
+                                currentUser.uid,
+
+                            customerName:
+                                userData.fullname ||
+                                userData.username ||
+                                "Customer",
+
+                            username:
+                                userData.username ||
+                                "",
+
+                            email:
+                                currentUser.email ||
+                                userData.email ||
+                                "",
+
+                            productId:
+                                productSnapshot.id,
+
+                            productName:
+                                productData.name ||
+                                "Product",
+
+                            categoryId:
+                                productData.categoryId ||
+                                "",
+
+                            categoryName:
+                                productData.categoryName ||
+                                "",
+
+                            price:
+                                price,
+
+                            currency:
+                                "USD",
+
+                            status:
+                                "pending",
+
+                            paymentStatus:
+                                "paid",
+
+                            deliveryDetails:
+                                "",
+
+                            createdAt:
+                                serverTimestamp()
+
+                        }
+                    );
+
+
+                    /*
+                     * CREATE TRANSACTION RECORD
+                     */
+
+                    transaction.set(
+                        transactionRef,
+                        {
+
+                            userId:
+                                currentUser.uid,
+
+                            type:
+                                "purchase",
+
+                            amount:
+                                price,
+
+                            currency:
+                                "USD",
+
+                            status:
+                                "completed",
+
+                            description:
+                                "Purchase of " +
+                                (
+                                    productData.name ||
+                                    "Product"
+                                ),
+
+                            orderId:
+                                orderRef.id,
+
+                            productId:
+                                productSnapshot.id,
+
+                            reference:
+                                orderRef.id,
+
+                            createdAt:
+                                serverTimestamp()
+
+                        }
+                    );
+
+
+                    return {
+
+                        orderId:
+                            orderRef.id,
+
+                        newBalance:
+                            newBalance,
+
+                        price:
+                            price
+
+                    };
 
                 }
             );
 
 
-        closeBuyModal();
-
-
-        alert(
-            "Order submitted successfully.\n\nOrder ID: " +
-            orderRef.id +
-            "\n\nYour order is now pending admin approval."
+        processingModal.classList.remove(
+            "show"
         );
 
 
-        window.location.href =
-            "orders.html";
+        const balanceElement =
+            document.getElementById(
+                "walletBalance"
+            );
 
 
-    }catch(error){
+        if(balanceElement){
 
-        console.error(error);
+            balanceElement.textContent =
+                formatMoney(
+                    result.newBalance
+                );
 
-        alert(
-            "Unable to submit order. Please try again."
+        }
+
+
+        /*
+         * SUCCESS MESSAGE
+         */
+
+        showResult(
+
+            "Order Successful",
+
+            "Your order has been submitted successfully. It will be delivered to you within 1–20 minutes.",
+
+            "success",
+
+            `
+                <a
+                    href="orders.html"
+                    class="success-btn"
+                >
+                    View My Orders
+                </a>
+
+                <button
+                    class="close-btn"
+                    id="continueShoppingBtn"
+                >
+                    Continue Shopping
+                </button>
+            `
+
         );
 
-    }finally{
+
+        const continueShoppingBtn =
+            document.getElementById(
+                "continueShoppingBtn"
+            );
+
+
+        if(continueShoppingBtn){
+
+            continueShoppingBtn.addEventListener(
+                "click",
+                () => {
+
+                    closeResultModal();
+
+                }
+            );
+
+        }
+
+    }
+
+    catch(error){
+
+        console.error(
+            "Purchase error:",
+            error
+        );
+
+
+        processingModal.classList.remove(
+            "show"
+        );
+
+
+        if(
+            error.message ===
+            "INSUFFICIENT_BALANCE"
+        ){
+
+            showResult(
+
+                "Insufficient Balance",
+
+                "Your wallet balance is not enough to purchase this product. Kindly fund your wallet balance and try again.",
+
+                "error",
+
+                `
+                    <a
+                        href="wallet.html"
+                        class="fund-btn"
+                    >
+                        Fund Wallet
+                    </a>
+
+                    <button
+                        class="close-btn"
+                        id="closeInsufficientBtn"
+                    >
+                        Close
+                    </button>
+                `
+
+            );
+
+
+            const closeInsufficientBtn =
+                document.getElementById(
+                    "closeInsufficientBtn"
+                );
+
+
+            if(closeInsufficientBtn){
+
+                closeInsufficientBtn.addEventListener(
+                    "click",
+                    closeResultModal
+                );
+
+            }
+
+        }
+
+        else if(
+            error.message ===
+            "ACCOUNT_NOT_FOUND"
+        ){
+
+            showResult(
+                "Account Error",
+                "Your customer account could not be found. Please contact support.",
+                "error",
+                `
+                    <button
+                        class="close-btn"
+                        id="closeErrorBtn"
+                    >
+                        Close
+                    </button>
+                `
+            );
+
+
+            document
+                .getElementById("closeErrorBtn")
+                ?.addEventListener(
+                    "click",
+                    closeResultModal
+                );
+
+        }
+
+        else if(
+            error.message ===
+            "PRODUCT_NOT_FOUND"
+        ){
+
+            showResult(
+                "Product Not Found",
+                "This product is no longer available.",
+                "error",
+                `
+                    <a
+                        href="products.html"
+                        class="fund-btn"
+                    >
+                        Browse Products
+                    </a>
+                `
+            );
+
+        }
+
+        else if(
+            error.message ===
+            "PRODUCT_UNAVAILABLE"
+        ){
+
+            showResult(
+                "Product Unavailable",
+                "This product is no longer available for purchase.",
+                "error",
+                `
+                    <a
+                        href="products.html"
+                        class="fund-btn"
+                    >
+                        Browse Products
+                    </a>
+                `
+            );
+
+        }
+
+        else if(
+            error.message ===
+            "INVALID_PRICE"
+        ){
+
+            showResult(
+                "Purchase Error",
+                "This product has an invalid price. Please contact support.",
+                "error",
+                `
+                    <button
+                        class="close-btn"
+                        id="closePriceErrorBtn"
+                    >
+                        Close
+                    </button>
+                `
+            );
+
+
+            document
+                .getElementById(
+                    "closePriceErrorBtn"
+                )
+                ?.addEventListener(
+                    "click",
+                    closeResultModal
+                );
+
+        }
+
+        else{
+
+            showResult(
+
+                "Unable to Complete Order",
+
+                "We could not complete your purchase. Please try again. If the problem continues, contact support.",
+
+                "error",
+
+                `
+                    <button
+                        class="close-btn"
+                        id="closePurchaseErrorBtn"
+                    >
+                        Close
+                    </button>
+                `
+
+            );
+
+
+            document
+                .getElementById(
+                    "closePurchaseErrorBtn"
+                )
+                ?.addEventListener(
+                    "click",
+                    closeResultModal
+                );
+
+        }
+
+    }
+
+    finally{
 
         confirmBtn.disabled =
             false;
@@ -940,13 +1652,57 @@ async function createOrder(){
 }
 
 
+/* =========================
+   CONFIRM BUTTON
+========================= */
+
 confirmBtn.addEventListener(
     "click",
     createOrder
 );
 
 
-/* AUTH */
+/* =========================
+   CLOSE MODALS
+========================= */
+
+buyModal.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target ===
+            buyModal
+        ){
+
+            closeBuyModal();
+
+        }
+
+    }
+);
+
+
+resultModal.addEventListener(
+    "click",
+    event => {
+
+        if(
+            event.target ===
+            resultModal
+        ){
+
+            closeResultModal();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   AUTH
+========================= */
 
 onAuthStateChanged(
     auth,
@@ -962,7 +1718,8 @@ onAuthStateChanged(
         }
 
 
-        currentUser = user;
+        currentUser =
+            user;
 
 
         try{
@@ -977,10 +1734,13 @@ onAuthStateChanged(
                 );
 
 
-            if(userSnapshot.exists()){
+            if(
+                userSnapshot.exists()
+            ){
 
                 const data =
                     userSnapshot.data();
+
 
                 userName.textContent =
                     data.fullname ||
@@ -989,9 +1749,14 @@ onAuthStateChanged(
 
             }
 
-        }catch(error){
+        }
 
-            console.error(error);
+        catch(error){
+
+            console.error(
+                "User error:",
+                error
+            );
 
         }
 
@@ -1001,7 +1766,5 @@ onAuthStateChanged(
     }
 );
 
-</script>
-
-</body>
+</script></body>
 </html>
