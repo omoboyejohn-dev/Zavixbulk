@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zavixbulk | Payment History</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+}
+
+.logo{font-size:22px;font-weight:900}
+.logo span{color:#4f8cff}
+
+.header-right{
+    color:#9cacc9;
+    font-size:13px;
+}
+
+.main{
+    max-width:950px;
+    margin:auto;
+    padding:105px 20px 50px;
+}
+
+.back{
+    color:#7393d7;
+    text-decoration:none;
+    font-size:13px;
+    display:inline-block;
+    margin-bottom:20px;
+}
+
+.title{
+    font-size:25px;
+    font-weight:850;
+    margin-bottom:20px;
+}
+
+.table-box{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:15px;
+    padding:16px 18px;
+    border-bottom:1px solid #18223b;
+    align-items:center;
+}
+
+.row:last-child{
+    border-bottom:0;
+}
+
+.head{
+    background:#080e20;
+    color:#667b9e;
+    font-size:10px;
+    font-weight:800;
+}
+
+.cell{
+    font-size:12px;
+    color:#a7b6cd;
+}
+
+.amount{
+    color:#fff;
+    font-weight:800;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:800;
+    background:#102d20;
+    color:#62d99a;
+}
+
+.pending{
+    background:#302713;
+    color:#e6c66b;
+}
+
+.failed{
+    background:#321820;
+    color:#ff7888;
+}
+
+.empty{
+    text-align:center;
+    padding:80px 20px;
+    color:#7182a1;
+}
+
+@media(max-width:700px){
+
+    .header{padding:0 16px}
+    .header-right{display:none}
+    .main{padding:90px 12px 35px}
+
+    .table-box{
+        overflow-x:auto;
+    }
+
+    .row{
+        min-width:650px;
+    }
+
+}
+</style></head><body><header class="header"><div class="logo">
+    ZAVIX<span>BULK</span>
+</div>
+
+<div class="header-right" id="headerName">
+    Customer
+</div>
+
+</header><main class="main"><a href="dashboard.html" class="back">
+    ← Back to Dashboard
+</a><div class="title">
+    Payment History
+</div><div class="table-box"><div class="row head">
+    <div>DESCRIPTION</div>
+    <div>AMOUNT</div>
+    <div>STATUS</div>
+    <div>DATE</div>
+</div>
+
+<div id="list">
+    <div class="empty">
+        Loading payment history...
+    </div>
+</div>
+
+</div></main><script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    query,
+    where,
+    orderBy,
+    onSnapshot,
+    doc,
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+const firebaseConfig={
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    authDomain:"zavixbulk.firebaseapp.com",
+    projectId:"zavixbulk",
+    storageBucket:"zavixbulk.firebasestorage.app",
+    messagingSenderId:"819994897169",
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    measurementId:"G-GJ8RY0WYBL"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+const list=document.getElementById("list");
+const headerName=document.getElementById("headerName");
+
+function money(value){
+    return "$"+Number(value||0).toLocaleString(
+        "en-US",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    );
+}
+
+function dateText(value){
+
+    if(!value) return "Processing";
+
+    const date=value.toDate
+        ? value.toDate()
+        : new Date(value);
+
+    return date.toLocaleString();
+
+}
+
+onAuthStateChanged(auth,async user=>{
+
+    if(!user){
+        location.href="login.html";
+        return;
+    }
+
+    const userSnap=await getDoc(
+        doc(db,"users",user.uid)
+    );
+
+    if(userSnap.exists()){
+
+        const data=userSnap.data();
+
+        headerName.textContent=
+            data.fullname||
+            data.username||
+            "Customer";
+
+    }
+
+    const q=query(
+        collection(db,"transactions"),
+        where("userId","==",user.uid),
+        orderBy("createdAt","desc")
+    );
+
+    onSnapshot(q,snapshot=>{
+
+        if(snapshot.empty){
+
+            list.innerHTML=`
+                <div class="empty">
+                    No payment history yet.
+                </div>
+            `;
+
+            return;
+
+        }
+
+        list.innerHTML="";
+
+        snapshot.forEach(item=>{
+
+            const data=item.data();
+
+            let statusClass="";
+
+            if(data.status==="pending"){
+                statusClass="pending";
+            }
+
+            if(
+                data.status==="failed" ||
+                data.status==="rejected"
+            ){
+                statusClass="failed";
+            }
+
+            const row=document.createElement("div");
+
+            row.className="row";
+
+            row.innerHTML=`
+
+                <div class="cell">
+                    ${data.description||data.type||"Transaction"}
+                </div>
+
+                <div class="cell amount">
+                    ${money(data.amount)}
+                </div>
+
+                <div class="cell">
+                    <span class="status ${statusClass}">
+                        ${data.status||"completed"}
+                    </span>
+                </div>
+
+                <div class="cell">
+                    ${dateText(data.createdAt)}
+                </div>
+
+            `;
+
+            list.appendChild(row);
+
+        });
+
+    },error=>{
+
+        console.error(error);
+
+        list.innerHTML=`
+            <div class="empty">
+                Unable to load payment history.
+            </div>
+        `;
+
+    });
+
+});
+
+</script></body>
+</html>
