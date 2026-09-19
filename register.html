@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account | Zavixbulk</title>
+<title>Register | Zavixbulk</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -19,13 +18,15 @@ background:#050817;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
+min-height:100vh;
+padding:20px;
 }
 
 .container{
-width:400px;
+width:100%;
+max-width:420px;
 background:#0b1230;
-padding:35px;
+padding:30px;
 border-radius:15px;
 border:1px solid #1f3f8b;
 box-shadow:0 0 25px rgba(0,119,255,.25);
@@ -33,7 +34,7 @@ box-shadow:0 0 25px rgba(0,119,255,.25);
 
 .logo{
 text-align:center;
-font-size:32px;
+font-size:30px;
 font-weight:bold;
 color:#4da3ff;
 margin-bottom:10px;
@@ -41,8 +42,8 @@ margin-bottom:10px;
 
 h2{
 text-align:center;
+color:#fff;
 margin-bottom:25px;
-color:white;
 }
 
 .input-box{
@@ -63,8 +64,8 @@ border:none;
 border-radius:8px;
 background:#16224d;
 color:white;
-outline:none;
 font-size:15px;
+outline:none;
 }
 
 .input-box input:focus{
@@ -88,9 +89,16 @@ button:hover{
 opacity:.9;
 }
 
-.bottom{
-margin-top:20px;
+#message{
+margin-top:15px;
 text-align:center;
+font-size:14px;
+color:#00ff88;
+}
+
+.bottom{
+text-align:center;
+margin-top:20px;
 color:#ccc;
 }
 
@@ -99,14 +107,9 @@ color:#4da3ff;
 text-decoration:none;
 font-weight:bold;
 }
-
-.bottom a:hover{
-text-decoration:underline;
-}
-
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
@@ -115,39 +118,41 @@ text-decoration:underline;
 
 <h2>Create Account</h2>
 
-<form action="register.php" method="POST">
+<form id="registerForm">
 
 <div class="input-box">
 <label>Full Name</label>
-<input type="text" name="fullname" required>
+<input type="text" id="fullname" required>
 </div>
 
 <div class="input-box">
 <label>Username</label>
-<input type="text" name="username" required>
+<input type="text" id="username" required>
 </div>
 
 <div class="input-box">
 <label>Phone Number</label>
-<input type="tel" name="number" required>
+<input type="tel" id="phone" required>
 </div>
 
 <div class="input-box">
 <label>Gmail Address</label>
-<input type="email" name="gmail" placeholder="example@gmail.com" required>
+<input type="email" id="email" required>
 </div>
 
 <div class="input-box">
 <label>Password</label>
-<input type="password" name="password" required>
+<input type="password" id="password" required>
 </div>
 
 <div class="input-box">
 <label>Confirm Password</label>
-<input type="password" name="confirm_password" required>
+<input type="password" id="confirmPassword" required>
 </div>
 
 <button type="submit">Create Account</button>
+
+<div id="message"></div>
 
 </form>
 
@@ -158,5 +163,100 @@ Already have an account?
 
 </div>
 
+<!-- Firebase JavaScript goes here in Part 2 -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+import {
+getAuth,
+createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+setDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+authDomain: "zavixbulk.firebaseapp.com",
+projectId: "zavixbulk",
+storageBucket: "zavixbulk.firebasestorage.app",
+messagingSenderId: "819994897169",
+appId: "1:819994897169:web:4aab1bcc15fbe439f6fab0",
+measurementId: "G-GJ8RY0WYBL"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const form = document.getElementById("registerForm");
+
+form.addEventListener("submit", async (e)=>{
+
+e.preventDefault();
+
+const fullname=document.getElementById("fullname").value.trim();
+const username=document.getElementById("username").value.trim();
+const phone=document.getElementById("phone").value.trim();
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
+const confirmPassword=document.getElementById("confirmPassword").value;
+
+const message=document.getElementById("message");
+
+message.style.color="red";
+
+if(password!==confirmPassword){
+
+message.innerHTML="Passwords do not match.";
+
+return;
+
+}
+
+try{
+
+const userCredential=
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user=userCredential.user;
+
+await setDoc(doc(db,"users",user.uid),{
+
+fullname:fullname,
+username:username,
+phone:phone,
+email:email,
+role:"customer",
+createdAt:serverTimestamp()
+
+});
+
+message.style.color="#00ff88";
+message.innerHTML="Registration Successful...";
+
+setTimeout(()=>{
+
+window.location="dashboard.html";
+
+},1500);
+
+}catch(error){
+
+message.innerHTML=error.message;
+
+}
+
+});
+
+</script>
 </body>
 </html>
