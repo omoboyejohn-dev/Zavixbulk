@@ -7,13 +7,9 @@
 <title>Zavixbulk | Digital Products Marketplace</title>
 
 <meta name="description"
-content="Zavixbulk is a digital products marketplace with fast delivery, secure payments and reliable customer support.">
+content="Zavixbulk is a digital products marketplace with fast processing, secure payments and reliable customer support.">
 
 <style>
-
-/* =========================
-   RESET
-========================= */
 
 *{
     margin:0;
@@ -28,7 +24,7 @@ html{
 body{
     font-family:Inter,Arial,Helvetica,sans-serif;
     background:#050817;
-    color:#ffffff;
+    color:#fff;
     line-height:1.6;
     overflow-x:hidden;
 }
@@ -43,26 +39,19 @@ input{
     font-family:inherit;
 }
 
-/* =========================
-   COLORS
-========================= */
-
 :root{
     --bg:#050817;
-    --bg2:#080d22;
     --card:#0b1230;
-    --card2:#0d1638;
     --border:rgba(100,130,255,.22);
     --purple:#8b3dff;
     --blue:#1677ff;
     --cyan:#13cfff;
-    --text:#ffffff;
     --muted:#9ba8c7;
     --green:#22d88a;
 }
 
 /* =========================
-   BACKGROUND EFFECT
+   BACKGROUND
 ========================= */
 
 body::before{
@@ -91,10 +80,6 @@ body::after{
     z-index:-1;
 }
 
-/* =========================
-   CONTAINER
-========================= */
-
 .container{
     width:min(1180px,92%);
     margin:auto;
@@ -108,7 +93,7 @@ header{
     position:sticky;
     top:0;
     z-index:1000;
-    background:rgba(5,8,23,.88);
+    background:rgba(5,8,23,.90);
     backdrop-filter:blur(18px);
     border-bottom:1px solid rgba(255,255,255,.06);
 }
@@ -142,7 +127,7 @@ header{
 }
 
 .logo span{
-    background:linear-gradient(90deg,#ffffff,#a6c8ff);
+    background:linear-gradient(90deg,#fff,#a6c8ff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
@@ -160,7 +145,7 @@ header{
 }
 
 .nav-links a:hover{
-    color:white;
+    color:#fff;
 }
 
 .nav-buttons{
@@ -180,7 +165,7 @@ header{
 }
 
 .btn-outline{
-    color:white;
+    color:#fff;
     background:transparent;
     border:1px solid #7250ff;
 }
@@ -190,7 +175,7 @@ header{
 }
 
 .btn-primary{
-    color:white;
+    color:#fff;
     background:linear-gradient(90deg,#8538ff,#177dff);
     box-shadow:0 8px 25px rgba(86,47,255,.25);
 }
@@ -204,7 +189,7 @@ header{
     display:none;
     background:none;
     border:0;
-    color:white;
+    color:#fff;
     font-size:28px;
     cursor:pointer;
 }
@@ -303,7 +288,7 @@ header{
 }
 
 /* =========================
-   HERO VISUAL
+   HERO PHONE
 ========================= */
 
 .hero-visual{
@@ -390,26 +375,31 @@ header{
     display:flex;
     align-items:center;
     gap:10px;
-    padding:11px;
+    padding:9px;
     border-radius:12px;
     background:#0d1430;
     border:1px solid rgba(255,255,255,.06);
-    margin-bottom:9px;
+    margin-bottom:8px;
 }
 
 .mini-icon{
     width:35px;
     height:35px;
+    min-width:35px;
     border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
     background:#152050;
+    overflow:hidden;
+}
+
+.mini-icon img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 .mini-product strong{
     display:block;
-    font-size:11px;
+    font-size:10px;
 }
 
 .mini-product small{
@@ -417,7 +407,9 @@ header{
     font-size:9px;
 }
 
-/* Floating icons */
+/* =========================
+   FLOATING ICONS
+========================= */
 
 .float-icon{
     position:absolute;
@@ -431,6 +423,13 @@ header{
     background:#0d1638;
     border:1px solid rgba(255,255,255,.1);
     box-shadow:0 15px 35px rgba(0,0,0,.4);
+    overflow:hidden;
+}
+
+.float-icon img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 .float-1{
@@ -454,7 +453,7 @@ header{
 }
 
 /* =========================
-   SECTION
+   SECTIONS
 ========================= */
 
 section{
@@ -490,8 +489,9 @@ section{
     background:linear-gradient(145deg,#0b1230,#080d23);
     border:1px solid var(--border);
     border-radius:17px;
-    padding:20px;
+    padding:15px;
     transition:.3s;
+    overflow:hidden;
 }
 
 .product-card:hover{
@@ -500,16 +500,20 @@ section{
     box-shadow:0 15px 40px rgba(0,0,0,.3);
 }
 
-.product-icon{
-    width:55px;
-    height:55px;
-    border-radius:15px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:25px;
-    margin-bottom:17px;
-    background:linear-gradient(135deg,#182454,#111a3c);
+.product-image{
+    width:100%;
+    height:150px;
+    border-radius:13px;
+    overflow:hidden;
+    background:#111a3c;
+    margin-bottom:15px;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 
 .product-card h3{
@@ -526,7 +530,7 @@ section{
 .price{
     font-size:21px;
     font-weight:800;
-    margin:15px 0;
+    margin:12px 0;
 }
 
 .stock{
@@ -619,12 +623,10 @@ section{
 }
 
 /* =========================
-   CRYPTO SECTION
+   CRYPTO
 ========================= */
 
 .crypto-box{
-    position:relative;
-    overflow:hidden;
     padding:50px;
     border-radius:25px;
     background:
@@ -723,7 +725,7 @@ footer{
 }
 
 .footer-col a:hover{
-    color:white;
+    color:#fff;
 }
 
 .copyright{
@@ -775,7 +777,6 @@ footer{
     .footer-grid{
         grid-template-columns:2fr 1fr 1fr;
     }
-
 }
 
 @media(max-width:700px){
@@ -852,7 +853,11 @@ footer{
     }
 
     .product-card{
-        padding:15px;
+        padding:10px;
+    }
+
+    .product-image{
+        height:125px;
     }
 
     .product-card h3{
@@ -883,13 +888,16 @@ footer{
     .footer-grid{
         grid-template-columns:1fr 1fr;
     }
-
 }
 
 @media(max-width:430px){
 
     .product-grid{
-        grid-template-columns:1fr;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .product-image{
+        height:115px;
     }
 
     .hero h1{
@@ -899,7 +907,6 @@ footer{
     .footer-grid{
         grid-template-columns:1fr;
     }
-
 }
 
 </style>
@@ -917,14 +924,11 @@ footer{
 
     <a href="index.html" class="logo">
 
-        <div class="logo-icon">
-            Z
-        </div>
+        <div class="logo-icon">Z</div>
 
         <span>Zavixbulk</span>
 
     </a>
-
 
     <nav class="nav-links" id="navLinks">
 
@@ -940,21 +944,17 @@ footer{
 
     </nav>
 
-
     <div class="nav-buttons">
 
-        <a href="login.html"
-           class="btn btn-outline">
-           Login
+        <a href="login.html" class="btn btn-outline">
+            Login
         </a>
 
-        <a href="register.html"
-           class="btn btn-primary">
-           Register
+        <a href="register.html" class="btn btn-primary">
+            Register
         </a>
 
     </div>
-
 
     <button
         class="menu-btn"
@@ -971,10 +971,12 @@ footer{
 
 
 <!-- =========================
-     HERO
+     MAIN
 ========================= -->
 
 <main>
+
+<!-- HERO -->
 
 <section class="hero">
 
@@ -990,7 +992,6 @@ footer{
 
         </div>
 
-
         <h1>
 
             Your Trusted
@@ -1003,7 +1004,6 @@ footer{
 
         </h1>
 
-
         <p>
 
             Buy quality digital products and services
@@ -1011,7 +1011,6 @@ footer{
             reliable delivery and customer support.
 
         </p>
-
 
         <div class="hero-buttons">
 
@@ -1022,7 +1021,6 @@ footer{
 
             </a>
 
-
             <a href="register.html"
                class="btn btn-outline hero-btn">
 
@@ -1032,36 +1030,27 @@ footer{
 
         </div>
 
-
         <div class="trust-row">
 
             <div class="trust-item">
 
-                <div class="trust-icon">
-                    ⚡
-                </div>
+                <div class="trust-icon">⚡</div>
 
                 Fast Processing
 
             </div>
 
-
             <div class="trust-item">
 
-                <div class="trust-icon">
-                    🔒
-                </div>
+                <div class="trust-icon">🔒</div>
 
                 Secure Payments
 
             </div>
 
-
             <div class="trust-item">
 
-                <div class="trust-icon">
-                    💬
-                </div>
+                <div class="trust-icon">💬</div>
 
                 Customer Support
 
@@ -1072,27 +1061,30 @@ footer{
     </div>
 
 
-    <!-- HERO PHONE -->
+    <!-- HERO VISUAL -->
 
     <div class="hero-visual">
 
         <div class="glow"></div>
 
-
         <div class="float-icon float-1">
-            G
+            <img src="https://i.ibb.co/kVX0jNBW/www-google-com-1746161873.jpg"
+                 alt="Product">
         </div>
 
         <div class="float-icon float-2">
-            ▶
+            <img src="https://i.ibb.co/DPPzxWxY/www-google-com-478099221.jpg"
+                 alt="Product">
         </div>
 
         <div class="float-icon float-3">
-            ₿
+            <img src="https://i.ibb.co/SwQPbsvm/www-google-com-161451819.png"
+                 alt="Product">
         </div>
 
         <div class="float-icon float-4">
-            Ł
+            <img src="https://i.ibb.co/9kJ0h0bN/1789842623635-1754231248.jpg"
+                 alt="Product">
         </div>
 
 
@@ -1112,7 +1104,6 @@ footer{
 
                 </div>
 
-
                 <div class="wallet-card">
 
                     <small>
@@ -1120,7 +1111,7 @@ footer{
                     </small>
 
                     <div class="wallet-amount">
-                        $250.00
+                        $0.00
                     </div>
 
                 </div>
@@ -1129,17 +1120,18 @@ footer{
                 <div class="mini-product">
 
                     <div class="mini-icon">
-                        G
+
+                        <img src="https://i.ibb.co/kVX0jNBW/www-google-com-1746161873.jpg"
+                             alt="Google Voice">
+
                     </div>
 
                     <div>
-                        <strong>
-                            Google Voice
-                        </strong>
 
-                        <small>
-                            $10.00
-                        </small>
+                        <strong>Google Voice</strong>
+
+                        <small>$0.00</small>
+
                     </div>
 
                 </div>
@@ -1148,17 +1140,18 @@ footer{
                 <div class="mini-product">
 
                     <div class="mini-icon">
-                        T
+
+                        <img src="https://i.ibb.co/DPPzxWxY/www-google-com-478099221.jpg"
+                             alt="Facebook">
+
                     </div>
 
                     <div>
-                        <strong>
-                            TextNow
-                        </strong>
 
-                        <small>
-                            $8.00
-                        </small>
+                        <strong>Facebook</strong>
+
+                        <small>$0.00</small>
+
                     </div>
 
                 </div>
@@ -1167,17 +1160,18 @@ footer{
                 <div class="mini-product">
 
                     <div class="mini-icon">
-                        ▶
+
+                        <img src="https://i.ibb.co/cKVMwg3r/1789842298814-1353982309.jpg"
+                             alt="Instagram">
+
                     </div>
 
                     <div>
-                        <strong>
-                            YouTube
-                        </strong>
 
-                        <small>
-                            $15.00
-                        </small>
+                        <strong>Instagram</strong>
+
+                        <small>$0.00</small>
+
                     </div>
 
                 </div>
@@ -1186,36 +1180,18 @@ footer{
                 <div class="mini-product">
 
                     <div class="mini-icon">
-                        F
+
+                        <img src="https://i.ibb.co/93GkF1RF/www-google-com-499771236.png"
+                             alt="TikTok">
+
                     </div>
 
                     <div>
-                        <strong>
-                            Facebook
-                        </strong>
 
-                        <small>
-                            $20.00
-                        </small>
-                    </div>
+                        <strong>TikTok</strong>
 
-                </div>
+                        <small>$0.00</small>
 
-
-                <div class="mini-product">
-
-                    <div class="mini-icon">
-                        I
-                    </div>
-
-                    <div>
-                        <strong>
-                            Instagram
-                        </strong>
-
-                        <small>
-                            $20.00
-                        </small>
                     </div>
 
                 </div>
@@ -1246,8 +1222,7 @@ footer{
         </h2>
 
         <p>
-            Browse our available digital products
-            and services.
+            Browse our available digital products and services.
         </p>
 
     </div>
@@ -1256,10 +1231,16 @@ footer{
     <div class="product-grid">
 
 
+        <!-- 1 -->
+
         <div class="product-card">
 
-            <div class="product-icon">
-                G
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/kVX0jNBW/www-google-com-1746161873.jpg"
+                    alt="Google Voice">
+
             </div>
 
             <h3>
@@ -1267,11 +1248,11 @@ footer{
             </h3>
 
             <p>
-                Digital communication service.
+                Digital communication product.
             </p>
 
             <div class="price">
-                $10.00
+                $0.00
             </div>
 
             <span class="stock">
@@ -1281,10 +1262,109 @@ footer{
         </div>
 
 
+        <!-- 2 -->
+
         <div class="product-card">
 
-            <div class="product-icon">
-                T
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/DPPzxWxY/www-google-com-478099221.jpg"
+                    alt="Facebook">
+
+            </div>
+
+            <h3>
+                Facebook
+            </h3>
+
+            <p>
+                Digital social media product.
+            </p>
+
+            <div class="price">
+                $0.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <!-- 3 -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/cKVMwg3r/1789842298814-1353982309.jpg"
+                    alt="Instagram">
+
+            </div>
+
+            <h3>
+                Instagram
+            </h3>
+
+            <p>
+                Digital social media product.
+            </p>
+
+            <div class="price">
+                $0.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/93GkF1RF/www-google-com-499771236.png"
+                    alt="TikTok">
+
+            </div>
+
+            <h3>
+                TikTok
+            </h3>
+
+            <p>
+                Digital social media product.
+            </p>
+
+            <div class="price">
+                $0.00
+            </div>
+
+            <span class="stock">
+                ● In Stock
+            </span>
+
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="product-card">
+
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/vxb56R4v/www-google-com-1420802700.jpg"
+                    alt="TextNow">
+
             </div>
 
             <h3>
@@ -1292,11 +1372,11 @@ footer{
             </h3>
 
             <p>
-                Digital communication service.
+                Digital communication product.
             </p>
 
             <div class="price">
-                $8.00
+                $0.00
             </div>
 
             <span class="stock">
@@ -1306,10 +1386,16 @@ footer{
         </div>
 
 
+        <!-- 6 -->
+
         <div class="product-card">
 
-            <div class="product-icon">
-                T+
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/d06d1Lzx/1789842365667-1243978385.jpg"
+                    alt="TextPlus">
+
             </div>
 
             <h3>
@@ -1317,11 +1403,11 @@ footer{
             </h3>
 
             <p>
-                Digital communication service.
+                Digital communication product.
             </p>
 
             <div class="price">
-                $7.00
+                $0.00
             </div>
 
             <span class="stock">
@@ -1331,10 +1417,16 @@ footer{
         </div>
 
 
+        <!-- 7 -->
+
         <div class="product-card">
 
-            <div class="product-icon">
-                ▶
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/SwQPbsvm/www-google-com-161451819.png"
+                    alt="YouTube">
+
             </div>
 
             <h3>
@@ -1346,7 +1438,7 @@ footer{
             </p>
 
             <div class="price">
-                $15.00
+                $0.00
             </div>
 
             <span class="stock">
@@ -1356,97 +1448,28 @@ footer{
         </div>
 
 
-        <div class="product-card">
-
-            <div class="product-icon">
-                F
-            </div>
-
-            <h3>
-                Facebook
-            </h3>
-
-            <p>
-                Authorized digital products.
-            </p>
-
-            <div class="price">
-                $20.00
-            </div>
-
-            <span class="stock">
-                ● In Stock
-            </span>
-
-        </div>
-
+        <!-- 8 -->
 
         <div class="product-card">
 
-            <div class="product-icon">
-                I
+            <div class="product-image">
+
+                <img
+                    src="https://i.ibb.co/9kJ0h0bN/1789842623635-1754231248.jpg"
+                    alt="Other Product">
+
             </div>
 
             <h3>
-                Instagram
+                Other Product
             </h3>
 
             <p>
-                Authorized digital products.
+                More digital products coming soon.
             </p>
 
             <div class="price">
-                $20.00
-            </div>
-
-            <span class="stock">
-                ● In Stock
-            </span>
-
-        </div>
-
-
-        <div class="product-card">
-
-            <div class="product-icon">
-                ✉
-            </div>
-
-            <h3>
-                Email Products
-            </h3>
-
-            <p>
-                Digital email-related products.
-            </p>
-
-            <div class="price">
-                $5.00
-            </div>
-
-            <span class="stock">
-                ● In Stock
-            </span>
-
-        </div>
-
-
-        <div class="product-card">
-
-            <div class="product-icon">
-                +
-            </div>
-
-            <h3>
-                More Products
-            </h3>
-
-            <p>
-                New products added by Zavixbulk.
-            </p>
-
-            <div class="price">
-                From $5
+                $0.00
             </div>
 
             <span class="stock">
@@ -1514,8 +1537,7 @@ footer{
             </h3>
 
             <p>
-                Browse available products and select what
-                you need.
+                Browse available products and select what you need.
             </p>
 
         </div>
@@ -1532,7 +1554,7 @@ footer{
             </h3>
 
             <p>
-                Complete your payment and submit your order.
+                Complete payment and submit your order.
             </p>
 
         </div>
@@ -1632,8 +1654,8 @@ footer{
             </h3>
 
             <p>
-                Products and inventory are managed directly
-                by the Zavixbulk administrator.
+                Products and inventory are managed by the
+                Zavixbulk administrator.
             </p>
 
         </div>
@@ -1668,8 +1690,8 @@ footer{
             </h3>
 
             <p>
-                Support for selected cryptocurrency payment
-                methods can be connected to the platform.
+                Selected cryptocurrency payment methods
+                can be connected to the platform.
             </p>
 
         </div>
@@ -1717,9 +1739,7 @@ footer{
 
             <p>
                 Zavixbulk can support cryptocurrency payments
-                through a secure payment integration. Customers
-                will be able to select an available cryptocurrency
-                during checkout.
+                through a secure payment integration.
             </p>
 
 
@@ -1898,9 +1918,7 @@ footer{
 
 <script>
 
-/* =========================
-   MOBILE MENU
-========================= */
+/* MOBILE MENU */
 
 function toggleMenu(){
 
@@ -1912,20 +1930,15 @@ function toggleMenu(){
 }
 
 
-/* =========================
-   YEAR
-========================= */
+/* CURRENT YEAR */
 
-document.getElementById("year")
-    .textContent = new Date().getFullYear();
+document.getElementById("year").textContent =
+    new Date().getFullYear();
 
 
-/* =========================
-   CLOSE MOBILE MENU
-========================= */
+/* CLOSE MOBILE MENU */
 
-document.querySelectorAll(".nav-links a")
-.forEach(link => {
+document.querySelectorAll(".nav-links a").forEach(link => {
 
     link.addEventListener("click", () => {
 
@@ -1940,4 +1953,4 @@ document.querySelectorAll(".nav-links a")
 </script>
 
 </body>
-  </html>
+</html>
