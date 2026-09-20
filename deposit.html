@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Zavixbulk | Deposit</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -127,9 +130,11 @@ main{
 }
 
 @keyframes spin{
+
     to{
         transform:rotate(360deg);
     }
+
 }
 
 .wallet-card{
@@ -149,6 +154,27 @@ main{
     color:#aaa3b8;
     font-size:13px;
     margin-bottom:25px;
+}
+
+.network-box{
+    background:rgba(34,211,238,.07);
+    border:1px solid rgba(34,211,238,.18);
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:18px;
+    text-align:center;
+}
+
+.network-label{
+    color:#aaa3b8;
+    font-size:12px;
+    margin-bottom:4px;
+}
+
+.network-value{
+    color:#22d3ee;
+    font-size:14px;
+    font-weight:800;
 }
 
 .address-label{
@@ -307,268 +333,386 @@ main{
     .form-card{
         padding:20px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <div class="logo">ZAVIXBULK</div>
-    <div class="user" id="userName">Loading...</div>
+
+    <div class="logo">
+        ZAVIXBULK
+    </div>
+
+    <div class="user" id="userName">
+        Loading...
+    </div>
+
 </header>
+
 
 <main>
 
-    <!-- =========================
-         COIN PAGE
-    ========================== -->
-    <section class="page active" id="coinPage">
+
+<!-- =========================================
+     COIN PAGE
+========================================= -->
+
+<section class="page active" id="coinPage">
+
+    <div class="title">
+
+        <h1>
+            Deposit Funds
+        </h1>
+
+        <p>
+            Select the cryptocurrency you want to use for your deposit.
+        </p>
+
+    </div>
+
+
+    <div class="methods">
+
+
+        <div class="method" data-method="bitcoin">
+
+            <div class="method-icon">
+                ₿
+            </div>
+
+            <h3>
+                Bitcoin
+            </h3>
+
+            <p>
+                Make your deposit using Bitcoin.
+            </p>
+
+        </div>
+
+
+        <div class="method" data-method="litecoin">
+
+            <div class="method-icon">
+                Ł
+            </div>
+
+            <h3>
+                Litecoin
+            </h3>
+
+            <p>
+                Make your deposit using Litecoin.
+            </p>
+
+        </div>
+
+
+        <div class="method" data-method="ethereum">
+
+            <div class="method-icon">
+                ◆
+            </div>
+
+            <h3>
+                Ethereum
+            </h3>
+
+            <p>
+                Make your deposit using Ethereum.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     GENERATING PAGE
+========================================= -->
+
+<section class="page" id="generatePage">
+
+    <div class="center">
 
         <div class="title">
-            <h1>Deposit Funds</h1>
+
+            <h1 id="generateText">
+                Generating wallet...
+            </h1>
+
             <p>
-                Select the cryptocurrency you want to use for your deposit.
-            </p>
-        </div>
-
-        <div class="methods">
-
-            <div class="method" data-method="bitcoin">
-                <div class="method-icon">₿</div>
-                <h3>Bitcoin</h3>
-                <p>Make your deposit using Bitcoin.</p>
-            </div>
-
-            <div class="method" data-method="litecoin">
-                <div class="method-icon">Ł</div>
-                <h3>Litecoin</h3>
-                <p>Make your deposit using Litecoin.</p>
-            </div>
-
-            <div class="method" data-method="ethereum">
-                <div class="method-icon">◆</div>
-                <h3>Ethereum</h3>
-                <p>Make your deposit using Ethereum.</p>
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         GENERATING PAGE
-    ========================== -->
-    <section class="page" id="generatePage">
-
-        <div class="center">
-
-            <div class="title">
-                <h1 id="generateText">
-                    Generating wallet...
-                </h1>
-
-                <p>
-                    Please wait while we prepare your payment address.
-                </p>
-            </div>
-
-            <div class="loader"></div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         WALLET PAGE
-    ========================== -->
-    <section class="page" id="walletPage">
-
-        <div class="wallet-card">
-
-            <h2 id="walletTitle">
-                Bitcoin Wallet
-            </h2>
-
-            <p class="wallet-subtitle">
-                Send your payment to the address below.
+                Please wait while we prepare your payment address.
             </p>
 
-            <div class="address-label">
-                Receiving Wallet Address
+        </div>
+
+        <div class="loader"></div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     WALLET PAGE
+========================================= -->
+
+<section class="page" id="walletPage">
+
+    <div class="wallet-card">
+
+        <h2 id="walletTitle">
+            Bitcoin Wallet
+        </h2>
+
+        <p class="wallet-subtitle">
+            Send your payment to the address below.
+        </p>
+
+
+        <div class="network-box">
+
+            <div class="network-label">
+                Network
             </div>
 
-            <div class="address-box" id="walletAddress">
+            <div
+                class="network-value"
+                id="walletNetwork"
+            >
                 Loading...
             </div>
 
-            <button class="copy-btn" id="copyBtn">
-                Copy Wallet Address
-            </button>
+        </div>
 
-            <div class="warning">
-                <strong>Important:</strong>
-                Send only the selected cryptocurrency to this address.
-                Sending another cryptocurrency or using the wrong network
-                may result in loss of funds.
-            </div>
 
-            <div class="timer-box">
-                <div class="timer-label">
-                    Payment window
-                </div>
+        <div class="address-label">
+            Receiving Wallet Address
+        </div>
 
-                <div id="timer">
-                    20:00
-                </div>
-            </div>
 
-            <button class="primary-btn" id="paidBtn">
-                I Have Paid
-            </button>
+        <div
+            class="address-box"
+            id="walletAddress"
+        >
+            Loading...
+        </div>
 
-            <button class="back-btn" id="chooseAnotherBtn">
-                Choose Another Cryptocurrency
-            </button>
+
+        <button
+            class="copy-btn"
+            id="copyBtn"
+        >
+            Copy Wallet Address
+        </button>
+
+
+        <div class="warning">
+
+            <strong>
+                Important:
+            </strong>
+
+            Send only the selected cryptocurrency
+            to this address.
+
+            Sending another cryptocurrency or using
+            the wrong network may result in loss of funds.
 
         </div>
 
-    </section>
 
+        <div class="timer-box">
 
-    <!-- =========================
-         CHECKING PAGE
-    ========================== -->
-    <section class="page" id="checkingPage">
-
-        <div class="center">
-
-            <div class="title">
-
-                <h1>
-                    Checking Payment
-                </h1>
-
-                <p>
-                    Preparing your payment submission form...
-                </p>
-
+            <div class="timer-label">
+                Payment window
             </div>
 
-            <div class="loader"></div>
+            <div id="timer">
+                20:00
+            </div>
 
         </div>
 
-    </section>
+
+        <button
+            class="primary-btn"
+            id="paidBtn"
+        >
+            I Have Paid
+        </button>
 
 
-    <!-- =========================
-         SUBMIT PAGE
-    ========================== -->
-    <section class="page" id="submitPage">
+        <button
+            class="back-btn"
+            id="chooseAnotherBtn"
+        >
+            Choose Another Cryptocurrency
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     CHECKING PAGE
+========================================= -->
+
+<section class="page" id="checkingPage">
+
+    <div class="center">
 
         <div class="title">
 
             <h1>
-                Submit Payment
+                Checking Payment
             </h1>
 
             <p>
-                Enter the details of the payment you made.
+                Preparing your payment submission form...
             </p>
 
         </div>
 
-        <div class="form-card">
+        <div class="loader"></div>
 
-            <div class="form-group">
+    </div>
 
-                <label>
-                    Cryptocurrency
-                </label>
-
-                <input
-                    type="text"
-                    id="cryptoDisplay"
-                    readonly
-                >
-
-            </div>
+</section>
 
 
-            <div class="form-group">
 
-                <label>
-                    Amount in USD
-                </label>
+<!-- =========================================
+     SUBMIT PAGE
+========================================= -->
 
-                <input
-                    type="number"
-                    id="amount"
-                    placeholder="e.g. 50"
-                    min="1"
-                    step="0.01"
-                >
+<section class="page" id="submitPage">
 
-            </div>
+    <div class="title">
 
+        <h1>
+            Submit Payment
+        </h1>
 
-            <div class="form-group">
+        <p>
+            Enter the details of the payment you made.
+        </p>
 
-                <label>
-                    Sender Wallet Address
-                </label>
-
-                <input
-                    type="text"
-                    id="senderAddress"
-                    placeholder="Enter the wallet address you sent from"
-                >
-
-            </div>
+    </div>
 
 
-            <button
-                class="primary-btn"
-                id="submitBtn"
+    <div class="form-card">
+
+
+        <div class="form-group">
+
+            <label>
+                Cryptocurrency
+            </label>
+
+            <input
+                type="text"
+                id="cryptoDisplay"
+                readonly
             >
-                Submit Payment
-            </button>
-
-
-            <div
-                class="error-box"
-                id="errorMessage"
-            ></div>
-
-
-            <div
-                class="success"
-                id="successMessage"
-            >
-                Payment submitted successfully.<br>
-                Your deposit is now pending verification.
-            </div>
 
         </div>
 
-    </section>
+
+        <div class="form-group">
+
+            <label>
+                Amount in USD
+            </label>
+
+            <input
+                type="number"
+                id="amount"
+                placeholder="e.g. 50"
+                min="1"
+                step="0.01"
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Sender Wallet Address
+            </label>
+
+            <input
+                type="text"
+                id="senderAddress"
+                placeholder="Enter the wallet address you sent from"
+            >
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            id="submitBtn"
+        >
+            Submit Payment
+        </button>
+
+
+        <div
+            class="error-box"
+            id="errorMessage"
+        ></div>
+
+
+        <div
+            class="success"
+            id="successMessage"
+        >
+            Payment submitted successfully.<br>
+            Your deposit is now pending verification.
+        </div>
+
+    </div>
+
+</section>
+
 
 </main>
 
 
+
 <script type="module">
+
+
+/* =========================================
+   FIREBASE APP
+========================================= */
 
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
+
 import {
     getAuth,
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -576,8 +720,12 @@ import {
     getDoc,
     collection,
     addDoc,
-    serverTimestamp
+    serverTimestamp,
+    query,
+    where,
+    getDocs
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
 
 
 /* =========================================
@@ -606,18 +754,26 @@ const firebaseConfig = {
 
     measurementId:
         "G-GJ8RY0WYBL"
+
 };
+
 
 
 /* =========================================
    INITIALIZE FIREBASE
 ========================================= */
 
-const app = initializeApp(firebaseConfig);
+const app =
+    initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
 
-const db = getFirestore(app);
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
 
 
 /* =========================================
@@ -632,27 +788,56 @@ let selectedMethod = null;
 
 let selectedReceivingWallet = null;
 
+let selectedNetwork = null;
+
 let timerInterval = null;
 
 let paymentExpired = false;
 
 
-/*
-   This is the Firestore collection used
-   by the admin wallet manager.
-*/
-const WALLET_COLLECTION = "walletSettings";
 
+/*
+ IMPORTANT
+
+ Your ADMIN wallet page saves wallets here:
+
+    wallets
+
+Each wallet document contains:
+
+    coin
+    cryptocurrency
+    network
+    address
+    active
+    createdAt
+    createdBy
+
+So this customer page MUST read
+from the same "wallets" collection.
+*/
+
+const WALLET_COLLECTION = "wallets";
+
+
+
+/* =========================================
+   CRYPTO NAMES
+========================================= */
 
 const names = {
 
-    bitcoin: "Bitcoin",
+    bitcoin:
+        "Bitcoin",
 
-    litecoin: "Litecoin",
+    litecoin:
+        "Litecoin",
 
-    ethereum: "Ethereum"
+    ethereum:
+        "Ethereum"
 
 };
+
 
 
 /* =========================================
@@ -660,19 +845,34 @@ const names = {
 ========================================= */
 
 const coinPage =
-    document.getElementById("coinPage");
+    document.getElementById(
+        "coinPage"
+    );
+
 
 const generatePage =
-    document.getElementById("generatePage");
+    document.getElementById(
+        "generatePage"
+    );
+
 
 const walletPage =
-    document.getElementById("walletPage");
+    document.getElementById(
+        "walletPage"
+    );
+
 
 const checkingPage =
-    document.getElementById("checkingPage");
+    document.getElementById(
+        "checkingPage"
+    );
+
 
 const submitPage =
-    document.getElementById("submitPage");
+    document.getElementById(
+        "submitPage"
+    );
+
 
 
 /* =========================================
@@ -685,171 +885,302 @@ function showPage(page){
         .querySelectorAll(".page")
         .forEach(item => {
 
-            item.classList.remove("active");
+            item.classList.remove(
+                "active"
+            );
 
         });
 
-    page.classList.add("active");
+
+    page.classList.add(
+        "active"
+    );
+
 
     window.scrollTo({
         top:0,
         behavior:"smooth"
     });
+
 }
 
 
+
 /* =========================================
-   AUTH
+   AUTHENTICATION
 ========================================= */
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(
+    auth,
+    async (user) => {
 
-    if(!user){
+        if(!user){
 
-        window.location.href = "login.html";
+            window.location.href =
+                "login.html";
 
-        return;
-    }
+            return;
 
-    currentUser = user;
+        }
 
-    try{
 
-        const userSnap = await getDoc(
-            doc(db, "users", user.uid)
-        );
+        currentUser =
+            user;
 
-        if(userSnap.exists()){
 
-            userData = userSnap.data();
+        try{
+
+            const userSnap =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(userSnap.exists()){
+
+                userData =
+                    userSnap.data();
+
+
+                document.getElementById(
+                    "userName"
+                ).textContent =
+
+                    userData.fullname ||
+
+                    userData.username ||
+
+                    user.email ||
+
+                    "Customer";
+
+            }else{
+
+                document.getElementById(
+                    "userName"
+                ).textContent =
+
+                    user.email ||
+
+                    "Customer";
+
+            }
+
+        }catch(error){
+
+            console.error(
+                "Unable to load user:",
+                error
+            );
+
 
             document.getElementById(
                 "userName"
             ).textContent =
-                userData.fullname ||
-                userData.username ||
-                user.email ||
-                "Customer";
 
-        }else{
-
-            document.getElementById(
-                "userName"
-            ).textContent =
                 user.email ||
+
                 "Customer";
 
         }
 
-    }catch(error){
-
-        console.error(
-            "Unable to load user:",
-            error
-        );
-
-        document.getElementById(
-            "userName"
-        ).textContent =
-            user.email ||
-            "Customer";
     }
+);
 
-});
 
 
 /* =========================================
-   GET RANDOM ADMIN WALLET
+   GET RANDOM ACTIVE ADMIN WALLET
 ========================================= */
 
-async function getRandomWallet(method){
+async function getRandomWallet(
+    method
+){
 
-    const walletRef = doc(
-        db,
-        WALLET_COLLECTION,
-        method
+    /*
+       IMPORTANT:
+
+       Admin saves:
+
+       coin: "bitcoin"
+       coin: "litecoin"
+       coin: "ethereum"
+
+       Therefore we search:
+
+       wallets
+       where coin == method
+       and active == true
+    */
+
+    const walletsRef =
+        collection(
+            db,
+            WALLET_COLLECTION
+        );
+
+
+    const walletQuery =
+        query(
+            walletsRef,
+
+            where(
+                "coin",
+                "==",
+                method
+            ),
+
+            where(
+                "active",
+                "==",
+                true
+            )
+        );
+
+
+    const snapshot =
+        await getDocs(
+            walletQuery
+        );
+
+
+    console.log(
+        "Wallets found for",
+        method,
+        ":",
+        snapshot.size
     );
 
-    const walletSnap =
-        await getDoc(walletRef);
 
-
-    if(!walletSnap.exists()){
+    if(snapshot.empty){
 
         throw new Error(
-            "No " +
+
+            "No active " +
             names[method] +
-            " wallet has been configured by the admin."
+            " wallet is available right now. Please contact support."
+
         );
 
     }
 
 
-    const data = walletSnap.data();
-
-
-    let addresses =
-        Array.isArray(data.addresses)
-            ? data.addresses
-            : [];
-
-
     /*
-       Remove empty addresses and spaces.
+       Convert Firestore documents
+       into an array.
     */
-    addresses = addresses
-        .filter(address =>
-            typeof address === "string" &&
-            address.trim() !== ""
-        )
-        .map(address =>
-            address.trim()
-        );
+
+    const wallets =
+        snapshot.docs
+            .map(
+                walletDoc => {
+
+                    const data =
+                        walletDoc.data();
 
 
-    if(addresses.length === 0){
+                    return {
+
+                        id:
+                            walletDoc.id,
+
+                        address:
+                            typeof data.address === "string"
+                                ? data.address.trim()
+                                : "",
+
+                        network:
+                            data.network ||
+                            "Not specified"
+
+                    };
+
+                }
+            )
+            .filter(
+                wallet => {
+
+                    return (
+                        wallet.address !== ""
+                    );
+
+                }
+            );
+
+
+    if(wallets.length === 0){
 
         throw new Error(
-            "There are currently no " +
+
+            "The admin has not added a valid " +
             names[method] +
-            " wallet addresses available."
+            " wallet address yet."
+
         );
 
     }
 
 
     /*
-       Randomly select one address
-       from the admin wallet pool.
+       RANDOM WALLET
+
+       If admin has:
+
+       Litecoin Wallet 1
+       Litecoin Wallet 2
+       Litecoin Wallet 3
+
+       the customer gets one randomly.
     */
 
     const randomIndex =
         Math.floor(
-            Math.random() * addresses.length
+            Math.random() *
+            wallets.length
         );
 
 
-    return addresses[randomIndex];
+    const selectedWallet =
+        wallets[randomIndex];
+
+
+    console.log(
+        "Random wallet selected:",
+        selectedWallet
+    );
+
+
+    return selectedWallet;
 
 }
+
 
 
 /* =========================================
-   DELAY FUNCTION
+   DELAY
 ========================================= */
 
-function delay(milliseconds){
+function delay(
+    milliseconds
+){
 
-    return new Promise(resolve => {
+    return new Promise(
+        resolve => {
 
-        setTimeout(
-            resolve,
-            milliseconds
-        );
+            setTimeout(
+                resolve,
+                milliseconds
+            );
 
-    });
+        }
+    );
 
 }
+
 
 
 /* =========================================
@@ -858,124 +1189,195 @@ function delay(milliseconds){
 
 document
     .querySelectorAll(".method")
-    .forEach(method => {
+    .forEach(
+        method => {
 
-        method.addEventListener(
-            "click",
-            async () => {
-
-                selectedMethod =
-                    method.dataset.method;
+            method.addEventListener(
+                "click",
+                async () => {
 
 
-                selectedReceivingWallet =
-                    null;
-
-
-                paymentExpired = false;
-
-
-                clearInterval(
-                    timerInterval
-                );
-
-
-                /*
-                   Remove old payment timer.
-                   Selecting a cryptocurrency again
-                   creates a new payment attempt.
-                */
-
-                sessionStorage.removeItem(
-                    "zavix_payment_started_at"
-                );
-
-
-                const coin =
-                    names[selectedMethod];
-
-
-                document.getElementById(
-                    "generateText"
-                ).textContent =
-                    "Generating " +
-                    coin +
-                    " wallet...";
-
-
-                showPage(
-                    generatePage
-                );
-
-
-                try{
-
-                    /*
-                       Start loading the wallet
-                       immediately.
-
-                       The page will still wait
-                       at least 3 seconds.
-                    */
-
-                    const walletPromise =
-                        getRandomWallet(
-                            selectedMethod
-                        );
-
-
-                    await delay(3000);
+                    selectedMethod =
+                        method.dataset.method;
 
 
                     selectedReceivingWallet =
-                        await walletPromise;
+                        null;
+
+
+                    selectedNetwork =
+                        null;
+
+
+                    paymentExpired =
+                        false;
+
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+
+                    sessionStorage.removeItem(
+                        "zavix_payment_started_at"
+                    );
+
+
+                    const coin =
+                        names[
+                            selectedMethod
+                        ];
 
 
                     document.getElementById(
-                        "walletTitle"
+                        "generateText"
                     ).textContent =
+
+                        "Generating " +
                         coin +
-                        " Wallet";
-
-
-                    document.getElementById(
-                        "walletAddress"
-                    ).textContent =
-                        selectedReceivingWallet;
+                        " wallet...";
 
 
                     showPage(
-                        walletPage
+                        generatePage
                     );
 
 
-                    startPaymentTimer();
+                    try{
+
+                        /*
+                           Start loading the wallet
+                           while the 3-second
+                           generating screen runs.
+                        */
+
+                        const walletPromise =
+                            getRandomWallet(
+                                selectedMethod
+                            );
 
 
-                }catch(error){
+                        /*
+                           Always show generating
+                           page for at least 3 seconds.
+                        */
 
-                    console.error(
-                        "Wallet error:",
-                        error
-                    );
-
-
-                    alert(
-                        error.message ||
-                        "Unable to load a payment wallet."
-                    );
+                        await delay(
+                            3000
+                        );
 
 
-                    showPage(
-                        coinPage
-                    );
+                        const wallet =
+                            await walletPromise;
+
+
+                        /*
+                           Save the exact wallet
+                           selected for this customer.
+                        */
+
+                        selectedReceivingWallet =
+                            wallet.address;
+
+
+                        selectedNetwork =
+                            wallet.network;
+
+
+                        document.getElementById(
+                            "walletTitle"
+                        ).textContent =
+
+                            coin +
+                            " Wallet";
+
+
+                        document.getElementById(
+                            "walletAddress"
+                        ).textContent =
+
+                            selectedReceivingWallet;
+
+
+                        document.getElementById(
+                            "walletNetwork"
+                        ).textContent =
+
+                            selectedNetwork;
+
+
+                        /*
+                           Reset button.
+                        */
+
+                        const paidButton =
+                            document.getElementById(
+                                "paidBtn"
+                            );
+
+
+                        paidButton.disabled =
+                            false;
+
+
+                        paidButton.textContent =
+                            "I Have Paid";
+
+
+                        showPage(
+                            walletPage
+                        );
+
+
+                        startPaymentTimer();
+
+
+                    }catch(error){
+
+                        console.error(
+                            "Wallet loading error:",
+                            error
+                        );
+
+
+                        let message =
+                            error.message ||
+                            "Unable to load a payment wallet.";
+
+
+                        /*
+                           Firebase permission
+                           error.
+                        */
+
+                        if(
+                            error.code ===
+                            "permission-denied"
+                        ){
+
+                            message =
+                                "Missing or insufficient permission to read payment wallets. Please check the Firestore wallets rules.";
+
+                        }
+
+
+                        alert(
+                            message
+                        );
+
+
+                        showPage(
+                            coinPage
+                        );
+
+                    }
 
                 }
+            );
 
-            }
-        );
+        }
+    );
 
-    });
 
 
 /* =========================================
@@ -989,13 +1391,9 @@ function startPaymentTimer(){
     );
 
 
-    paymentExpired = false;
+    paymentExpired =
+        false;
 
-
-    /*
-       20 minutes
-       = 1200 seconds
-    */
 
     const paymentDuration =
         20 * 60;
@@ -1015,15 +1413,18 @@ function startPaymentTimer(){
 
         const elapsed =
             Math.floor(
-                (Date.now() - startedAt) /
-                1000
+                (
+                    Date.now() -
+                    startedAt
+                ) / 1000
             );
 
 
         const remaining =
             Math.max(
                 0,
-                paymentDuration - elapsed
+                paymentDuration -
+                elapsed
             );
 
 
@@ -1040,19 +1441,27 @@ function startPaymentTimer(){
         document.getElementById(
             "timer"
         ).textContent =
-            String(minutes).padStart(2,"0") +
+
+            String(minutes)
+                .padStart(2,"0") +
+
             ":" +
-            String(seconds).padStart(2,"0");
+
+            String(seconds)
+                .padStart(2,"0");
 
 
-        if(remaining <= 0){
+        if(
+            remaining <= 0
+        ){
 
             clearInterval(
                 timerInterval
             );
 
 
-            paymentExpired = true;
+            paymentExpired =
+                true;
 
 
             document.getElementById(
@@ -1061,14 +1470,17 @@ function startPaymentTimer(){
                 "00:00";
 
 
-            document.getElementById(
-                "paidBtn"
-            ).disabled = true;
+            const paidButton =
+                document.getElementById(
+                    "paidBtn"
+                );
 
 
-            document.getElementById(
-                "paidBtn"
-            ).textContent =
+            paidButton.disabled =
+                true;
+
+
+            paidButton.textContent =
                 "Payment Window Expired";
 
         }
@@ -1088,8 +1500,9 @@ function startPaymentTimer(){
 }
 
 
+
 /* =========================================
-   COPY WALLET ADDRESS
+   COPY WALLET
 ========================================= */
 
 document
@@ -1098,17 +1511,22 @@ document
         "click",
         async () => {
 
-            if(!selectedReceivingWallet){
+            if(
+                !selectedReceivingWallet
+            ){
 
                 return;
+
             }
 
 
             try{
 
-                await navigator.clipboard.writeText(
-                    selectedReceivingWallet
-                );
+                await navigator
+                    .clipboard
+                    .writeText(
+                        selectedReceivingWallet
+                    );
 
 
                 document.getElementById(
@@ -1117,22 +1535,20 @@ document
                     "Copied ✓";
 
 
-                setTimeout(() => {
+                setTimeout(
+                    () => {
 
-                    document.getElementById(
-                        "copyBtn"
-                    ).textContent =
-                        "Copy Wallet Address";
+                        document.getElementById(
+                            "copyBtn"
+                        ).textContent =
+                            "Copy Wallet Address";
 
-                },2000);
+                    },
+                    2000
+                );
 
 
             }catch(error){
-
-                /*
-                   Fallback for browsers where
-                   clipboard permission is blocked.
-                */
 
                 const textArea =
                     document.createElement(
@@ -1166,14 +1582,17 @@ document
                     "Copied ✓";
 
 
-                setTimeout(() => {
+                setTimeout(
+                    () => {
 
-                    document.getElementById(
-                        "copyBtn"
-                    ).textContent =
-                        "Copy Wallet Address";
+                        document.getElementById(
+                            "copyBtn"
+                        ).textContent =
+                            "Copy Wallet Address";
 
-                },2000);
+                    },
+                    2000
+                );
 
             }
 
@@ -1181,12 +1600,15 @@ document
     );
 
 
+
 /* =========================================
    CHOOSE ANOTHER COIN
 ========================================= */
 
 document
-    .getElementById("chooseAnotherBtn")
+    .getElementById(
+        "chooseAnotherBtn"
+    )
     .addEventListener(
         "click",
         () => {
@@ -1197,6 +1619,10 @@ document
 
 
             selectedReceivingWallet =
+                null;
+
+
+            selectedNetwork =
                 null;
 
 
@@ -1221,12 +1647,15 @@ document
     );
 
 
+
 /* =========================================
    I HAVE PAID
 ========================================= */
 
 document
-    .getElementById("paidBtn")
+    .getElementById(
+        "paidBtn"
+    )
     .addEventListener(
         "click",
         async () => {
@@ -1238,16 +1667,20 @@ document
                 );
 
                 return;
+
             }
 
 
-            if(!selectedReceivingWallet){
+            if(
+                !selectedReceivingWallet
+            ){
 
                 alert(
                     "Your receiving wallet is not available. Please start again."
                 );
 
                 return;
+
             }
 
 
@@ -1269,7 +1702,10 @@ document
             document.getElementById(
                 "cryptoDisplay"
             ).value =
-                names[selectedMethod];
+
+                names[
+                    selectedMethod
+                ];
 
 
             showPage(
@@ -1280,15 +1716,19 @@ document
     );
 
 
+
 /* =========================================
    SUBMIT PAYMENT
 ========================================= */
 
 document
-    .getElementById("submitBtn")
+    .getElementById(
+        "submitBtn"
+    )
     .addEventListener(
         "click",
         async () => {
+
 
             const amountInput =
                 document.getElementById(
@@ -1332,9 +1772,10 @@ document
                 "none";
 
 
+
             /* =========================
-               VALIDATION
-            ========================== */
+               SESSION
+            ========================= */
 
             if(!currentUser){
 
@@ -1349,6 +1790,11 @@ document
             }
 
 
+
+            /* =========================
+               METHOD
+            ========================= */
+
             if(!selectedMethod){
 
                 errorMessage.textContent =
@@ -1361,6 +1807,11 @@ document
 
             }
 
+
+
+            /* =========================
+               RECEIVING WALLET
+            ========================= */
 
             if(!selectedReceivingWallet){
 
@@ -1375,7 +1826,15 @@ document
             }
 
 
-            if(!amount || amount <= 0){
+
+            /* =========================
+               AMOUNT
+            ========================= */
+
+            if(
+                !amount ||
+                amount <= 0
+            ){
 
                 errorMessage.textContent =
                     "Please enter a valid amount in USD.";
@@ -1387,6 +1846,11 @@ document
 
             }
 
+
+
+            /* =========================
+               SENDER
+            ========================= */
 
             if(!senderAddress){
 
@@ -1401,9 +1865,10 @@ document
             }
 
 
+
             /* =========================
-               DISABLE BUTTON
-            ========================== */
+               BUTTON
+            ========================= */
 
             const submitButton =
                 document.getElementById(
@@ -1419,11 +1884,13 @@ document
                 "Submitting...";
 
 
+
             try{
+
 
                 /* =========================
                    CREATE DEPOSIT
-                ========================== */
+                ========================= */
 
                 await addDoc(
                     collection(
@@ -1448,7 +1915,13 @@ document
                             selectedMethod,
 
                         cryptocurrency:
-                            names[selectedMethod],
+                            names[
+                                selectedMethod
+                            ],
+
+                        network:
+                            selectedNetwork ||
+                            "",
 
                         amountUSD:
                             amount,
@@ -1457,9 +1930,8 @@ document
                             senderAddress,
 
                         /*
-                           IMPORTANT:
-                           This is the exact address
-                           that was displayed to the customer.
+                           EXACT ADMIN WALLET
+                           SHOWN TO CUSTOMER
                         */
 
                         receivingWallet:
@@ -1475,9 +1947,10 @@ document
                 );
 
 
+
                 /* =========================
                    SUCCESS
-                ========================== */
+                ========================= */
 
                 successMessage.style.display =
                     "block";
@@ -1508,8 +1981,32 @@ document
                 );
 
 
-                errorMessage.textContent =
-                    "Unable to submit your payment right now. Please try again.";
+                console.error(
+                    "Firebase error code:",
+                    error.code
+                );
+
+
+                console.error(
+                    "Firebase error message:",
+                    error.message
+                );
+
+
+                if(
+                    error.code ===
+                    "permission-denied"
+                ){
+
+                    errorMessage.textContent =
+                        "You do not have permission to submit this deposit. Please check your Firestore deposits rules.";
+
+                }else{
+
+                    errorMessage.textContent =
+                        "Unable to submit your payment right now. Please try again.";
+
+                }
 
 
                 errorMessage.style.display =
@@ -1527,6 +2024,7 @@ document
 
         }
     );
+
 
 </script>
 
