@@ -148,20 +148,40 @@ body{
     margin-bottom:8px;
 }
 
+/*
+    BALANCE ROW
+
+    $0.00 and Deposit button
+    stay on the same horizontal line.
+*/
+
+.balance-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
 .balance{
     font-size:32px;
     font-weight:bold;
-    margin-bottom:20px;
 }
 
 .deposit-btn{
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
     background:linear-gradient(90deg,#2b6cff,#00b7ff);
     color:#fff;
     padding:11px 20px;
     border-radius:8px;
     text-decoration:none;
     font-weight:bold;
+    white-space:nowrap;
+}
+
+.deposit-btn:hover{
+    opacity:.9;
 }
 
 /* QUICK ACTIONS */
@@ -493,6 +513,11 @@ body{
         font-size:27px;
     }
 
+    .deposit-btn{
+        padding:10px 15px;
+        font-size:13px;
+    }
+
     .marketplace-header h2{
         font-size:20px;
     }
@@ -538,6 +563,23 @@ body{
 
     .action{
         padding:15px;
+    }
+
+    .balance-card{
+        padding:20px;
+    }
+
+    .balance-label{
+        margin-bottom:8px;
+    }
+
+    .balance{
+        font-size:24px;
+    }
+
+    .deposit-btn{
+        padding:9px 12px;
+        font-size:12px;
     }
 
     .product-grid{
@@ -672,19 +714,25 @@ body{
 </section>
 
 
+<!-- BALANCE -->
+
 <section class="balance-card">
 
     <div class="balance-label">
         Total Balance
     </div>
 
-    <div class="balance" id="balance">
-        $0.00
-    </div>
+    <div class="balance-row">
 
-    <a href="deposit.html" class="deposit-btn">
-        + Deposit
-    </a>
+        <div class="balance" id="balance">
+            $0.00
+        </div>
+
+        <a href="deposit.html" class="deposit-btn">
+            + Deposit
+        </a>
+
+    </div>
 
 </section>
 
@@ -878,26 +926,6 @@ const searchInput =
     document.getElementById("searchInput");
 
 
-/*
-    IMPORTANT
-
-    Products are stored separately from categories.
-
-    We therefore keep TWO realtime listeners:
-
-    1. products collection
-    2. categories collection
-
-    When Admin changes:
-
-    Facebook -> Facebbbok
-
-    the category listener receives the change
-    immediately and the customer dashboard
-    re-renders using the NEW category name.
-*/
-
-
 let allProducts = [];
 
 let allCategories = {};
@@ -959,19 +987,7 @@ function isImageUrl(value){
 }
 
 
-/*
-    LOAD CATEGORIES IN REAL TIME
-
-    This is the important fix.
-
-    Admin edits category document
-    ↓
-    Firestore updates
-    ↓
-    onSnapshot receives new category
-    ↓
-    dashboard re-renders
-*/
+/* CATEGORIES REALTIME */
 
 function startCategoriesListener(){
 
@@ -992,10 +1008,6 @@ function startCategoriesListener(){
                 const data =
                     categoryDoc.data();
 
-
-                /*
-                    Keep the category document ID.
-                */
 
                 newCategories[categoryDoc.id] = {
 
@@ -1020,19 +1032,9 @@ function startCategoriesListener(){
             });
 
 
-            /*
-                Replace the current category map.
-            */
-
             allCategories =
                 newCategories;
 
-
-            /*
-                Re-render immediately.
-
-                No page refresh needed.
-            */
 
             renderProducts();
 
@@ -1051,30 +1053,7 @@ function startCategoriesListener(){
 }
 
 
-/*
-    GET CURRENT CATEGORY
-
-    First we try categoryId.
-
-    This is the correct method because
-    categoryId stays the same when the
-    Admin changes the category name.
-
-    Example:
-
-    category ID:
-    abc123
-
-    Admin changes:
-    Facebook -> Facebbbok
-
-    Product still has:
-    categoryId = abc123
-
-    So customer gets:
-    Facebbbok
-*/
-
+/* GET PRODUCT CATEGORY */
 
 function getProductCategory(product){
 
@@ -1104,14 +1083,6 @@ function getProductCategory(product){
 
     }
 
-
-    /*
-        FALLBACK FOR OLD PRODUCTS
-
-        If an old product does not have
-        categoryId, use its saved category
-        information.
-    */
 
     return {
 
@@ -1156,10 +1127,6 @@ function startProductsListener(){
                 const data =
                     productDoc.data();
 
-
-                /*
-                    Do not show disabled products.
-                */
 
                 if(data.active === false){
 
@@ -1241,8 +1208,6 @@ function renderProducts(){
         allProducts;
 
 
-    /* SEARCH */
-
     if(search){
 
         products =
@@ -1259,13 +1224,6 @@ function renderProducts(){
                         product.description || ""
                     ).toLowerCase();
 
-
-                /*
-                    IMPORTANT:
-
-                    Search also uses the CURRENT
-                    category name from Firestore.
-                */
 
                 const category =
                     getProductCategory(product);
@@ -1291,10 +1249,6 @@ function renderProducts(){
 
     }
 
-
-    /*
-        If no products
-    */
 
     if(products.length === 0){
 
@@ -1324,10 +1278,6 @@ function renderProducts(){
     }
 
 
-    /*
-        GROUP PRODUCTS BY CATEGORY
-    */
-
     const groups = {};
 
 
@@ -1336,11 +1286,6 @@ function renderProducts(){
         const category =
             getProductCategory(product);
 
-
-        /*
-            If category has been disabled
-            by Admin, don't show it.
-        */
 
         if(category.active === false){
 
@@ -1377,10 +1322,6 @@ function renderProducts(){
     });
 
 
-    /*
-        If all categories are disabled
-    */
-
     if(Object.keys(groups).length === 0){
 
         productsContainer.innerHTML = `
@@ -1410,10 +1351,6 @@ function renderProducts(){
 
     let html = "";
 
-
-    /*
-        CREATE CATEGORY SECTIONS
-    */
 
     Object.values(groups).forEach(group=>{
 
@@ -1457,10 +1394,6 @@ function renderProducts(){
 
         `;
 
-
-        /*
-            PRODUCTS
-        */
 
         group.products.forEach(product=>{
 
@@ -1589,10 +1522,6 @@ onAuthStateChanged(
 
         try{
 
-            /*
-                CUSTOMER DATA
-            */
-
             const userSnap =
                 await getDoc(
                     doc(
@@ -1636,16 +1565,6 @@ onAuthStateChanged(
 
             }
 
-
-            /*
-                START BOTH REALTIME LISTENERS
-
-                Categories:
-                Admin changes appear instantly.
-
-                Products:
-                New products appear instantly.
-            */
 
             startCategoriesListener();
 
