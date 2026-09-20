@@ -18,11 +18,7 @@ export default async function handler(req, res) {
       });
     }
 
-    const {
-      amount_usd,
-      description
-    } = req.body || {};
-
+    const { amount_usd, description } = req.body || {};
     const amount = Number(amount_usd);
 
     if (!Number.isFinite(amount) || amount < 1) {
@@ -37,9 +33,9 @@ export default async function handler(req, res) {
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${apiKey}`,
+          Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
-          "Accept": "application/json"
+          Accept: "application/json"
         },
         body: JSON.stringify({
           amount_usd: amount,
@@ -61,6 +57,7 @@ export default async function handler(req, res) {
       };
     }
 
+    // Show the actual MG Crypto response if they reject it
     if (!response.ok) {
       return res.status(response.status).json({
         success: false,
@@ -70,12 +67,11 @@ export default async function handler(req, res) {
       });
     }
 
-    /*
-      Look for a payment URL in common response fields.
-      This does not expose your API key.
-    */
-    const findUrl = (obj) => {
-      if (!obj || typeof obj !== "object") return null;
+    // Find payment URL anywhere inside the response
+    function findUrl(obj) {
+      if (!obj || typeof obj !== "object") {
+        return null;
+      }
 
       for (const key of Object.keys(obj)) {
         const value = obj[key];
@@ -88,23 +84,24 @@ export default async function handler(req, res) {
         }
 
         if (value && typeof value === "object") {
-          const nested = findUrl(value);
+          const nestedUrl = findUrl(value);
 
-          if (nested) {
-            return nested;
+          if (nestedUrl) {
+            return nestedUrl;
           }
         }
       }
 
       return null;
-    };
+    }
 
     const paymentUrl = findUrl(providerData);
 
     if (!paymentUrl) {
       return res.status(502).json({
         success: false,
-        error: "MG Crypto accepted the request, but no payment URL was found.",
+        error:
+          "MG Crypto accepted the request, but no payment URL was found.",
         mg_response: providerData
       });
     }
