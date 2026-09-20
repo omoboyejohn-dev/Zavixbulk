@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Content-Type", "application/json");
 
   if (req.method !== "POST") {
     return res.status(405).json({
@@ -9,33 +9,26 @@ export default async function handler(req, res) {
   }
 
   try {
-    const body =
-      typeof req.body === "string"
-        ? JSON.parse(req.body)
-        : req.body || {};
+    const apiKey = process.env.MG_API_KEY;
 
-    const amount = Number(body.amount_usd);
-    const description =
-      body.description || "Zavixbulk Wallet Deposit";
-
-    if (!Number.isFinite(amount) || amount <= 0) {
-      return res.status(400).json({
-        success: false,
-        error: "Invalid deposit amount."
-      });
-    }
-
-    if (amount < 1) {
-      return res.status(400).json({
-        success: false,
-        error: "Minimum deposit is $1."
-      });
-    }
-
-    if (!process.env.MG_API_KEY) {
+    if (!apiKey) {
       return res.status(500).json({
         success: false,
-        error: "MG Crypto API key is not configured."
+        error: "MG_API_KEY is not configured in Vercel."
+      });
+    }
+
+    const {
+      amount_usd,
+      description
+    } = req.body || {};
+
+    const amount = Number(amount_usd);
+
+    if (!Number.isFinite(amount) || amount < 1) {
+      return res.status(400).json({
+        success: false,
+        error: "Minimum deposit amount is $1."
       });
     }
 
@@ -44,79 +37,91 @@ export default async function handler(req, res) {
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${process.env.MG_API_KEY}`,
+          "Authorization": `Bearer ${apiKey}`,
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
         body: JSON.stringify({
           amount_usd: amount,
-          description
+          description:
+            description || "Zavixbulk Bitcoin Wallet Deposit"
         })
       }
     );
 
-    const text = await response.text();
+    const responseText = await response.text();
 
-    let data;
+    let providerData;
 
     try {
-      data = JSON.parse(text);
+      providerData = JSON.parse(responseText);
     } catch {
-      data = {
-        raw: text
+      providerData = {
+        raw_response: responseText
       };
     }
-
-    console.log("MG Crypto status:", response.status);
-    console.log("MG Crypto response:", data);
 
     if (!response.ok) {
       return res.status(response.status).json({
         success: false,
         error: "MG Crypto rejected the invoice request.",
-        details: data
+        mg_status: response.status,
+        mg_response: providerData
       });
     }
 
     /*
-      MG Crypto's exact response structure can vary.
-      Look for the payment URL in the common locations.
+      Look for a payment URL in common response fields.
+      This does not expose your API key.
     */
+    const findUrl = (obj) => {
+      if (!obj || typeof obj !== "object") return null;
 
-    const paymentUrl =
-      data?.payment_url ||
-      data?.checkout_url ||
-      data?.invoice_url ||
-      data?.url ||
-      data?.data?.payment_url ||
-      data?.data?.checkout_url ||
-      data?.data?.invoice_url ||
-      data?.data?.url ||
-      data?.invoice?.payment_url ||
-      data?.invoice?.checkout_url ||
-      data?.invoice?.url;
+      for (const key of Object.keys(obj)) {
+        const value = obj[key];
+
+        if (
+          typeof value === "string" &&
+          /^https?:\/\//i.test(value)
+        ) {
+          return value;
+        }
+
+        if (value && typeof value === "object") {
+          const nested = findUrl(value);
+
+          if (nested) {
+            return nested;
+          }
+        }
+      }
+
+      return null;
+    };
+
+    const paymentUrl = findUrl(providerData);
 
     if (!paymentUrl) {
       return res.status(502).json({
         success: false,
-        error: "MG Crypto created a response, but no payment URL was found.",
-        data
+        error: "MG Crypto accepted the request, but no payment URL was found.",
+        mg_response: providerData
       });
     }
 
     return res.status(200).json({
       success: true,
       payment_url: paymentUrl,
-      data
+      mg_response: providerData
     });
 
   } catch (error) {
-    console.error("Create invoice error:", error);
+    console.error("MG Crypto error:", error);
 
     return res.status(500).json({
       success: false,
-      error: "Unable to create Bitcoin invoice.",
-      message: error.message
+      error: "Server error while connecting to MG Crypto.",
+      details: error.message
     });
   }
 }
