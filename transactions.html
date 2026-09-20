@@ -1,9 +1,16 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Zavixbulk | Payment History</title><style>
-*{box-sizing:border-box;margin:0;padding:0}
+<title>Zavixbulk | Payment History</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
     font-family:Inter,Arial,sans-serif;
@@ -24,10 +31,17 @@ body{
     top:0;
     left:0;
     right:0;
+    z-index:100;
 }
 
-.logo{font-size:22px;font-weight:900}
-.logo span{color:#4f8cff}
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#4f8cff;
+}
 
 .header-right{
     color:#9cacc9;
@@ -99,6 +113,7 @@ body{
     font-weight:800;
     background:#102d20;
     color:#62d99a;
+    text-transform:capitalize;
 }
 
 .pending{
@@ -106,7 +121,8 @@ body{
     color:#e6c66b;
 }
 
-.failed{
+.failed,
+.rejected{
     background:#321820;
     color:#ff7888;
 }
@@ -115,13 +131,28 @@ body{
     text-align:center;
     padding:80px 20px;
     color:#7182a1;
+    line-height:1.6;
+}
+
+.loading{
+    text-align:center;
+    padding:60px 20px;
+    color:#7182a1;
 }
 
 @media(max-width:700px){
 
-    .header{padding:0 16px}
-    .header-right{display:none}
-    .main{padding:90px 12px 35px}
+    .header{
+        padding:0 16px;
+    }
+
+    .header-right{
+        display:none;
+    }
+
+    .main{
+        padding:90px 12px 35px;
+    }
 
     .table-box{
         overflow-x:auto;
@@ -130,199 +161,417 @@ body{
     .row{
         min-width:650px;
     }
-
 }
-</style></head><body><header class="header"><div class="logo">
-    ZAVIX<span>BULK</span>
-</div>
+</style>
+</head>
 
-<div class="header-right" id="headerName">
-    Customer
-</div>
+<body>
 
-</header><main class="main"><a href="dashboard.html" class="back">
-    ← Back to Dashboard
-</a><div class="title">
-    Payment History
-</div><div class="table-box"><div class="row head">
-    <div>DESCRIPTION</div>
-    <div>AMOUNT</div>
-    <div>STATUS</div>
-    <div>DATE</div>
-</div>
+<header class="header">
 
-<div id="list">
-    <div class="empty">
-        Loading payment history...
+    <div class="logo">
+        ZAVIX<span>BULK</span>
     </div>
-</div>
 
-</div></main><script type="module">
+    <div class="header-right" id="headerName">
+        Customer
+    </div>
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+</header>
+
+
+<main class="main">
+
+    <a href="dashboard.html" class="back">
+        ← Back to Dashboard
+    </a>
+
+    <div class="title">
+        Payment History
+    </div>
+
+    <div class="table-box">
+
+        <div class="row head">
+            <div>DESCRIPTION</div>
+            <div>AMOUNT</div>
+            <div>STATUS</div>
+            <div>DATE</div>
+        </div>
+
+        <div id="list">
+
+            <div class="loading">
+                Loading payment history...
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
 
 import {
     getFirestore,
     collection,
+    getDocs,
     query,
     where,
-    orderBy,
-    onSnapshot,
     doc,
     getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
-const firebaseConfig={
+
+const firebaseConfig = {
+
     apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
     authDomain:"zavixbulk.firebaseapp.com",
+
     projectId:"zavixbulk",
+
     storageBucket:"zavixbulk.firebasestorage.app",
+
     messagingSenderId:"819994897169",
+
     appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
     measurementId:"G-GJ8RY0WYBL"
+
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
 
-const list=document.getElementById("list");
-const headerName=document.getElementById("headerName");
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+const list =
+    document.getElementById("list");
+
+const headerName =
+    document.getElementById("headerName");
+
 
 function money(value){
-    return "$"+Number(value||0).toLocaleString(
-        "en-US",
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    );
+
+    return "$" +
+        Number(value || 0).toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+
 }
+
 
 function dateText(value){
 
-    if(!value) return "Processing";
+    if(!value){
+        return "Processing";
+    }
 
-    const date=value.toDate
-        ? value.toDate()
-        : new Date(value);
+    try{
 
-    return date.toLocaleString();
+        const date =
+            value.toDate
+                ? value.toDate()
+                : new Date(value);
+
+        return date.toLocaleString();
+
+    }catch(error){
+
+        return "Processing";
+
+    }
 
 }
 
-onAuthStateChanged(auth,async user=>{
 
-    if(!user){
-        location.href="login.html";
-        return;
-    }
+function statusClass(status){
 
-    const userSnap=await getDoc(
-        doc(db,"users",user.uid)
-    );
+    status =
+        String(status || "").toLowerCase();
 
-    if(userSnap.exists()){
+    if(
+        status === "pending" ||
+        status === "processing"
+    ){
 
-        const data=userSnap.data();
-
-        headerName.textContent=
-            data.fullname||
-            data.username||
-            "Customer";
+        return "pending";
 
     }
 
-    const q=query(
-        collection(db,"transactions"),
-        where("userId","==",user.uid),
-        orderBy("createdAt","desc")
-    );
+    if(
+        status === "failed" ||
+        status === "rejected"
+    ){
 
-    onSnapshot(q,snapshot=>{
+        return "failed";
 
-        if(snapshot.empty){
+    }
 
-            list.innerHTML=`
-                <div class="empty">
-                    No payment history yet.
-                </div>
-            `;
+    return "";
+
+}
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            location.href =
+                "login.html";
 
             return;
 
         }
 
-        list.innerHTML="";
 
-        snapshot.forEach(item=>{
+        try{
 
-            const data=item.data();
+            /* CUSTOMER NAME */
 
-            let statusClass="";
+            const userSnap =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
 
-            if(data.status==="pending"){
-                statusClass="pending";
+
+            if(userSnap.exists()){
+
+                const data =
+                    userSnap.data();
+
+                headerName.textContent =
+                    data.fullname ||
+                    data.username ||
+                    "Customer";
+
             }
 
-            if(
-                data.status==="failed" ||
-                data.status==="rejected"
-            ){
-                statusClass="failed";
+
+            /*
+             * IMPORTANT:
+             * We only use where(userId == current user).
+             * We sort the records ourselves.
+             *
+             * This avoids the Firestore composite-index
+             * problem caused by where + orderBy.
+             */
+
+            const q =
+                query(
+                    collection(
+                        db,
+                        "transactions"
+                    ),
+                    where(
+                        "userId",
+                        "==",
+                        user.uid
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(q);
+
+
+            if(snapshot.empty){
+
+                list.innerHTML = `
+
+                    <div class="empty">
+
+                        💳<br><br>
+
+                        No payment history yet.
+
+                    </div>
+
+                `;
+
+                return;
+
             }
 
-            const row=document.createElement("div");
 
-            row.className="row";
+            const transactions = [];
 
-            row.innerHTML=`
 
-                <div class="cell">
-                    ${data.description||data.type||"Transaction"}
-                </div>
+            snapshot.forEach(item => {
 
-                <div class="cell amount">
-                    ${money(data.amount)}
-                </div>
+                transactions.push({
 
-                <div class="cell">
-                    <span class="status ${statusClass}">
-                        ${data.status||"completed"}
-                    </span>
-                </div>
+                    id:item.id,
 
-                <div class="cell">
-                    ${dateText(data.createdAt)}
+                    ...item.data()
+
+                });
+
+            });
+
+
+            /*
+             * Newest first
+             */
+
+            transactions.sort(
+                (a,b) => {
+
+                    const aTime =
+                        a.createdAt?.toMillis
+                            ? a.createdAt.toMillis()
+                            : 0;
+
+                    const bTime =
+                        b.createdAt?.toMillis
+                            ? b.createdAt.toMillis()
+                            : 0;
+
+                    return bTime - aTime;
+
+                }
+            );
+
+
+            list.innerHTML = "";
+
+
+            transactions.forEach(
+                data => {
+
+                    const status =
+                        String(
+                            data.status ||
+                            "completed"
+                        ).toLowerCase();
+
+
+                    const row =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    row.className =
+                        "row";
+
+
+                    row.innerHTML = `
+
+                        <div class="cell">
+
+                            ${escapeHTML(
+                                data.description ||
+                                data.type ||
+                                data.coin ||
+                                "Wallet Deposit"
+                            )}
+
+                        </div>
+
+
+                        <div class="cell amount">
+
+                            ${money(data.amount)}
+
+                        </div>
+
+
+                        <div class="cell">
+
+                            <span class="status ${statusClass(status)}">
+
+                                ${escapeHTML(status)}
+
+                            </span>
+
+                        </div>
+
+
+                        <div class="cell">
+
+                            ${dateText(
+                                data.createdAt
+                            )}
+
+                        </div>
+
+                    `;
+
+
+                    list.appendChild(row);
+
+                }
+            );
+
+
+        }catch(error){
+
+            console.error(
+                "Payment history error:",
+                error
+            );
+
+
+            list.innerHTML = `
+
+                <div class="empty">
+
+                    Unable to load payment history.<br><br>
+
+                    Please refresh the page and try again.
+
                 </div>
 
             `;
 
-            list.appendChild(row);
+        }
 
-        });
+    }
+);
 
-    },error=>{
+</script>
 
-        console.error(error);
-
-        list.innerHTML=`
-            <div class="empty">
-                Unable to load payment history.
-            </div>
-        `;
-
-    });
-
-});
-
-</script></body>
+</body>
 </html>
