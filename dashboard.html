@@ -149,13 +149,11 @@ body{
 }
 
 /*
-    BALANCE ROW
+    EXACT BALANCE LAYOUT
 
     Total Balance
-    $0.00                         [ Deposit ]
 
-    The balance and Deposit button
-    stay on the SAME horizontal line.
+    $0.00                         [ Deposit ]
 */
 
 .balance-row{
@@ -176,13 +174,25 @@ body{
     display:inline-flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(90deg,#2b6cff,#00b7ff);
+
+    background:linear-gradient(
+        90deg,
+        #2b6cff,
+        #00b7ff
+    );
+
     color:#fff;
+
     padding:11px 20px;
+
     border-radius:8px;
+
     text-decoration:none;
+
     font-weight:bold;
+
     white-space:nowrap;
+
     flex-shrink:0;
 }
 
@@ -517,13 +527,19 @@ body{
         font-size:22px;
     }
 
-    /*
-        KEEP BALANCE AND DEPOSIT
-        ON THE SAME LINE.
-    */
+    /* BALANCE */
 
     .balance-card{
         padding:20px;
+    }
+
+    .balance-label{
+        margin-bottom:12px;
+    }
+
+    .balance-row{
+        width:100%;
+        gap:10px;
     }
 
     .balance{
@@ -593,10 +609,15 @@ body{
     }
 
     /*
-        Still SAME LINE on small phones.
+        NEVER PUT DEPOSIT UNDER BALANCE.
+        KEEP BOTH ON THE SAME LINE.
     */
 
     .balance-row{
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+        justify-content:space-between;
         gap:8px;
     }
 
