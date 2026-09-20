@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zavixbulk | Admin Deposits</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0b1230;
+    border-bottom:1px solid #1b326b;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:23px;
+    font-weight:900;
+    color:#4da3ff;
+}
+
+.admin-label{
+    color:#8d9aba;
+    font-size:13px;
+}
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 70px);
+}
+
+.sidebar{
+    width:245px;
+    background:#080e25;
+    border-right:1px solid #182e62;
+    padding:25px 15px;
+    flex-shrink:0;
+}
+
+.sidebar-title{
+    color:#687795;
+    font-size:11px;
+    text-transform:uppercase;
+    margin:0 10px 12px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:13px 12px;
+    margin-bottom:5px;
+    border-radius:8px;
+    color:#cfd5e8;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:#122354;
+    color:#4da3ff;
+}
+
+.nav-icon{
+    width:24px;
+    text-align:center;
+}
+
+.logout{
+    margin-top:20px;
+    color:#ff7070;
+    cursor:pointer;
+}
+
+.main{
+    flex:1;
+    padding:30px;
+    min-width:0;
+}
+
+.page-title{
+    font-size:27px;
+    margin-bottom:7px;
+}
+
+.page-subtitle{
+    color:#7d8cab;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.stat{
+    background:#0b1230;
+    border:1px solid #1b326b;
+    border-radius:12px;
+    padding:20px;
+}
+
+.stat-label{
+    color:#71809f;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.stat-value{
+    font-size:25px;
+    font-weight:800;
+}
+
+.toolbar{
+    display:flex;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.search{
+    flex:1;
+    max-width:500px;
+    padding:13px 15px;
+    background:#0b1230;
+    border:1px solid #1b326b;
+    border-radius:9px;
+    color:#fff;
+    outline:none;
+}
+
+.search:focus{
+    border-color:#3985ff;
+}
+
+.filter{
+    background:#0b1230;
+    border:1px solid #1b326b;
+    color:#fff;
+    padding:12px;
+    border-radius:9px;
+    outline:none;
+}
+
+.table-box{
+    background:#0b1230;
+    border:1px solid #1b326b;
+    border-radius:13px;
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1050px;
+}
+
+th{
+    text-align:left;
+    padding:15px;
+    background:#0e1838;
+    color:#8392b1;
+    font-size:11px;
+    text-transform:uppercase;
+    white-space:nowrap;
+}
+
+td{
+    padding:15px;
+    border-top:1px solid #182b58;
+    font-size:13px;
+    vertical-align:top;
+}
+
+.customer{
+    font-weight:700;
+}
+
+.username{
+    color:#7283a3;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.coin{
+    color:#6594ff;
+    font-weight:800;
+}
+
+.amount{
+    font-weight:800;
+}
+
+.wallet{
+    max-width:180px;
+    word-break:break-all;
+    color:#8da6d9;
+    font-size:11px;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.status.pending{
+    background:#302817;
+    color:#e9bd5b;
+}
+
+.status.approved{
+    background:#0d3025;
+    color:#5ed5a3;
+}
+
+.status.rejected{
+    background:#35191f;
+    color:#ff7785;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.action-btn{
+    border:0;
+    padding:8px 11px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.approve{
+    background:#126b4b;
+    color:#fff;
+}
+
+.reject{
+    background:#7b2734;
+    color:#fff;
+}
+
+.view{
+    background:#1d3d79;
+    color:#fff;
+}
+
+.action-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#71809e;
+}
+
+.loading{
+    text-align:center;
+    padding:60px;
+    color:#71809e;
+}
+
+.spinner{
+    width:35px;
+    height:35px;
+    border:3px solid #1a2948;
+    border-top-color:#4d83ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:0 auto 15px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    z-index:3000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow:auto;
+    background:#0a1024;
+    border:1px solid #26385e;
+    border-radius:15px;
+    padding:25px;
+}
+
+.modal-title{
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:20px;
+}
+
+.detail{
+    background:#070c1c;
+    border:1px solid #1d2c4a;
+    border-radius:9px;
+    padding:13px;
+    margin-bottom:10px;
+}
+
+.detail-label{
+    color:#71809e;
+    font-size:10px;
+    margin-bottom:5px;
+    text-transform:uppercase;
+}
+
+.detail-value{
+    font-size:13px;
+    word-break:break-all;
+}
+
+.close-btn{
+    width:100%;
+    margin-top:12px;
+    padding:12px;
+    border:1px solid #293a5d;
+    background:#111a31;
+    color:#fff;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+@media(max-width:800px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        padding:22px 15px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        ZAVIXBULK ADMIN
+    </div>
+
+    <div class="admin-label">
+        Deposit Management
+    </div>
+
+</header>
+
+
+<div class="layout">
+
+<aside class="sidebar">
+
+    <div class="sidebar-title">
+        Admin Panel
+    </div>
+
+    <a href="index.html" class="nav-item">
+        <span class="nav-icon">📊</span>
+        Dashboard
+    </a>
+
+    <a href="products.html" class="nav-item">
+        <span class="nav-icon">💎</span>
+        Products
+    </a>
+
+    <a href="categories.html" class="nav-item">
+        <span class="nav-icon">📁</span>
+        Categories
+    </a>
+
+    <a href="orders.html" class="nav-item">
+        <span class="nav-icon">📦</span>
+        Orders
+    </a>
+
+    <a href="customers.html" class="nav-item">
+        <span class="nav-icon">👥</span>
+        Customers
+    </a>
+
+    <a href="deposits.html" class="nav-item active">
+        <span class="nav-icon">💰</span>
+        Deposits
+    </a>
+
+    <a href="transactions.html" class="nav-item">
+        <span class="nav-icon">💳</span>
+        Transactions
+    </a>
+
+    <div
+        class="nav-item logout"
+        id="logoutBtn"
+    >
+        <span class="nav-icon">🚪</span>
+        Logout
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <h1 class="page-title">
+        Deposits
+    </h1>
+
+    <p class="page-subtitle">
+        Review customer cryptocurrency deposits.
+    </p>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Pending Deposits
+            </div>
+
+            <div
+                class="stat-value"
+                id="pendingCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Approved Deposits
+            </div>
+
+            <div
+                class="stat-value"
+                id="approvedCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Rejected Deposits
+            </div>
+
+            <div
+                class="stat-value"
+                id="rejectedCount"
+            >
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="toolbar">
+
+        <input
+            type="search"
+            id="searchInput"
+            class="search"
+            placeholder="Search customer or wallet..."
+        >
+
+
+        <select
+            id="filter"
+            class="filter"
+        >
+
+            <option value="all">
+                All
+            </option>
+
+            <option value="pending">
+                Pending
+            </option>
+
+            <option value="approved">
+                Approved
+            </option>
+
+            <option value="rejected">
+                Rejected
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="table-box">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Customer
+                    </th>
+
+                    <th>
+                        Coin
+                    </th>
+
+                    <th>
+                        Amount
+                    </th>
+
+                    <th>
+                        Sender Wallet
+                    </th>
+
+                    <th>
+                        Receiving Wallet
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Actions
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="depositTable">
+
+                <tr>
+
+                    <td colspan="7">
+
+                        <div class="loading">
+
+                            <div class="spinner"></div>
+
+                            Loading deposits...
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</main>
+
+</div>
+
+
+<!-- VIEW MODAL -->
+
+<div
+    class="modal"
+    id="viewModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-title">
+            Deposit Details
+        </div>
+
+        <div id="modalDetails"></div>
+
+        <button
+            class="close-btn"
+            id="closeModal"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    getDocs,
+    doc,
+    getDoc,
+    updateDoc,
+    increment,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
+    authDomain:"zavixbulk.firebaseapp.com",
+
+    projectId:"zavixbulk",
+
+    storageBucket:"zavixbulk.firebasestorage.app",
+
+    messagingSenderId:"819994897169",
+
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
+    measurementId:"G-GJ8RY0WYBL"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+const depositTable =
+    document.getElementById("depositTable");
+
+const searchInput =
+    document.getElementById("searchInput");
+
+const filter =
+    document.getElementById("filter");
+
+const pendingCount =
+    document.getElementById("pendingCount");
+
+const approvedCount =
+    document.getElementById("approvedCount");
+
+const rejectedCount =
+    document.getElementById("rejectedCount");
+
+const viewModal =
+    document.getElementById("viewModal");
+
+const modalDetails =
+    document.getElementById("modalDetails");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+
+let deposits = [];
+
+
+/* ESCAPE HTML */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* MONEY */
+
+function formatMoney(value){
+
+    return "$" +
+        Number(value || 0).toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+
+}
+
+
+/* DATE */
+
+function formatDate(timestamp){
+
+    if(!timestamp){
+        return "Pending";
+    }
+
+    try{
+
+        return timestamp.toDate().toLocaleString();
+
+    }catch(error){
+
+        return "Unknown";
+
+    }
+
+}
+
+
+/* LOAD DEPOSITS */
+
+async function loadDeposits(){
+
+    try{
+
+        const snapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "deposits"
+                )
+            );
+
+
+        deposits = [];
+
+
+        snapshot.forEach(depositDoc => {
+
+            deposits.push({
+
+                id:
+                    depositDoc.id,
+
+                ...depositDoc.data()
+
+            });
+
+        });
+
+
+        deposits.sort((a,b)=>{
+
+            const aTime =
+                a.createdAt?.seconds || 0;
+
+            const bTime =
+                b.createdAt?.seconds || 0;
+
+            return bTime - aTime;
+
+        });
+
+
+        updateStats();
+
+        renderDeposits();
+
+    }catch(error){
+
+        console.error(error);
+
+        depositTable.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+                        Unable to load deposits.
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+/* STATS */
+
+function updateStats(){
+
+    const pending =
+        deposits.filter(
+            item => item.status === "pending"
+        ).length;
+
+    const approved =
+        deposits.filter(
+            item => item.status === "approved"
+        ).length;
+
+    const rejected =
+        deposits.filter(
+            item => item.status === "rejected"
+        ).length;
+
+
+    pendingCount.textContent =
+        pending;
+
+    approvedCount.textContent =
+        approved;
+
+    rejectedCount.textContent =
+        rejected;
+
+}
+
+
+/* RENDER */
+
+function renderDeposits(){
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+    const selectedFilter =
+        filter.value;
+
+
+    const filtered =
+        deposits.filter(item => {
+
+            const statusMatch =
+                selectedFilter === "all" ||
+                item.status === selectedFilter;
+
+
+            const text =
+                (
+                    item.customerName ||
+                    ""
+                ) +
+                " " +
+                (
+                    item.username ||
+                    ""
+                ) +
+                " " +
+                (
+                    item.senderWallet ||
+                    ""
+                ) +
+                " " +
+                (
+                    item.cryptocurrency ||
+                    ""
+                );
+
+
+            const searchMatch =
+                !search ||
+                text.toLowerCase().includes(search);
+
+
+            return statusMatch &&
+                   searchMatch;
+
+        });
+
+
+    if(filtered.length === 0){
+
+        depositTable.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+                        No deposits found.
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    filtered.forEach(item => {
+
+        const status =
+            item.status || "pending";
+
+
+        html += `
+
+            <tr>
+
+                <td>
+
+                    <div class="customer">
+                        ${escapeHTML(
+                            item.customerName ||
+                            "Customer"
+                        )}
+                    </div>
+
+                    <div class="username">
+                        ${escapeHTML(
+                            item.username ||
+                            ""
+                        )}
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="coin">
+                        ${escapeHTML(
+                            item.cryptocurrency ||
+                            item.method ||
+                            "Crypto"
+                        )}
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="amount">
+                        ${formatMoney(
+                            item.amountUSD
+                        )}
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="wallet">
+                        ${escapeHTML(
+                            item.senderWallet ||
+                            "Not provided"
+                        )}
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="wallet">
+                        ${escapeHTML(
+                            item.receivingWallet ||
+                            "Not provided"
+                        )}
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <span class="status ${status}">
+                        ${escapeHTML(status)}
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="actions">
+
+                        <button
+                            class="action-btn view"
+                            data-action="view"
+                            data-id="${item.id}"
+                        >
+                            View
+                        </button>
+
+
+                        ${
+                            status === "pending"
+
+                            ?
+
+                            `
+
+                            <button
+                                class="action-btn approve"
+                                data-action="approve"
+                                data-id="${item.id}"
+                            >
+                                Approve
+                            </button>
+
+                            <button
+                                class="action-btn reject"
+                                data-action="reject"
+                                data-id="${item.id}"
+                            >
+                                Reject
+                            </button>
+
+                            `
+
+                            :
+
+                            ""
+
+                        }
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+
+    depositTable.innerHTML =
+        html;
+
+}
+
+
+/* VIEW */
+
+function viewDeposit(id){
+
+    const deposit =
+        deposits.find(
+            item => item.id === id
+        );
+
+
+    if(!deposit){
+        return;
+    }
+
+
+    modalDetails.innerHTML = `
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Customer
+            </div>
+
+            <div class="detail-value">
+                ${escapeHTML(
+                    deposit.customerName ||
+                    "Customer"
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Username
+            </div>
+
+            <div class="detail-value">
+                ${escapeHTML(
+                    deposit.username ||
+                    "-"
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Cryptocurrency
+            </div>
+
+            <div class="detail-value">
+                ${escapeHTML(
+                    deposit.cryptocurrency ||
+                    deposit.method ||
+                    "-"
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Amount Paid
+            </div>
+
+            <div class="detail-value">
+                ${formatMoney(
+                    deposit.amountUSD
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Sender Wallet
+            </div>
+
+            <div class="detail-value">
+                ${escapeHTML(
+                    deposit.senderWallet ||
+                    "-"
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Receiving Wallet
+            </div>
+
+            <div class="detail-value">
+                ${escapeHTML(
+                    deposit.receivingWallet ||
+                    "-"
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Status
+            </div>
+
+            <div class="detail-value">
+                ${escapeHTML(
+                    deposit.status ||
+                    "pending"
+                )}
+            </div>
+
+        </div>
+
+
+        <div class="detail">
+
+            <div class="detail-label">
+                Submitted
+            </div>
+
+            <div class="detail-value">
+                ${formatDate(
+                    deposit.createdAt
+                )}
+            </div>
+
+        </div>
+
+    `;
+
+
+    viewModal.classList.add(
+        "show"
+    );
+
+}
+
+
+/* APPROVE */
+
+async function approveDeposit(id){
+
+    const deposit =
+        deposits.find(
+            item => item.id === id
+        );
+
+
+    if(!deposit){
+        return;
+    }
+
+
+    if(deposit.status !== "pending"){
+
+        alert(
+            "This deposit has already been processed."
+        );
+
+        return;
+
+    }
+
+
+    const amount =
+        Number(
+            deposit.amountUSD || 0
+        );
+
+
+    if(amount <= 0){
+
+        alert(
+            "Invalid deposit amount."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "Have you verified this cryptocurrency payment on the blockchain?\n\nApprove this deposit for " +
+            formatMoney(amount) +
+            "?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    try{
+
+        /*
+         * Get the customer's current balance.
+         */
+
+        const userRef =
+            doc(
+                db,
+                "users",
+                deposit.userId
+            );
+
+
+        const userSnapshot =
+            await getDoc(userRef);
+
+
+        if(!userSnapshot.exists()){
+
+            alert(
+                "Customer account could not be found."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Credit customer wallet.
+         */
+
+        await updateDoc(
+            userRef,
+            {
+
+                balance:
+                    increment(amount)
+
+            }
+        );
+
+
+        /*
+         * Mark deposit approved.
+         */
+
+        await updateDoc(
+            doc(
+                db,
+                "deposits",
+                id
+            ),
+            {
+
+                status:
+                    "approved",
+
+                approvedAt:
+                    serverTimestamp(),
+
+                approvedBy:
+                    auth.currentUser?.uid ||
+                    ""
+
+            }
+        );
+
+
+        /*
+         * Create transaction record.
+         */
+
+        await addDoc(
+            collection(
+                db,
+                "transactions"
+            ),
+            {
+
+                userId:
+                    deposit.userId,
+
+                type:
+                    "deposit",
+
+                method:
+                    deposit.cryptocurrency ||
+                    deposit.method ||
+                    "Crypto",
+
+                amount:
+                    amount,
+
+                currency:
+                    "USD",
+
+                status:
+                    "completed",
+
+                depositId:
+                    id,
+
+                description:
+                    "Crypto deposit approved",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        alert(
+            "Deposit approved successfully.\n\n" +
+            formatMoney(amount) +
+            " has been added to the customer's wallet."
+        );
+
+
+        await loadDeposits();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to approve deposit: " +
+            error.message
+        );
+
+    }
+
+}
+
+
+/* REJECT */
+
+async function rejectDeposit(id){
+
+    const deposit =
+        deposits.find(
+            item => item.id === id
+        );
+
+
+    if(!deposit){
+        return;
+    }
+
+
+    if(deposit.status !== "pending"){
+
+        alert(
+            "This deposit has already been processed."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to reject this deposit?"
+        );
+
+
+    if(!confirmed){
+        return;
+    }
+
+
+    try{
+
+        await updateDoc(
+            doc(
+                db,
+                "deposits",
+                id
+            ),
+            {
+
+                status:
+                    "rejected",
+
+                rejectedAt:
+                    serverTimestamp(),
+
+                rejectedBy:
+                    auth.currentUser?.uid ||
+                    ""
+
+            }
+        );
+
+
+        alert(
+            "Deposit rejected."
+        );
+
+
+        await loadDeposits();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to reject deposit."
+        );
+
+    }
+
+}
+
+
+/* ACTION BUTTONS */
+
+depositTable.addEventListener(
+    "click",
+    event => {
+
+        const button =
+            event.target.closest(
+                "[data-action]"
+            );
+
+
+        if(!button){
+            return;
+        }
+
+
+        const action =
+            button.dataset.action;
+
+        const id =
+            button.dataset.id;
+
+
+        if(action === "view"){
+
+            viewDeposit(id);
+
+        }
+
+
+        if(action === "approve"){
+
+            approveDeposit(id);
+
+        }
+
+
+        if(action === "reject"){
+
+            rejectDeposit(id);
+
+        }
+
+    }
+);
+
+
+/* SEARCH */
+
+searchInput.addEventListener(
+    "input",
+    renderDeposits
+);
+
+
+/* FILTER */
+
+filter.addEventListener(
+    "change",
+    renderDeposits
+);
+
+
+/* CLOSE MODAL */
+
+closeModal.addEventListener(
+    "click",
+    ()=>{
+
+        viewModal.classList.remove(
+            "show"
+        );
+
+    }
+);
+
+
+/* LOGOUT */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async ()=>{
+
+            await signOut(auth);
+
+            window.location.href =
+                "login.html";
+
+        }
+    );
+
+
+/* ADMIN AUTH */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        await loadDeposits();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
