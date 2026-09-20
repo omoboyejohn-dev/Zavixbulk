@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zavixbulk | Generate Wallet</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.box{
+    width:90%;
+    max-width:430px;
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:18px;
+    padding:35px 25px;
+    text-align:center;
+}
+
+.icon{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.title{
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:10px;
+}
+
+.text{
+    color:#7b8daa;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.spinner{
+    width:42px;
+    height:42px;
+    border:3px solid #1b2a49;
+    border-top-color:#4f87ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:25px auto 15px;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+.count{
+    color:#5d8dff;
+    font-size:13px;
+    font-weight:700;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="icon" id="coinIcon">₿</div>
+
+    <div class="title" id="title">
+        Generating Bitcoin Wallet
+    </div>
+
+    <div class="text">
+        Please wait while we prepare your secure payment wallet.
+    </div>
+
+    <div class="spinner"></div>
+
+    <div class="count" id="count">
+        3 seconds
+    </div>
+
+</div>
+
+<script>
+
+const params=
+    new URLSearchParams(location.search);
+
+const coin=
+    params.get("coin") || "bitcoin";
+
+const names={
+    bitcoin:"Bitcoin",
+    litecoin:"Litecoin",
+    ethereum:"Ethereum"
+};
+
+const icons={
+    bitcoin:"₿",
+    litecoin:"Ł",
+    ethereum:"♦"
+};
+
+const name=
+    names[coin] || "Bitcoin";
+
+document.getElementById("coinIcon").textContent=
+    icons[coin] || "₿";
+
+document.getElementById("title").textContent=
+    "Generating "+name+" Wallet";
+
+let seconds=3;
+
+const count=
+    document.getElementById("count");
+
+const timer=setInterval(()=>{
+
+    seconds--;
+
+    count.textContent=
+        seconds+" second"+(seconds===1?"":"s");
+
+    if(seconds<=0){
+
+        clearInterval(timer);
+
+        location.href=
+            "deposit-address.html?coin="+
+            encodeURIComponent(coin);
+
+    }
+
+},1000);
+
+</script>
+
+</body>
+</html>
