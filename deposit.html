@@ -275,6 +275,7 @@ input:focus{
     border:1px solid rgba(255,255,255,.08);
     font-size:13px;
     line-height:1.6;
+    word-break:break-word;
 }
 
 .status.show{
@@ -354,6 +355,7 @@ input:focus{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -463,7 +465,7 @@ input:focus{
     </div>
 
 
-    <!-- PAYMENT 1 CARD -->
+    <!-- PAYMENT 1 -->
 
     <div
         class="card"
@@ -510,38 +512,23 @@ input:focus{
 
         <div class="quick">
 
-            <button
-                type="button"
-                onclick="setAmount(5)"
-            >
+            <button type="button" onclick="setAmount(5)">
                 $5
             </button>
 
-            <button
-                type="button"
-                onclick="setAmount(10)"
-            >
+            <button type="button" onclick="setAmount(10)">
                 $10
             </button>
 
-            <button
-                type="button"
-                onclick="setAmount(20)"
-            >
+            <button type="button" onclick="setAmount(20)">
                 $20
             </button>
 
-            <button
-                type="button"
-                onclick="setAmount(50)"
-            >
+            <button type="button" onclick="setAmount(50)">
                 $50
             </button>
 
-            <button
-                type="button"
-                onclick="setAmount(100)"
-            >
+            <button type="button" onclick="setAmount(100)">
                 $100
             </button>
 
@@ -573,9 +560,9 @@ input:focus{
             </h3>
 
             <p>
-                Your payment invoice has been created.
+                Your Bitcoin invoice has been created.
                 Continue to the secure payment page to
-                complete your Bitcoin deposit.
+                complete your deposit.
             </p>
 
 
@@ -623,6 +610,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
+/* FIREBASE */
+
 const firebaseConfig = {
 
     apiKey:
@@ -659,8 +648,7 @@ const db =
     getFirestore(app);
 
 
-let currentUser = null;
-
+/* ELEMENTS */
 
 const amountInput =
     document.getElementById("amount");
@@ -677,6 +665,24 @@ const paymentBox =
 const payBtn =
     document.getElementById("payBtn");
 
+let currentUser = null;
+
+
+/* MONEY */
+
+function formatMoney(value){
+
+    return "$" +
+        Number(value || 0).toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+
+}
+
 
 /* QUICK AMOUNT */
 
@@ -692,33 +698,47 @@ window.setAmount = function(amount){
 
 document
     .getElementById("payment2")
-    .addEventListener("click",()=>{
+    .addEventListener(
+        "click",
+        function(){
 
-        alert(
-            "Payment 2 is currently under development.\n\nPlease use Payment 1 (Bitcoin) for now."
-        );
+            document
+                .getElementById("payment2")
+                .classList.remove("active");
 
-    });
+            document
+                .getElementById("payment1")
+                .classList.add("active");
+
+            alert(
+                "Payment 2 is coming soon.\n\nPlease use Payment 1 — Bitcoin — for now."
+            );
+
+        }
+    );
 
 
 /* PAYMENT 1 */
 
 document
     .getElementById("payment1")
-    .addEventListener("click",()=>{
+    .addEventListener(
+        "click",
+        function(){
 
-        document
-            .getElementById("payment1")
-            .classList.add("active");
+            document
+                .getElementById("payment1")
+                .classList.add("active");
 
-    });
+        }
+    );
 
 
-/* AUTH */
+/* LOAD USER */
 
 onAuthStateChanged(
     auth,
-    async user => {
+    async function(user){
 
         if(!user){
 
@@ -745,30 +765,17 @@ onAuthStateChanged(
                 );
 
 
-            if(
-                userSnapshot.exists()
-            ){
+            if(userSnapshot.exists()){
 
                 const data =
                     userSnapshot.data();
 
 
-                const balance =
-                    Number(
-                        data.balance || 0
-                    );
-
-
                 document
                     .getElementById("balance")
                     .textContent =
-                    "$" +
-                    balance.toLocaleString(
-                        "en-US",
-                        {
-                            minimumFractionDigits:2,
-                            maximumFractionDigits:2
-                        }
+                    formatMoney(
+                        data.balance || 0
                     );
 
             }
@@ -776,7 +783,7 @@ onAuthStateChanged(
         }catch(error){
 
             console.error(
-                "Could not load balance:",
+                "Balance error:",
                 error
             );
 
@@ -786,11 +793,145 @@ onAuthStateChanged(
 );
 
 
-/* CREATE BITCOIN PAYMENT */
+/* SAFE ERROR MESSAGE */
+
+function getErrorMessage(result){
+
+    if(!result){
+        return "Unable to create Bitcoin payment.";
+    }
+
+
+    if(typeof result.error === "string"){
+        return result.error;
+    }
+
+
+    if(typeof result.message === "string"){
+        return result.message;
+    }
+
+
+    if(
+        result.error &&
+        typeof result.error === "object"
+    ){
+
+        if(typeof result.error.message === "string"){
+            return result.error.message;
+        }
+
+        if(typeof result.error.error === "string"){
+            return result.error.error;
+        }
+
+        try{
+
+            return JSON.stringify(
+                result.error
+            );
+
+        }catch{
+
+            return "MG Crypto returned an error.";
+
+        }
+
+    }
+
+
+    if(
+        result.data &&
+        typeof result.data === "object" &&
+        typeof result.data.message === "string"
+    ){
+
+        return result.data.message;
+
+    }
+
+
+    return "Unable to create Bitcoin payment.";
+
+}
+
+
+/* FIND PAYMENT URL */
+
+function getPaymentUrl(result){
+
+    if(!result){
+        return null;
+    }
+
+
+    const possibleUrls = [
+
+        result.payment_url,
+
+        result.checkout_url,
+
+        result.invoice_url,
+
+        result.url,
+
+        result.paymentUrl,
+
+        result.checkoutUrl,
+
+        result.invoiceUrl,
+
+        result.data?.payment_url,
+
+        result.data?.checkout_url,
+
+        result.data?.invoice_url,
+
+        result.data?.url,
+
+        result.data?.paymentUrl,
+
+        result.data?.checkoutUrl,
+
+        result.data?.invoiceUrl,
+
+        result.invoice?.payment_url,
+
+        result.invoice?.checkout_url,
+
+        result.invoice?.invoice_url,
+
+        result.invoice?.url
+
+    ];
+
+
+    for(
+        const value of possibleUrls
+    ){
+
+        if(
+            typeof value === "string" &&
+            value.trim()
+        ){
+
+            return value.trim();
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* CREATE PAYMENT */
 
 createBtn.addEventListener(
     "click",
-    async ()=>{
+    async function(){
 
         const amount =
             Number(
@@ -803,19 +944,16 @@ createBtn.addEventListener(
             .remove("show");
 
 
-        statusBox
-            .className =
+        statusBox.className =
             "status show";
 
 
         if(
-            !amount ||
+            !Number.isFinite(amount) ||
             amount < 1
         ){
 
-            statusBox
-                .classList
-                .add("error");
+            statusBox.classList.add("error");
 
             statusBox.textContent =
                 "Please enter a deposit amount of at least $1.";
@@ -827,9 +965,7 @@ createBtn.addEventListener(
 
         if(!currentUser){
 
-            statusBox
-                .classList
-                .add("error");
+            statusBox.classList.add("error");
 
             statusBox.textContent =
                 "Please login before making a deposit.";
@@ -846,19 +982,14 @@ createBtn.addEventListener(
             "Creating Bitcoin Payment...";
 
 
+        statusBox.className =
+            "status show";
+
         statusBox.textContent =
-            "Creating your Bitcoin payment invoice...";
+            "Creating your secure Bitcoin payment...";
 
 
         try{
-
-            /*
-             * The MG Crypto secret/API key MUST NOT
-             * be placed in this HTML file.
-             *
-             * Vercel /api/create-invoice will handle
-             * the secret securely on the server.
-             */
 
             const response =
                 await fetch(
@@ -869,6 +1000,8 @@ createBtn.addEventListener(
 
                         headers:{
                             "Content-Type":
+                                "application/json",
+                            "Accept":
                                 "application/json"
                         },
 
@@ -892,57 +1025,72 @@ createBtn.addEventListener(
                 );
 
 
-            const result =
-                await response.json();
+            /*
+             * Read the response safely.
+             * This prevents [object Object].
+             */
+
+            const rawText =
+                await response.text();
 
 
-            if(!response.ok){
+            let result;
 
-                throw new Error(
-                    result.error ||
-                    "Unable to create Bitcoin payment."
-                );
+
+            try{
+
+                result =
+                    JSON.parse(rawText);
+
+            }catch{
+
+                result = {
+                    error:
+                        rawText ||
+                        "Invalid response from server."
+                };
 
             }
 
 
             console.log(
-                "MG Crypto response:",
+                "Zavixbulk invoice response:",
                 result
             );
 
 
-            /*
-             * We support several possible URL
-             * names returned by the backend.
-             *
-             * Once we see the exact MG Crypto
-             * response, we can lock this to the
-             * official field.
-             */
+            if(!response.ok){
+
+                throw new Error(
+                    getErrorMessage(result)
+                );
+
+            }
+
+
+            if(result.success === false){
+
+                throw new Error(
+                    getErrorMessage(result)
+                );
+
+            }
+
 
             const paymentUrl =
-                result.payment_url ||
-                result.checkout_url ||
-                result.invoice_url ||
-                result.url ||
-                result.data?.payment_url ||
-                result.data?.checkout_url ||
-                result.data?.invoice_url ||
-                result.data?.url;
+                getPaymentUrl(result);
 
 
             if(!paymentUrl){
 
-                statusBox
-                    .className =
+                statusBox.className =
                     "status show error";
 
                 statusBox.textContent =
-                    "Payment was created, but the Bitcoin payment link was not returned. Check the MG Crypto API response.";
+                    getErrorMessage(result);
 
                 console.log(
-                    "Full MG Crypto result:",
+                    "Full server response:",
                     result
                 );
 
@@ -951,12 +1099,11 @@ createBtn.addEventListener(
             }
 
 
-            statusBox
-                .className =
+            statusBox.className =
                 "status show success";
 
             statusBox.textContent =
-                "Bitcoin payment created successfully. Continue below to pay.";
+                "Bitcoin payment created successfully.";
 
 
             payBtn.href =
@@ -970,17 +1117,19 @@ createBtn.addEventListener(
 
         }catch(error){
 
-            console.error(error);
+            console.error(
+                "Payment error:",
+                error
+            );
 
 
-            statusBox
-                .className =
+            statusBox.className =
                 "status show error";
 
 
             statusBox.textContent =
                 error.message ||
-                "Unable to create Bitcoin payment. Please try again.";
+                "Unable to create Bitcoin payment.";
 
         }finally{
 
