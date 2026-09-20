@@ -1,9 +1,20 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Zavixbulk | Notifications</title><style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+<title>Zavixbulk | Notifications</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
     font-family:Inter,Arial,sans-serif;
@@ -24,10 +35,17 @@ body{
     top:0;
     left:0;
     right:0;
+    z-index:100;
 }
 
-.logo{font-size:22px;font-weight:900}
-.logo span{color:#4f8cff}
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#4f8cff;
+}
 
 .header-right{
     color:#9cacc9;
@@ -53,6 +71,7 @@ body{
     justify-content:space-between;
     align-items:center;
     margin-bottom:20px;
+    gap:15px;
 }
 
 .title{
@@ -68,6 +87,10 @@ body{
     font-size:12px;
 }
 
+.mark:hover{
+    color:#82a7ff;
+}
+
 .notification{
     background:#0a1024;
     border:1px solid #1b2542;
@@ -76,6 +99,16 @@ body{
     margin-bottom:12px;
     display:flex;
     gap:15px;
+    transition:.2s;
+}
+
+.notification:hover{
+    border-color:#3156a4;
+}
+
+.notification.unread{
+    border-color:#3156a4;
+    background:#0b142d;
 }
 
 .icon{
@@ -87,10 +120,12 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;
+    font-size:19px;
 }
 
-.notification.unread{
-    border-color:#3156a4;
+.notification-content{
+    flex:1;
+    min-width:0;
 }
 
 .notification-title{
@@ -111,210 +146,626 @@ body{
     margin-top:8px;
 }
 
+.unread-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#4d83ff;
+    margin-top:6px;
+    flex-shrink:0;
+}
+
 .empty{
     text-align:center;
     padding:80px 20px;
     color:#7182a1;
+    line-height:1.6;
+}
+
+.loading{
+    text-align:center;
+    padding:70px 20px;
+    color:#7182a1;
+}
+
+.spinner{
+    width:34px;
+    height:34px;
+    border:3px solid #1a2948;
+    border-top-color:#4d83ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:0 auto 15px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 @media(max-width:600px){
-    .header{padding:0 16px}
-    .header-right{display:none}
-    .main{padding:90px 15px 35px}
-    .title{font-size:22px}
+
+    .header{
+        padding:0 16px;
+    }
+
+    .header-right{
+        display:none;
+    }
+
+    .main{
+        padding:90px 15px 35px;
+    }
+
+    .title{
+        font-size:22px;
+    }
+
+    .top{
+        align-items:flex-start;
+    }
+
+    .notification{
+        padding:15px;
+    }
+
 }
-</style></head><body><header class="header">
-    <div class="logo">ZAVIX<span>BULK</span></div>
-    <div class="header-right" id="headerName">Customer</div>
-</header><main class="main"><a href="dashboard.html" class="back">← Back to Dashboard</a>
 
-<div class="top">
-    <div class="title">Notifications</div><button class="mark" id="markAll">
-    Mark all as read
-</button>
+</style>
 
-</div><div id="list">
-    <div class="empty">Loading notifications...</div>
-</div></main><script type="module">
+</head>
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+        ZAVIX<span>BULK</span>
+    </div>
+
+    <div
+        class="header-right"
+        id="headerName"
+    >
+        Customer
+    </div>
+
+</header>
+
+
+<main class="main">
+
+
+    <a
+        href="dashboard.html"
+        class="back"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+    <div class="top">
+
+        <div class="title">
+            Notifications
+        </div>
+
+
+        <button
+            class="mark"
+            id="markAll"
+        >
+            Mark all as read
+        </button>
+
+    </div>
+
+
+    <div id="list">
+
+        <div class="loading">
+
+            <div class="spinner"></div>
+
+            Loading notifications...
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
 
 import {
     getAuth,
     onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
 
 import {
     getFirestore,
     collection,
     query,
     where,
-    orderBy,
-    onSnapshot,
+    getDocs,
     doc,
     updateDoc,
     getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
-const firebaseConfig={
+
+const firebaseConfig = {
+
     apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
     authDomain:"zavixbulk.firebaseapp.com",
+
     projectId:"zavixbulk",
+
     storageBucket:"zavixbulk.firebasestorage.app",
+
     messagingSenderId:"819994897169",
+
     appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
     measurementId:"G-GJ8RY0WYBL"
+
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
 
-const list=document.getElementById("list");
-const headerName=document.getElementById("headerName");
+const app =
+    initializeApp(firebaseConfig);
 
-let notifications=[];
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
+
+
+const list =
+    document.getElementById("list");
+
+
+const headerName =
+    document.getElementById("headerName");
+
+
+let notifications = [];
+
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
 
 function dateText(value){
 
-    if(!value) return "Recently";
+    if(!value){
 
-    const date=value.toDate
-        ? value.toDate()
-        : new Date(value);
+        return "Recently";
 
-    return date.toLocaleString();
+    }
+
+
+    try{
+
+        const date =
+            value.toDate
+                ? value.toDate()
+                : new Date(value);
+
+
+        return date.toLocaleString();
+
+    }catch(error){
+
+        return "Recently";
+
+    }
 
 }
 
-onAuthStateChanged(auth,async user=>{
 
-    if(!user){
-        location.href="login.html";
-        return;
-    }
+function timeValue(value){
 
-    const userSnap=await getDoc(
-        doc(db,"users",user.uid)
-    );
+    if(!value){
 
-    if(userSnap.exists()){
-
-        const data=userSnap.data();
-
-        headerName.textContent=
-            data.fullname||
-            data.username||
-            "Customer";
+        return 0;
 
     }
 
-    const q=query(
-        collection(db,"notifications"),
-        where("userId","==",user.uid),
-        orderBy("createdAt","desc")
-    );
 
-    onSnapshot(q,snapshot=>{
+    try{
 
-        notifications=[];
+        if(
+            typeof value.toMillis ===
+            "function"
+        ){
 
-        snapshot.forEach(item=>{
+            return value.toMillis();
 
-            notifications.push({
-                id:item.id,
-                ...item.data()
-            });
+        }
 
-        });
 
-        render();
+        return new Date(value).getTime();
 
-    },error=>{
+    }catch(error){
 
-        console.error(error);
+        return 0;
 
-        list.innerHTML=`
-            <div class="empty">
-                Unable to load notifications.
-            </div>
-        `;
+    }
 
-    });
-
-});
+}
 
 
 function render(){
 
     if(!notifications.length){
 
-        list.innerHTML=`
+        list.innerHTML = `
+
             <div class="empty">
+
                 🔔<br><br>
+
                 You have no notifications yet.
+
             </div>
+
         `;
 
         return;
 
     }
 
-    list.innerHTML=notifications.map(item=>`
 
-        <div
-            class="notification ${item.read===false?"unread":""}"
-            data-id="${item.id}"
-        >
+    list.innerHTML = "";
+
+
+    notifications.forEach(item => {
+
+        const notification =
+            document.createElement(
+                "div"
+            );
+
+
+        notification.className =
+            "notification " +
+            (
+                item.read === false
+                    ? "unread"
+                    : ""
+            );
+
+
+        notification.dataset.id =
+            item.id;
+
+
+        notification.innerHTML = `
 
             <div class="icon">
                 🔔
             </div>
 
-            <div>
+
+            <div class="notification-content">
 
                 <div class="notification-title">
-                    ${item.title||"Notification"}
+
+                    ${escapeHTML(
+                        item.title ||
+                        "Notification"
+                    )}
+
                 </div>
+
 
                 <div class="notification-text">
-                    ${item.message||""}
+
+                    ${escapeHTML(
+                        item.message ||
+                        ""
+                    )}
+
                 </div>
 
+
                 <div class="date">
-                    ${dateText(item.createdAt)}
+
+                    ${dateText(
+                        item.createdAt
+                    )}
+
                 </div>
 
             </div>
 
-        </div>
 
-    `).join("");
+            ${
+                item.read === false
+
+                ?
+
+                `<div class="unread-dot"></div>`
+
+                :
+
+                ""
+
+            }
+
+        `;
+
+
+        list.appendChild(
+            notification
+        );
+
+    });
 
 }
 
 
-document.getElementById("markAll").onclick=async()=>{
+async function loadNotifications(
+    user
+){
 
-    for(const item of notifications){
+    try{
 
-        if(item.read===false){
+        /*
+         * IMPORTANT:
+         *
+         * We only use:
+         *
+         * where("userId","==",user.uid)
+         *
+         * We do NOT use orderBy().
+         *
+         * This avoids the Firestore
+         * composite-index problem.
+         */
 
-            await updateDoc(
-                doc(db,"notifications",item.id),
-                {
-                    read:true
-                }
+        const q =
+            query(
+                collection(
+                    db,
+                    "notifications"
+                ),
+                where(
+                    "userId",
+                    "==",
+                    user.uid
+                )
             );
+
+
+        const snapshot =
+            await getDocs(q);
+
+
+        notifications = [];
+
+
+        snapshot.forEach(item => {
+
+            notifications.push({
+
+                id:item.id,
+
+                ...item.data()
+
+            });
+
+        });
+
+
+        /*
+         * Newest notification first.
+         */
+
+        notifications.sort(
+            (a,b) =>
+                timeValue(
+                    b.createdAt
+                )
+                -
+                timeValue(
+                    a.createdAt
+                )
+        );
+
+
+        render();
+
+
+    }catch(error){
+
+        console.error(
+            "Notifications error:",
+            error
+        );
+
+
+        list.innerHTML = `
+
+            <div class="empty">
+
+                Unable to load notifications.<br><br>
+
+                Please refresh the page and try again.
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* AUTH */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        try{
+
+            const userSnap =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(userSnap.exists()){
+
+                const data =
+                    userSnap.data();
+
+
+                headerName.textContent =
+                    data.fullname ||
+                    data.username ||
+                    "Customer";
+
+            }
+
+
+            await loadNotifications(
+                user
+            );
+
+
+        }catch(error){
+
+            console.error(error);
 
         }
 
     }
+);
 
-};
 
-</script></body>
+/* MARK ALL AS READ */
+
+document
+    .getElementById("markAll")
+    .addEventListener(
+        "click",
+        async () => {
+
+            const unread =
+                notifications.filter(
+                    item =>
+                        item.read === false
+                );
+
+
+            if(!unread.length){
+
+                return;
+
+            }
+
+
+            try{
+
+                for(
+                    const item
+                    of unread
+                ){
+
+                    await updateDoc(
+
+                        doc(
+                            db,
+                            "notifications",
+                            item.id
+                        ),
+
+                        {
+                            read:true
+                        }
+
+                    );
+
+                }
+
+
+                /*
+                 * Update local data immediately.
+                 */
+
+                notifications =
+                    notifications.map(
+                        item => ({
+
+                            ...item,
+
+                            read:true
+
+                        })
+                    );
+
+
+                render();
+
+
+            }catch(error){
+
+                console.error(
+                    "Could not mark notifications:",
+                    error
+                );
+
+                alert(
+                    "Unable to mark notifications as read."
+                );
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+
 </html>
