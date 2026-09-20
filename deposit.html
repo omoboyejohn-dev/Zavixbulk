@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Zavixbulk | Deposit</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -92,6 +94,76 @@ body{
     font-size:32px;
     font-weight:800;
 }
+
+/* PAYMENT METHODS */
+
+.payment-methods{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.payment-method{
+    background:#100b1f;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:15px;
+    padding:18px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.payment-method:hover{
+    border-color:#8d4dff;
+    transform:translateY(-2px);
+}
+
+.payment-method.active{
+    border-color:#8d4dff;
+    box-shadow:0 0 0 1px rgba(141,77,255,.25);
+}
+
+.payment-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:#171126;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    margin-bottom:12px;
+}
+
+.payment-name{
+    font-size:15px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.payment-description{
+    color:#898298;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.payment-status{
+    display:inline-block;
+    margin-top:10px;
+    padding:4px 8px;
+    border-radius:20px;
+    background:rgba(0,229,255,.08);
+    color:#00dff5;
+    font-size:10px;
+    font-weight:700;
+}
+
+.payment-status.soon{
+    background:rgba(255,193,7,.08);
+    color:#ffc857;
+}
+
+/* CARD */
 
 .card{
     background:#100b1f;
@@ -262,6 +334,11 @@ input:focus{
 }
 
 @media(max-width:500px){
+
+    .payment-methods{
+        grid-template-columns:1fr;
+    }
+
     .quick{
         grid-template-columns:repeat(3,1fr);
     }
@@ -273,44 +350,148 @@ input:focus{
     .balance{
         font-size:27px;
     }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <header class="header">
-    <div class="logo">Zavixbulk</div>
-    <a href="dashboard.html" class="back">← Dashboard</a>
+
+    <div class="logo">
+        Zavixbulk
+    </div>
+
+    <a href="dashboard.html" class="back">
+        ← Dashboard
+    </a>
+
 </header>
+
 
 <main class="container">
 
     <div class="title">
-        <h1>Deposit</h1>
+
+        <h1>
+            Deposit
+        </h1>
+
         <p>
-            Fund your Zavixbulk wallet using a secure crypto payment invoice.
+            Choose a payment method and add funds to your
+            Zavixbulk wallet.
         </p>
+
     </div>
+
+
+    <!-- BALANCE -->
 
     <div class="balance-card">
-        <div class="balance-label">Current Wallet Balance</div>
-        <div class="balance" id="balance">$0.00</div>
+
+        <div class="balance-label">
+            Current Wallet Balance
+        </div>
+
+        <div
+            class="balance"
+            id="balance"
+        >
+            $0.00
+        </div>
+
     </div>
 
-    <div class="card">
 
-        <h2>Fund Wallet</h2>
+    <!-- PAYMENT METHODS -->
+
+    <div class="payment-methods">
+
+        <!-- PAYMENT 1 -->
+
+        <div
+            class="payment-method active"
+            id="payment1"
+        >
+
+            <div class="payment-icon">
+                ₿
+            </div>
+
+            <div class="payment-name">
+                Payment 1
+            </div>
+
+            <div class="payment-description">
+                Pay with Bitcoin using MG Crypto.
+            </div>
+
+            <span class="payment-status">
+                AVAILABLE
+            </span>
+
+        </div>
+
+
+        <!-- PAYMENT 2 -->
+
+        <div
+            class="payment-method"
+            id="payment2"
+        >
+
+            <div class="payment-icon">
+                🌐
+            </div>
+
+            <div class="payment-name">
+                Payment 2
+            </div>
+
+            <div class="payment-description">
+                Pay using other supported cryptocurrencies.
+            </div>
+
+            <span class="payment-status soon">
+                COMING SOON
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT 1 CARD -->
+
+    <div
+        class="card"
+        id="payment1Card"
+    >
+
+        <h2>
+            Bitcoin Deposit
+        </h2>
 
         <p class="card-description">
-            Enter the amount you want to deposit. You will be redirected to the
-            secure payment page after the invoice is created.
+            Enter the amount you want to deposit in USD.
+            You will then be taken to the secure Bitcoin
+            payment page.
         </p>
 
-        <label for="amount">Deposit Amount (USD)</label>
+
+        <label for="amount">
+            Deposit Amount (USD)
+        </label>
+
 
         <div class="input-wrap">
-            <span class="currency">$</span>
+
+            <span class="currency">
+                $
+            </span>
+
             <input
                 type="number"
                 id="amount"
@@ -318,36 +499,85 @@ input:focus{
                 step="0.01"
                 placeholder="10.00"
             >
+
         </div>
 
-        <div class="quick-title">Quick Amount</div>
+
+        <div class="quick-title">
+            Quick Amount
+        </div>
+
 
         <div class="quick">
-            <button type="button" onclick="setAmount(5)">$5</button>
-            <button type="button" onclick="setAmount(10)">$10</button>
-            <button type="button" onclick="setAmount(20)">$20</button>
-            <button type="button" onclick="setAmount(50)">$50</button>
-            <button type="button" onclick="setAmount(100)">$100</button>
+
+            <button
+                type="button"
+                onclick="setAmount(5)"
+            >
+                $5
+            </button>
+
+            <button
+                type="button"
+                onclick="setAmount(10)"
+            >
+                $10
+            </button>
+
+            <button
+                type="button"
+                onclick="setAmount(20)"
+            >
+                $20
+            </button>
+
+            <button
+                type="button"
+                onclick="setAmount(50)"
+            >
+                $50
+            </button>
+
+            <button
+                type="button"
+                onclick="setAmount(100)"
+            >
+                $100
+            </button>
+
         </div>
+
 
         <button
             type="button"
             class="create-btn"
             id="createBtn"
-            onclick="createInvoice()"
         >
-            Create Payment
+            Continue with Bitcoin
         </button>
 
-        <div class="status" id="status"></div>
 
-        <div class="payment-box" id="paymentBox">
-            <h3>Payment Invoice Created</h3>
+        <div
+            class="status"
+            id="status"
+        ></div>
+
+
+        <div
+            class="payment-box"
+            id="paymentBox"
+        >
+
+            <h3>
+                Bitcoin Payment Ready
+            </h3>
 
             <p>
-                Your payment invoice has been created. Click the button below
-                to continue with your payment.
+                Your payment invoice has been created.
+                Continue to the secure payment page to
+                complete your Bitcoin deposit.
             </p>
+
 
             <a
                 href="#"
@@ -356,258 +586,414 @@ input:focus{
                 class="pay-btn"
                 id="payBtn"
             >
-                Continue to Payment
+                Continue to Bitcoin Payment
             </a>
+
         </div>
 
+
         <div class="note">
-            Your wallet should only be credited after the payment is verified
-            by the payment provider. Do not close the payment page before
-            completing your payment.
+
+            Your wallet balance will only be credited after
+            MG Crypto confirms that the Bitcoin payment has
+            been successfully received.
+
         </div>
 
     </div>
 
 </main>
 
+
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
     getFirestore,
     doc,
     getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
-    authDomain: "zavixbulk.firebaseapp.com",
-    projectId: "zavixbulk",
-    storageBucket: "zavixbulk.firebasestorage.app",
-    messagingSenderId: "819994897169",
-    appId: "1:819994897169:web:4aab1bcc15fbe439f6fab0",
-    measurementId: "G-GJ8RY0WYBL"
+
+    apiKey:
+        "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
+    authDomain:
+        "zavixbulk.firebaseapp.com",
+
+    projectId:
+        "zavixbulk",
+
+    storageBucket:
+        "zavixbulk.firebasestorage.app",
+
+    messagingSenderId:
+        "819994897169",
+
+    appId:
+        "1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
+    measurementId:
+        "G-GJ8RY0WYBL"
+
 };
 
-const app = initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
 
 let currentUser = null;
 
 
-onAuthStateChanged(auth, async (user) => {
+const amountInput =
+    document.getElementById("amount");
 
-    if (!user) {
-        window.location.href = "login.html";
-        return;
-    }
+const createBtn =
+    document.getElementById("createBtn");
 
-    currentUser = user;
+const statusBox =
+    document.getElementById("status");
 
-    try {
+const paymentBox =
+    document.getElementById("paymentBox");
 
-        const userRef = doc(db, "users", user.uid);
-        const snap = await getDoc(userRef);
+const payBtn =
+    document.getElementById("payBtn");
 
-        if (snap.exists()) {
 
-            const data = snap.data();
-
-            const balance = Number(data.balance || 0);
-
-            document.getElementById("balance").textContent =
-                "$" + balance.toFixed(2);
-        }
-
-    } catch (error) {
-
-        console.error("Could not load balance:", error);
-
-    }
-
-});
-
+/* QUICK AMOUNT */
 
 window.setAmount = function(amount){
 
-    document.getElementById("amount").value =
+    amountInput.value =
         Number(amount).toFixed(2);
 
 };
 
 
-window.createInvoice = async function(){
+/* PAYMENT 2 */
 
-    const amountInput =
-        document.getElementById("amount");
+document
+    .getElementById("payment2")
+    .addEventListener("click",()=>{
 
-    const amount =
-        Number(amountInput.value);
+        alert(
+            "Payment 2 is currently under development.\n\nPlease use Payment 1 (Bitcoin) for now."
+        );
 
-    const button =
-        document.getElementById("createBtn");
-
-    const status =
-        document.getElementById("status");
-
-    const paymentBox =
-        document.getElementById("paymentBox");
-
-    const payBtn =
-        document.getElementById("payBtn");
+    });
 
 
-    paymentBox.classList.remove("show");
+/* PAYMENT 1 */
 
-    status.className = "status show";
-    status.textContent = "";
+document
+    .getElementById("payment1")
+    .addEventListener("click",()=>{
 
-    if (!amount || amount < 1) {
+        document
+            .getElementById("payment1")
+            .classList.add("active");
 
-        status.classList.add("error");
-
-        status.textContent =
-            "Please enter a deposit amount of at least $1.";
-
-        return;
-    }
+    });
 
 
-    if (!currentUser) {
+/* AUTH */
 
-        status.classList.add("error");
+onAuthStateChanged(
+    auth,
+    async user => {
 
-        status.textContent =
-            "Please login before making a deposit.";
+        if(!user){
 
-        return;
-    }
+            window.location.href =
+                "login.html";
 
+            return;
 
-    button.disabled = true;
-    button.textContent = "Creating Payment...";
-
-    status.className = "status show";
-    status.textContent =
-        "Creating your secure payment invoice...";
+        }
 
 
-    try {
+        currentUser = user;
 
-        const response = await fetch(
-            "/api/create-invoice",
-            {
-                method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        try{
 
-                body: JSON.stringify({
-                    amount_usd: amount,
-                    description: "Zavixbulk Wallet Deposit"
-                })
+            const userSnapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(
+                userSnapshot.exists()
+            ){
+
+                const data =
+                    userSnapshot.data();
+
+
+                const balance =
+                    Number(
+                        data.balance || 0
+                    );
+
+
+                document
+                    .getElementById("balance")
+                    .textContent =
+                    "$" +
+                    balance.toLocaleString(
+                        "en-US",
+                        {
+                            minimumFractionDigits:2,
+                            maximumFractionDigits:2
+                        }
+                    );
+
             }
-        );
 
+        }catch(error){
 
-        const result = await response.json();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                result.error ||
-                "Unable to create payment invoice."
+            console.error(
+                "Could not load balance:",
+                error
             );
+
         }
 
-
-        /*
-         IMPORTANT:
-
-         We are intentionally not guessing the MG Crypto
-         response field containing the checkout URL.
-
-         The API response is temporarily displayed below
-         so we can see the exact response returned by MG Crypto.
-        */
-
-        status.className = "status show success";
-
-        status.textContent =
-            "Invoice created successfully. We are checking the payment response...";
-
-
-        console.log(
-            "MG Crypto invoice response:",
-            result
-        );
-
-
-        /*
-         If the API returns a checkout URL under one of these
-         common names, the page will automatically use it.
-
-         If MG Crypto uses another field, we will adjust it
-         after seeing the actual response.
-        */
-
-        const paymentUrl =
-            result.payment_url ||
-            result.checkout_url ||
-            result.url ||
-            result.invoice_url;
-
-
-        if (paymentUrl) {
-
-            paymentBox.classList.add("show");
-
-            payBtn.href = paymentUrl;
-
-            status.textContent =
-                "Invoice created successfully. Click Continue to Payment.";
-        } else {
-
-            status.className = "status show";
-
-            status.textContent =
-                "Invoice created, but the payment URL field was not identified yet. Open the browser console and check the MG Crypto response.";
-        }
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        status.className = "status show error";
-
-        status.textContent =
-            error.message ||
-            "Something went wrong while creating the invoice.";
-
-    } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-            "Create Payment";
     }
+);
 
-};
+
+/* CREATE BITCOIN PAYMENT */
+
+createBtn.addEventListener(
+    "click",
+    async ()=>{
+
+        const amount =
+            Number(
+                amountInput.value
+            );
+
+
+        paymentBox
+            .classList
+            .remove("show");
+
+
+        statusBox
+            .className =
+            "status show";
+
+
+        if(
+            !amount ||
+            amount < 1
+        ){
+
+            statusBox
+                .classList
+                .add("error");
+
+            statusBox.textContent =
+                "Please enter a deposit amount of at least $1.";
+
+            return;
+
+        }
+
+
+        if(!currentUser){
+
+            statusBox
+                .classList
+                .add("error");
+
+            statusBox.textContent =
+                "Please login before making a deposit.";
+
+            return;
+
+        }
+
+
+        createBtn.disabled =
+            true;
+
+        createBtn.textContent =
+            "Creating Bitcoin Payment...";
+
+
+        statusBox.textContent =
+            "Creating your Bitcoin payment invoice...";
+
+
+        try{
+
+            /*
+             * The MG Crypto secret/API key MUST NOT
+             * be placed in this HTML file.
+             *
+             * Vercel /api/create-invoice will handle
+             * the secret securely on the server.
+             */
+
+            const response =
+                await fetch(
+                    "/api/create-invoice",
+                    {
+
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:JSON.stringify({
+
+                            amount_usd:
+                                amount,
+
+                            user_id:
+                                currentUser.uid,
+
+                            email:
+                                currentUser.email || "",
+
+                            description:
+                                "Zavixbulk Bitcoin Wallet Deposit"
+
+                        })
+
+                    }
+                );
+
+
+            const result =
+                await response.json();
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    result.error ||
+                    "Unable to create Bitcoin payment."
+                );
+
+            }
+
+
+            console.log(
+                "MG Crypto response:",
+                result
+            );
+
+
+            /*
+             * We support several possible URL
+             * names returned by the backend.
+             *
+             * Once we see the exact MG Crypto
+             * response, we can lock this to the
+             * official field.
+             */
+
+            const paymentUrl =
+                result.payment_url ||
+                result.checkout_url ||
+                result.invoice_url ||
+                result.url ||
+                result.data?.payment_url ||
+                result.data?.checkout_url ||
+                result.data?.invoice_url ||
+                result.data?.url;
+
+
+            if(!paymentUrl){
+
+                statusBox
+                    .className =
+                    "status show error";
+
+                statusBox.textContent =
+                    "Payment was created, but the Bitcoin payment link was not returned. Check the MG Crypto API response.";
+
+                console.log(
+                    "Full MG Crypto result:",
+                    result
+                );
+
+                return;
+
+            }
+
+
+            statusBox
+                .className =
+                "status show success";
+
+            statusBox.textContent =
+                "Bitcoin payment created successfully. Continue below to pay.";
+
+
+            payBtn.href =
+                paymentUrl;
+
+
+            paymentBox
+                .classList
+                .add("show");
+
+
+        }catch(error){
+
+            console.error(error);
+
+
+            statusBox
+                .className =
+                "status show error";
+
+
+            statusBox.textContent =
+                error.message ||
+                "Unable to create Bitcoin payment. Please try again.";
+
+        }finally{
+
+            createBtn.disabled =
+                false;
+
+            createBtn.textContent =
+                "Continue with Bitcoin";
+
+        }
+
+    }
+);
 
 </script>
 
