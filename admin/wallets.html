@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Zavixbulk | Wallet Addresses</title>
+<title>Zavixbulk | Admin Wallets</title>
 
 <style>
 
@@ -20,6 +22,10 @@ body{
     color:#fff;
     min-height:100vh;
 }
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
     height:70px;
@@ -46,454 +52,888 @@ body{
     color:#4f8cff;
 }
 
-.admin-name{
-    color:#9aa9c4;
-    font-size:13px;
+.admin-label{
+    color:#8192b4;
+    font-size:12px;
+    margin-left:10px;
 }
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.admin-name{
+    color:#dbe5ff;
+    font-size:14px;
+}
+
+.menu-btn{
+    display:none;
+    background:none;
+    border:0;
+    color:#fff;
+    font-size:25px;
+    cursor:pointer;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar{
+    position:fixed;
+    top:70px;
+    left:0;
+    bottom:0;
+    width:245px;
+    background:#080d20;
+    border-right:1px solid #1b2542;
+    padding:22px 14px;
+    z-index:900;
+    overflow-y:auto;
+}
+
+.sidebar-title{
+    color:#65769a;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin:0 12px 12px;
+}
+
+.nav-link{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px 14px;
+    margin-bottom:5px;
+    border-radius:10px;
+    color:#91a0bd;
+    text-decoration:none;
+    font-size:14px;
+    transition:.2s;
+}
+
+.nav-link:hover{
+    background:#111a35;
+    color:#fff;
+}
+
+.nav-link.active{
+    background:linear-gradient(
+        135deg,
+        #1c4ed8,
+        #2868ff
+    );
+    color:#fff;
+}
+
+.nav-icon{
+    width:22px;
+    text-align:center;
+    font-size:17px;
+}
+
+.logout{
+    margin-top:20px;
+    color:#ff7180;
+    cursor:pointer;
+}
+
+.logout:hover{
+    background:#28131b;
+}
+
+/* =========================
+   MAIN
+========================= */
 
 .main{
-    max-width:1100px;
-    margin:auto;
-    padding:100px 20px 50px;
+    margin-left:245px;
+    padding:95px 28px 50px;
+    max-width:1250px;
 }
 
-.back{
-    display:inline-block;
-    color:#7393d7;
-    text-decoration:none;
-    font-size:13px;
-    margin-bottom:20px;
-}
-
-.title{
-    font-size:28px;
-    font-weight:850;
+.page-title{
+    font-size:27px;
+    font-weight:800;
     margin-bottom:7px;
 }
 
-.subtitle{
-    color:#7182a2;
+.page-subtitle{
+    color:#7586a8;
     font-size:14px;
-    margin-bottom:28px;
+    margin-bottom:25px;
 }
 
-.card{
+/* =========================
+   FORM CARD
+========================= */
+
+.form-card{
     background:#0a1024;
     border:1px solid #1b2542;
     border-radius:16px;
     padding:22px;
-    margin-bottom:18px;
+    margin-bottom:25px;
 }
 
-.coin-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:15px;
+.form-title{
+    font-size:17px;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.form-subtitle{
+    color:#6f819f;
+    font-size:12px;
     margin-bottom:20px;
 }
 
-.coin-title{
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.input-group.full{
+    grid-column:1/-1;
+}
+
+.label{
+    color:#899abb;
+    font-size:12px;
+    font-weight:700;
+}
+
+.input,
+.select{
+    width:100%;
+    padding:13px 14px;
+    background:#070c1c;
+    border:1px solid #263653;
+    border-radius:9px;
+    color:#fff;
+    outline:none;
+    font-size:13px;
+}
+
+.input:focus,
+.select:focus{
+    border-color:#3977ff;
+}
+
+.select{
+    cursor:pointer;
+}
+
+.select option{
+    background:#0a1024;
+    color:#fff;
+}
+
+.add-btn{
+    margin-top:18px;
+    padding:13px 20px;
+    border:0;
+    border-radius:9px;
+    background:linear-gradient(
+        135deg,
+        #1c4ed8,
+        #2868ff
+    );
+    color:#fff;
+    font-size:13px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.add-btn:hover{
+    opacity:.92;
+}
+
+.add-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* =========================
+   WALLET PANEL
+========================= */
+
+.panel{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:16px;
+    overflow:hidden;
+}
+
+.panel-header{
+    padding:18px 20px;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.panel-header h2{
+    font-size:16px;
+}
+
+.wallet-count{
+    color:#7083a5;
+    font-size:12px;
+}
+
+/* =========================
+   WALLET CARD
+========================= */
+
+.wallet-list{
+    padding:15px;
+}
+
+.wallet-card{
+    background:#080e20;
+    border:1px solid #1b2947;
+    border-radius:13px;
+    padding:18px;
+    margin-bottom:12px;
+}
+
+.wallet-card:last-child{
+    margin-bottom:0;
+}
+
+.wallet-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:15px;
+    margin-bottom:14px;
+}
+
+.wallet-info{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.coin-icon{
+    width:43px;
+    height:43px;
+    border-radius:11px;
+    background:#111d3c;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:21px;
+}
+
+.coin-name{
+    font-size:15px;
+    font-weight:800;
+}
+
+.network{
+    color:#657897;
+    font-size:10px;
+    margin-top:4px;
+    text-transform:uppercase;
+}
+
+.wallet-status{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:800;
+}
+
+.wallet-status.active{
+    background:#102d20;
+    color:#62d99a;
+}
+
+.wallet-status.disabled{
+    background:#321820;
+    color:#ff7888;
+}
+
+.address-label{
+    color:#657896;
+    font-size:10px;
+    text-transform:uppercase;
+    margin-bottom:7px;
+    font-weight:800;
+}
+
+.address-row{
+    display:flex;
+    gap:8px;
+}
+
+.address{
+    flex:1;
+    background:#050a17;
+    border:1px solid #243454;
+    border-radius:9px;
+    padding:12px;
+    color:#8eaeff;
+    font-size:12px;
+    word-break:break-all;
+    line-height:1.5;
+}
+
+.copy-btn{
+    border:0;
+    background:#172b58;
+    color:#fff;
+    border-radius:9px;
+    padding:0 14px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.copy-btn:hover{
+    background:#21417e;
+}
+
+.wallet-actions{
+    display:flex;
+    gap:8px;
+    margin-top:13px;
+}
+
+.action-btn{
+    border:1px solid #263653;
+    background:#0d162d;
+    color:#a8b7d2;
+    border-radius:8px;
+    padding:8px 12px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:700;
+}
+
+.action-btn:hover{
+    border-color:#3977ff;
+    color:#fff;
+}
+
+.action-btn.delete{
+    color:#ff7888;
+}
+
+.action-btn.delete:hover{
+    border-color:#ff596d;
+    background:#28131b;
+}
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#697b9a;
+}
+
+/* =========================
+   EDIT MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    z-index:3000;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:500px;
+    background:#0a1024;
+    border:1px solid #263653;
+    border-radius:16px;
+    padding:22px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-title{
     font-size:18px;
     font-weight:800;
 }
 
-.coin-symbol{
-    color:#7898e8;
-    font-size:12px;
-    margin-top:4px;
+.close-btn{
+    background:none;
+    border:0;
+    color:#8293b1;
+    font-size:22px;
+    cursor:pointer;
 }
 
-.add-btn{
-    border:0;
-    background:linear-gradient(135deg,#1c4ed8,#2868ff);
-    color:#fff;
-    padding:11px 15px;
+.modal-actions{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.cancel-btn,
+.save-btn{
+    flex:1;
+    padding:12px;
     border-radius:9px;
     cursor:pointer;
     font-weight:800;
     font-size:12px;
 }
 
-.form{
-    display:none;
-    background:#070c1c;
-    border:1px solid #202e4b;
-    border-radius:12px;
-    padding:17px;
-    margin-bottom:18px;
-}
-
-.form.show{
-    display:block;
-}
-
-.label{
-    display:block;
-    color:#8798b6;
-    font-size:11px;
-    margin-bottom:7px;
-}
-
-.input{
-    width:100%;
-    padding:13px;
-    background:#050817;
-    border:1px solid #263653;
-    border-radius:8px;
-    color:#fff;
-    outline:none;
-    font-size:13px;
-}
-
-.input:focus{
-    border-color:#3977ff;
-}
-
-.form-buttons{
-    display:flex;
-    gap:10px;
-    margin-top:12px;
-}
-
-.save-btn,
 .cancel-btn{
-    border:0;
-    padding:11px 15px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:800;
-    font-size:12px;
+    background:#111a31;
+    border:1px solid #263653;
+    color:#9aabc7;
 }
 
 .save-btn{
-    background:#1c4ed8;
+    background:#1f5de5;
+    border:0;
     color:#fff;
 }
 
-.cancel-btn{
-    background:#18233b;
-    color:#a9b8d5;
-}
+/* =========================
+   LOADING
+========================= */
 
-.wallet-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-}
-
-.wallet{
-    background:#070c1c;
-    border:1px solid #1b2947;
-    border-radius:11px;
-    padding:15px;
-}
-
-.wallet-top{
+.loading-screen{
+    position:fixed;
+    inset:0;
+    background:#050817;
+    z-index:5000;
     display:flex;
     align-items:center;
-    justify-content:space-between;
-    gap:12px;
+    justify-content:center;
+    flex-direction:column;
+    gap:15px;
 }
 
-.wallet-address{
-    color:#a8bcf1;
-    font-size:12px;
-    word-break:break-all;
-    line-height:1.5;
+.spinner{
+    width:38px;
+    height:38px;
+    border:3px solid #1a2748;
+    border-top-color:#4d83ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
 }
 
-.badge{
-    flex-shrink:0;
-    padding:5px 9px;
-    border-radius:20px;
-    font-size:9px;
-    font-weight:800;
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-.active-badge{
-    background:#102d20;
-    color:#62d99a;
+/* =========================
+   OVERLAY
+========================= */
+
+.overlay{
+    display:none;
+    position:fixed;
+    inset:70px 0 0;
+    background:rgba(0,0,0,.55);
+    z-index:850;
 }
 
-.disabled-badge{
-    background:#302713;
-    color:#e6c66b;
-}
+/* =========================
+   MOBILE
+========================= */
 
-.assigned-badge{
-    background:#17294d;
-    color:#72a5ff;
-}
-
-.wallet-actions{
-    display:flex;
-    gap:8px;
-    margin-top:12px;
-}
-
-.action-btn{
-    border:0;
-    border-radius:7px;
-    padding:8px 11px;
-    cursor:pointer;
-    font-size:10px;
-    font-weight:700;
-}
-
-.toggle-btn{
-    background:#172b58;
-    color:#8fb0ff;
-}
-
-.delete-btn{
-    background:#321820;
-    color:#ff7888;
-}
-
-.empty{
-    color:#687a99;
-    text-align:center;
-    padding:25px;
-    border:1px dashed #243454;
-    border-radius:10px;
-    font-size:12px;
-}
-
-.loading{
-    color:#687a99;
-    text-align:center;
-    padding:20px;
-    font-size:12px;
-}
-
-.notice{
-    background:#111b32;
-    border:1px solid #25385e;
-    color:#8799ba;
-    padding:13px;
-    border-radius:10px;
-    font-size:11px;
-    line-height:1.6;
-    margin-bottom:22px;
-}
-
-@media(max-width:600px){
+@media(max-width:700px){
 
     .header{
         padding:0 16px;
     }
 
+    .admin-label,
     .admin-name{
         display:none;
     }
 
+    .menu-btn{
+        display:block;
+    }
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .overlay.show{
+        display:block;
+    }
+
     .main{
+        margin-left:0;
         padding:92px 15px 35px;
     }
 
-    .title{
-        font-size:24px;
+    .page-title{
+        font-size:23px;
     }
 
-    .coin-header{
-        align-items:flex-start;
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .input-group.full{
+        grid-column:auto;
+    }
+
+    .form-card{
+        padding:18px;
     }
 
     .wallet-top{
         align-items:flex-start;
     }
 
-    .wallet-actions{
-        flex-wrap:wrap;
+    .address-row{
+        flex-direction:column;
+    }
+
+    .copy-btn{
+        padding:11px;
     }
 
 }
 
 </style>
+
 </head>
 
 <body>
 
+
+<!-- =========================
+     LOADING
+========================= -->
+
+<div
+    class="loading-screen"
+    id="loadingScreen"
+>
+
+    <div class="spinner"></div>
+
+    <div style="color:#8192b4;font-size:13px;">
+        Loading wallet manager...
+    </div>
+
+</div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
 <header class="header">
 
     <div class="logo">
+
         ZAVIX<span>BULK</span>
+
+        <span class="admin-label">
+            ADMIN PANEL
+        </span>
+
     </div>
 
-    <div class="admin-name">
-        ADMIN PANEL
+    <div class="header-right">
+
+        <div
+            class="admin-name"
+            id="adminName"
+        >
+            Admin
+        </div>
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+        >
+            ☰
+        </button>
+
     </div>
 
 </header>
 
 
-<main class="main">
-
-    <a href="index.html" class="back">
-        ← Back to Admin
-    </a>
-
-    <h1 class="title">
-        Wallet Addresses
-    </h1>
-
-    <p class="subtitle">
-        Manage the cryptocurrency addresses used for customer deposits.
-    </p>
+<div
+    class="overlay"
+    id="overlay"
+></div>
 
 
-    <div class="notice">
+<!-- =========================
+     SIDEBAR
+========================= -->
 
-        ⚠️ Only add wallet addresses that you control.
-        Customers will be assigned an available address when they start
-        a deposit. An address assigned to an active deposit should remain
-        attached to that deposit.
+<aside
+    class="sidebar"
+    id="sidebar"
+>
 
+    <div class="sidebar-title">
+        Management
     </div>
 
 
-    <!-- BITCOIN -->
+    <a
+        href="index.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">📊</span>
+        Dashboard
+    </a>
 
-    <section class="card">
 
-        <div class="coin-header">
+    <a
+        href="categories.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">🗂️</span>
+        Categories
+    </a>
 
-            <div>
 
-                <div class="coin-title">
-                    ₿ Bitcoin Wallets
-                </div>
+    <a
+        href="products.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">📦</span>
+        Products
+    </a>
 
-                <div class="coin-symbol">
-                    BTC
-                </div>
 
-            </div>
+    <a
+        href="orders.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">🛒</span>
+        Orders
+    </a>
 
-            <button
-                class="add-btn"
-                data-coin="bitcoin"
-            >
-                + Add Bitcoin Address
-            </button>
 
+    <a
+        href="customers.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">👥</span>
+        Customers
+    </a>
+
+
+    <a
+        href="deposits.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">💰</span>
+        Deposits
+    </a>
+
+
+    <a
+        href="wallets.html"
+        class="nav-link active"
+    >
+        <span class="nav-icon">₿</span>
+        Wallets
+    </a>
+
+
+    <a
+        href="transactions.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">💳</span>
+        Transactions
+    </a>
+
+
+    <div
+        class="sidebar-title"
+        style="margin-top:25px;"
+    >
+        System
+    </div>
+
+
+    <a
+        href="settings.html"
+        class="nav-link"
+    >
+        <span class="nav-icon">⚙️</span>
+        Settings
+    </a>
+
+
+    <div
+        class="nav-link logout"
+        id="logoutBtn"
+    >
+        <span class="nav-icon">🚪</span>
+        Logout
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+    <h1 class="page-title">
+        Wallet Addresses
+    </h1>
+
+    <p class="page-subtitle">
+        Manage the cryptocurrency addresses customers can use for deposits.
+    </p>
+
+
+    <!-- =====================
+         ADD WALLET
+    ====================== -->
+
+    <section class="form-card">
+
+        <div class="form-title">
+            Add Wallet Address
+        </div>
+
+        <div class="form-subtitle">
+            Add a receiving address. Active addresses can be assigned to customer deposits.
         </div>
 
 
-        <div
-            class="form"
-            id="form-bitcoin"
-        >
+        <div class="form-grid">
 
-            <label class="label">
-                Bitcoin Wallet Address
-            </label>
 
-            <input
-                type="text"
-                class="input"
-                id="input-bitcoin"
-                placeholder="Enter your Bitcoin address"
-                autocomplete="off"
-            >
+            <div class="input-group">
 
-            <div class="form-buttons">
+                <label class="label">
+                    Cryptocurrency
+                </label>
 
-                <button
-                    class="save-btn"
-                    data-save="bitcoin"
+                <select
+                    class="select"
+                    id="coinInput"
                 >
-                    Save Address
-                </button>
 
-                <button
-                    class="cancel-btn"
-                    data-cancel="bitcoin"
+                    <option value="bitcoin">
+                        Bitcoin
+                    </option>
+
+                    <option value="litecoin">
+                        Litecoin
+                    </option>
+
+                    <option value="ethereum">
+                        Ethereum
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label class="label">
+                    Network
+                </label>
+
+                <input
+                    type="text"
+                    class="input"
+                    id="networkInput"
+                    placeholder="Example: BTC"
                 >
-                    Cancel
-                </button>
+
+            </div>
+
+
+            <div class="input-group full">
+
+                <label class="label">
+                    Wallet Address
+                </label>
+
+                <input
+                    type="text"
+                    class="input"
+                    id="addressInput"
+                    placeholder="Paste wallet address here"
+                >
 
             </div>
 
         </div>
 
 
-        <div
-            class="wallet-list"
-            id="list-bitcoin"
+        <button
+            class="add-btn"
+            id="addBtn"
         >
-
-            <div class="loading">
-                Loading Bitcoin addresses...
-            </div>
-
-        </div>
+            + Add Wallet Address
+        </button>
 
     </section>
 
 
-    <!-- LITECOIN -->
+    <!-- =====================
+         WALLET LIST
+    ====================== -->
 
-    <section class="card">
+    <section class="panel">
 
-        <div class="coin-header">
+        <div class="panel-header">
 
-            <div>
+            <h2>
+                Your Wallet Addresses
+            </h2>
 
-                <div class="coin-title">
-                    Ł Litecoin Wallets
-                </div>
-
-                <div class="coin-symbol">
-                    LTC
-                </div>
-
-            </div>
-
-            <button
-                class="add-btn"
-                data-coin="litecoin"
+            <div
+                class="wallet-count"
+                id="walletCount"
             >
-                + Add Litecoin Address
-            </button>
-
-        </div>
-
-
-        <div
-            class="form"
-            id="form-litecoin"
-        >
-
-            <label class="label">
-                Litecoin Wallet Address
-            </label>
-
-            <input
-                type="text"
-                class="input"
-                id="input-litecoin"
-                placeholder="Enter your Litecoin address"
-                autocomplete="off"
-            >
-
-            <div class="form-buttons">
-
-                <button
-                    class="save-btn"
-                    data-save="litecoin"
-                >
-                    Save Address
-                </button>
-
-                <button
-                    class="cancel-btn"
-                    data-cancel="litecoin"
-                >
-                    Cancel
-                </button>
-
+                0 wallets
             </div>
 
         </div>
@@ -501,91 +941,11 @@ body{
 
         <div
             class="wallet-list"
-            id="list-litecoin"
+            id="walletList"
         >
 
-            <div class="loading">
-                Loading Litecoin addresses...
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ETHEREUM -->
-
-    <section class="card">
-
-        <div class="coin-header">
-
-            <div>
-
-                <div class="coin-title">
-                    ♦ Ethereum Wallets
-                </div>
-
-                <div class="coin-symbol">
-                    ETH
-                </div>
-
-            </div>
-
-            <button
-                class="add-btn"
-                data-coin="ethereum"
-            >
-                + Add Ethereum Address
-            </button>
-
-        </div>
-
-
-        <div
-            class="form"
-            id="form-ethereum"
-        >
-
-            <label class="label">
-                Ethereum Wallet Address
-            </label>
-
-            <input
-                type="text"
-                class="input"
-                id="input-ethereum"
-                placeholder="Enter your Ethereum address"
-                autocomplete="off"
-            >
-
-            <div class="form-buttons">
-
-                <button
-                    class="save-btn"
-                    data-save="ethereum"
-                >
-                    Save Address
-                </button>
-
-                <button
-                    class="cancel-btn"
-                    data-cancel="ethereum"
-                >
-                    Cancel
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <div
-            class="wallet-list"
-            id="list-ethereum"
-        >
-
-            <div class="loading">
-                Loading Ethereum addresses...
+            <div class="empty">
+                Loading wallets...
             </div>
 
         </div>
@@ -595,16 +955,142 @@ body{
 </main>
 
 
+<!-- =========================
+     EDIT MODAL
+========================= -->
+
+<div
+    class="modal"
+    id="editModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                Edit Wallet
+            </div>
+
+            <button
+                class="close-btn"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label class="label">
+                Cryptocurrency
+            </label>
+
+            <select
+                class="select"
+                id="editCoin"
+            >
+
+                <option value="bitcoin">
+                    Bitcoin
+                </option>
+
+                <option value="litecoin">
+                    Litecoin
+                </option>
+
+                <option value="ethereum">
+                    Ethereum
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div
+            class="input-group"
+            style="margin-top:15px;"
+        >
+
+            <label class="label">
+                Network
+            </label>
+
+            <input
+                type="text"
+                class="input"
+                id="editNetwork"
+            >
+
+        </div>
+
+
+        <div
+            class="input-group"
+            style="margin-top:15px;"
+        >
+
+            <label class="label">
+                Wallet Address
+            </label>
+
+            <input
+                type="text"
+                class="input"
+                id="editAddress"
+            >
+
+        </div>
+
+
+        <div class="modal-actions">
+
+            <button
+                class="cancel-btn"
+                id="cancelEdit"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="save-btn"
+                id="saveEdit"
+            >
+                Save Changes
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
 <script type="module">
+
+
+/* =====================================================
+   FIREBASE
+===================================================== */
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+}
+from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
 
 import {
     getAuth,
-    onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+    onAuthStateChanged,
+    signOut
+}
+from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -612,27 +1098,39 @@ import {
     addDoc,
     getDocs,
     doc,
+    getDoc,
     updateDoc,
     deleteDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+    serverTimestamp,
+    query,
+    orderBy
+}
+from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
 
-    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    apiKey:
+    "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
 
-    authDomain:"zavixbulk.firebaseapp.com",
+    authDomain:
+    "zavixbulk.firebaseapp.com",
 
-    projectId:"zavixbulk",
+    projectId:
+    "zavixbulk",
 
-    storageBucket:"zavixbulk.firebasestorage.app",
+    storageBucket:
+    "zavixbulk.firebasestorage.app",
 
-    messagingSenderId:"819994897169",
+    messagingSenderId:
+    "819994897169",
 
-    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    appId:
+    "1:819994897169:web:4aab1bcc15fbe439f6fab0",
 
-    measurementId:"G-GJ8RY0WYBL"
+    measurementId:
+    "G-GJ8RY0WYBL"
 
 };
 
@@ -647,19 +1145,89 @@ const db =
     getFirestore(app);
 
 
-const coins = [
-    "bitcoin",
-    "litecoin",
-    "ethereum"
-];
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const loadingScreen =
+    document.getElementById("loadingScreen");
+
+const adminName =
+    document.getElementById("adminName");
+
+const walletList =
+    document.getElementById("walletList");
+
+const walletCount =
+    document.getElementById("walletCount");
+
+const addBtn =
+    document.getElementById("addBtn");
+
+const coinInput =
+    document.getElementById("coinInput");
+
+const networkInput =
+    document.getElementById("networkInput");
+
+const addressInput =
+    document.getElementById("addressInput");
 
 
-let adminUser = null;
+const editModal =
+    document.getElementById("editModal");
+
+const editCoin =
+    document.getElementById("editCoin");
+
+const editNetwork =
+    document.getElementById("editNetwork");
+
+const editAddress =
+    document.getElementById("editAddress");
+
+const saveEdit =
+    document.getElementById("saveEdit");
+
+const closeModal =
+    document.getElementById("closeModal");
+
+const cancelEdit =
+    document.getElementById("cancelEdit");
 
 
-/* =========================
+let editingWalletId = null;
+
+
+/* =====================================================
+   COIN DETAILS
+===================================================== */
+
+const coinNames = {
+
+    bitcoin:"Bitcoin",
+
+    litecoin:"Litecoin",
+
+    ethereum:"Ethereum"
+
+};
+
+
+const coinIcons = {
+
+    bitcoin:"₿",
+
+    litecoin:"Ł",
+
+    ethereum:"♦"
+
+};
+
+
+/* =====================================================
    ESCAPE HTML
-========================= */
+===================================================== */
 
 function escapeHTML(value){
 
@@ -673,349 +1241,364 @@ function escapeHTML(value){
 }
 
 
-/* =========================
-   OPEN FORMS
-========================= */
+/* =====================================================
+   MOBILE MENU
+===================================================== */
 
-document
-    .querySelectorAll(".add-btn")
-    .forEach(button => {
+const menuBtn =
+    document.getElementById("menuBtn");
 
-        button.addEventListener(
-            "click",
-            () => {
+const sidebar =
+    document.getElementById("sidebar");
 
-                const coin =
-                    button.dataset.coin;
-
-                const form =
-                    document.getElementById(
-                        "form-" + coin
-                    );
-
-                form.classList.toggle("show");
-
-            }
-        );
-
-    });
+const overlay =
+    document.getElementById("overlay");
 
 
-/* =========================
-   CANCEL
-========================= */
+menuBtn.addEventListener(
+    "click",
+    ()=>{
 
-document
-    .querySelectorAll(".cancel-btn")
-    .forEach(button => {
+        sidebar.classList.toggle("open");
 
-        button.addEventListener(
-            "click",
-            () => {
+        overlay.classList.toggle("show");
 
-                const coin =
-                    button.dataset.cancel;
-
-                document
-                    .getElementById(
-                        "form-" + coin
-                    )
-                    .classList.remove("show");
-
-                document
-                    .getElementById(
-                        "input-" + coin
-                    )
-                    .value = "";
-
-            }
-        );
-
-    });
+    }
+);
 
 
-/* =========================
+overlay.addEventListener(
+    "click",
+    ()=>{
+
+        sidebar.classList.remove("open");
+
+        overlay.classList.remove("show");
+
+    }
+);
+
+
+/* =====================================================
    LOAD WALLETS
-========================= */
+===================================================== */
 
 async function loadWallets(){
 
-    for(const coin of coins){
+    walletList.innerHTML = `
+        <div class="empty">
+            Loading wallets...
+        </div>
+    `;
 
-        const list =
-            document.getElementById(
-                "list-" + coin
+
+    try{
+
+        const walletsQuery =
+            query(
+                collection(db,"wallets"),
+                orderBy("createdAt","desc")
             );
 
-        try{
 
-            const snapshot =
-                await getDocs(
-                    collection(
-                        db,
-                        "walletAddresses"
-                    )
-                );
+        const snapshot =
+            await getDocs(
+                walletsQuery
+            );
 
 
-            const wallets = [];
+        walletCount.textContent =
+            snapshot.size +
+            (
+                snapshot.size === 1
+                ? " wallet"
+                : " wallets"
+            );
 
-            snapshot.forEach(item => {
+
+        if(snapshot.empty){
+
+            walletList.innerHTML = `
+                <div class="empty">
+
+                    ₿<br><br>
+
+                    No wallet addresses yet.<br>
+
+                    Add your first wallet address above.
+
+                </div>
+            `;
+
+            return;
+
+        }
+
+
+        let html = "";
+
+
+        snapshot.forEach(
+            item=>{
 
                 const data =
                     item.data();
 
-                if(data.cryptocurrency === coin){
 
-                    wallets.push({
-                        id:item.id,
-                        ...data
-                    });
-
-                }
-
-            });
+                const coin =
+                    data.coin ||
+                    "bitcoin";
 
 
-            if(!wallets.length){
-
-                list.innerHTML = `
-                    <div class="empty">
-                        No ${coin} wallet addresses added yet.
-                    </div>
-                `;
-
-                continue;
-
-            }
+                const name =
+                    coinNames[coin] ||
+                    data.cryptocurrency ||
+                    "Cryptocurrency";
 
 
-            list.innerHTML = wallets.map(
-                wallet => {
-
-                    const active =
-                        wallet.active !== false;
-
-                    const assigned =
-                        wallet.assigned === true;
+                const icon =
+                    coinIcons[coin] ||
+                    "₿";
 
 
-                    return `
+                const active =
+                    data.active !== false;
 
-                        <div class="wallet">
 
-                            <div class="wallet-top">
+                html += `
 
-                                <div class="wallet-address">
-                                    ${escapeHTML(wallet.address)}
+                    <div
+                        class="wallet-card"
+                        data-id="${escapeHTML(item.id)}"
+                    >
+
+                        <div class="wallet-top">
+
+                            <div class="wallet-info">
+
+                                <div class="coin-icon">
+                                    ${icon}
                                 </div>
 
-                                ${
-                                    assigned
+                                <div>
 
-                                    ?
+                                    <div class="coin-name">
+                                        ${escapeHTML(name)}
+                                    </div>
 
-                                    `<span class="badge assigned-badge">
-                                        ASSIGNED
-                                    </span>`
+                                    <div class="network">
+                                        ${escapeHTML(
+                                            data.network ||
+                                            name
+                                        )}
+                                    </div>
 
-                                    :
-
-                                    active
-
-                                    ?
-
-                                    `<span class="badge active-badge">
-                                        ACTIVE
-                                    </span>`
-
-                                    :
-
-                                    `<span class="badge disabled-badge">
-                                        DISABLED
-                                    </span>`
-                                }
+                                </div>
 
                             </div>
 
 
-                            <div class="wallet-actions">
-
-                                <button
-                                    class="action-btn toggle-btn"
-                                    data-toggle="${wallet.id}"
-                                    data-active="${active}"
-                                >
-                                    ${
-                                        active
-                                        ? "Disable"
-                                        : "Enable"
-                                    }
-                                </button>
-
-
-                                <button
-                                    class="action-btn delete-btn"
-                                    data-delete="${wallet.id}"
-                                    data-assigned="${assigned}"
-                                >
-                                    Delete
-                                </button>
-
+                            <div
+                                class="wallet-status ${
+                                    active
+                                    ? "active"
+                                    : "disabled"
+                                }"
+                            >
+                                ${
+                                    active
+                                    ? "ACTIVE"
+                                    : "DISABLED"
+                                }
                             </div>
 
                         </div>
 
-                    `;
 
-                }
-            ).join("");
+                        <div class="address-label">
+                            Wallet Address
+                        </div>
 
 
-            attachWalletActions();
+                        <div class="address-row">
 
-        }catch(error){
+                            <div class="address">
+                                ${escapeHTML(
+                                    data.address ||
+                                    ""
+                                )}
+                            </div>
 
-            console.error(error);
+                            <button
+                                class="copy-btn"
+                                data-copy="${escapeHTML(
+                                    data.address ||
+                                    ""
+                                )}"
+                            >
+                                Copy
+                            </button>
 
-            list.innerHTML = `
-                <div class="empty">
-                    Unable to load ${coin} wallets.
-                </div>
-            `;
+                        </div>
 
-        }
+
+                        <div class="wallet-actions">
+
+                            <button
+                                class="action-btn edit-btn"
+                                data-id="${escapeHTML(item.id)}"
+                            >
+                                ✏️ Edit
+                            </button>
+
+
+                            <button
+                                class="action-btn toggle-btn"
+                                data-id="${escapeHTML(item.id)}"
+                                data-active="${active}"
+                            >
+                                ${
+                                    active
+                                    ? "Disable"
+                                    : "Enable"
+                                }
+                            </button>
+
+
+                            <button
+                                class="action-btn delete delete-btn"
+                                data-id="${escapeHTML(item.id)}"
+                            >
+                                🗑️ Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        walletList.innerHTML =
+            html;
+
+
+        attachWalletEvents();
+
+
+    }catch(error){
+
+        console.error(
+            "Wallet loading error:",
+            error
+        );
+
+
+        walletList.innerHTML = `
+            <div class="empty">
+                Unable to load wallets.
+            </div>
+        `;
 
     }
 
 }
 
 
-/* =========================
-   SAVE WALLET
-========================= */
+/* =====================================================
+   WALLET EVENTS
+===================================================== */
 
-document
-    .querySelectorAll(".save-btn")
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            async () => {
-
-                const coin =
-                    button.dataset.save;
-
-                const input =
-                    document.getElementById(
-                        "input-" + coin
-                    );
-
-                const address =
-                    input.value.trim();
+function attachWalletEvents(){
 
 
-                if(!address){
-
-                    alert(
-                        "Please enter a wallet address."
-                    );
-
-                    return;
-
-                }
-
-
-                button.disabled = true;
-
-                button.textContent =
-                    "Saving...";
-
-
-                try{
-
-                    await addDoc(
-                        collection(
-                            db,
-                            "walletAddresses"
-                        ),
-                        {
-
-                            cryptocurrency:
-                                coin,
-
-                            address:
-                                address,
-
-                            active:
-                                true,
-
-                            assigned:
-                                false,
-
-                            assignedTo:
-                                null,
-
-                            createdAt:
-                                serverTimestamp()
-
-                        }
-                    );
-
-
-                    input.value = "";
-
-                    document
-                        .getElementById(
-                            "form-" + coin
-                        )
-                        .classList.remove("show");
-
-
-                    await loadWallets();
-
-
-                }catch(error){
-
-                    console.error(error);
-
-                    alert(
-                        "Unable to save wallet address."
-                    );
-
-                }finally{
-
-                    button.disabled = false;
-
-                    button.textContent =
-                        "Save Address";
-
-                }
-
-            }
-        );
-
-    });
-
-
-/* =========================
-   ACTIONS
-========================= */
-
-function attachWalletActions(){
+    /* COPY */
 
     document
-        .querySelectorAll("[data-toggle]")
-        .forEach(button => {
+        .querySelectorAll(".copy-btn")
+        .forEach(button=>{
 
-            button.onclick =
-                async () => {
+            button.addEventListener(
+                "click",
+                async ()=>{
+
+                    const address =
+                        button.dataset.copy;
+
+
+                    try{
+
+                        await navigator
+                            .clipboard
+                            .writeText(address);
+
+
+                        button.textContent =
+                            "Copied ✓";
+
+
+                        setTimeout(
+                            ()=>{
+                                button.textContent =
+                                    "Copy";
+                            },
+                            1800
+                        );
+
+
+                    }catch(error){
+
+                        alert(
+                            "Unable to copy. Please copy the address manually."
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* EDIT */
+
+    document
+        .querySelectorAll(".edit-btn")
+        .forEach(button=>{
+
+            button.addEventListener(
+                "click",
+                ()=>{
+
+                    openEdit(
+                        button.dataset.id
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* TOGGLE */
+
+    document
+        .querySelectorAll(".toggle-btn")
+        .forEach(button=>{
+
+            button.addEventListener(
+                "click",
+                async ()=>{
 
                     const id =
-                        button.dataset.toggle;
+                        button.dataset.id;
 
-                    const currentlyActive =
-                        button.dataset.active === "true";
+                    const active =
+                        button.dataset.active ===
+                        "true";
 
 
                     try{
@@ -1023,56 +1606,47 @@ function attachWalletActions(){
                         await updateDoc(
                             doc(
                                 db,
-                                "walletAddresses",
+                                "wallets",
                                 id
                             ),
                             {
                                 active:
-                                    !currentlyActive
+                                    !active
                             }
                         );
 
 
                         await loadWallets();
 
+
                     }catch(error){
 
                         console.error(error);
 
                         alert(
-                            "Unable to update wallet."
+                            "Unable to change wallet status."
                         );
 
                     }
 
-                };
+                }
+            );
 
         });
 
 
-    document
-        .querySelectorAll("[data-delete]")
-        .forEach(button => {
+    /* DELETE */
 
-            button.onclick =
-                async () => {
+    document
+        .querySelectorAll(".delete-btn")
+        .forEach(button=>{
+
+            button.addEventListener(
+                "click",
+                async ()=>{
 
                     const id =
-                        button.dataset.delete;
-
-                    const assigned =
-                        button.dataset.assigned === "true";
-
-
-                    if(assigned){
-
-                        alert(
-                            "This wallet is currently assigned to a customer deposit. It cannot be deleted until that assignment is finished."
-                        );
-
-                        return;
-
-                    }
+                        button.dataset.id;
 
 
                     const confirmDelete =
@@ -1091,13 +1665,14 @@ function attachWalletActions(){
                         await deleteDoc(
                             doc(
                                 db,
-                                "walletAddresses",
+                                "wallets",
                                 id
                             )
                         );
 
 
                         await loadWallets();
+
 
                     }catch(error){
 
@@ -1109,20 +1684,361 @@ function attachWalletActions(){
 
                     }
 
-                };
+                }
+            );
 
         });
 
 }
 
 
-/* =========================
-   ADMIN AUTH
-========================= */
+/* =====================================================
+   ADD WALLET
+===================================================== */
+
+addBtn.addEventListener(
+    "click",
+    async ()=>{
+
+        const coin =
+            coinInput.value;
+
+        const network =
+            networkInput.value.trim();
+
+        const address =
+            addressInput.value.trim();
+
+
+        if(!network){
+
+            alert(
+                "Please enter the network."
+            );
+
+            networkInput.focus();
+
+            return;
+
+        }
+
+
+        if(!address){
+
+            alert(
+                "Please enter the wallet address."
+            );
+
+            addressInput.focus();
+
+            return;
+
+        }
+
+
+        addBtn.disabled =
+            true;
+
+        addBtn.textContent =
+            "Adding wallet...";
+
+
+        try{
+
+            await addDoc(
+                collection(
+                    db,
+                    "wallets"
+                ),
+                {
+
+                    coin:
+                        coin,
+
+                    cryptocurrency:
+                        coinNames[coin],
+
+                    network:
+                        network,
+
+                    address:
+                        address,
+
+                    active:
+                        true,
+
+                    createdAt:
+                        serverTimestamp(),
+
+                    createdBy:
+                        auth.currentUser.uid
+
+                }
+            );
+
+
+            coinInput.value =
+                "bitcoin";
+
+            networkInput.value =
+                "";
+
+            addressInput.value =
+                "";
+
+
+            alert(
+                "Wallet address added successfully."
+            );
+
+
+            await loadWallets();
+
+
+        }catch(error){
+
+            console.error(
+                "Add wallet error:",
+                error
+            );
+
+
+            alert(
+                "Unable to add wallet. Please try again."
+            );
+
+
+        }finally{
+
+            addBtn.disabled =
+                false;
+
+            addBtn.textContent =
+                "+ Add Wallet Address";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   OPEN EDIT
+===================================================== */
+
+async function openEdit(id){
+
+    try{
+
+        const walletSnap =
+            await getDoc(
+                doc(
+                    db,
+                    "wallets",
+                    id
+                )
+            );
+
+
+        if(
+            !walletSnap.exists()
+        ){
+
+            alert(
+                "Wallet no longer exists."
+            );
+
+            return;
+
+        }
+
+
+        const data =
+            walletSnap.data();
+
+
+        editingWalletId =
+            id;
+
+
+        editCoin.value =
+            data.coin ||
+            "bitcoin";
+
+
+        editNetwork.value =
+            data.network ||
+            "";
+
+
+        editAddress.value =
+            data.address ||
+            "";
+
+
+        editModal.classList.add(
+            "show"
+        );
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to open wallet."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE EDIT
+===================================================== */
+
+function closeEdit(){
+
+    editingWalletId =
+        null;
+
+    editModal.classList.remove(
+        "show"
+    );
+
+}
+
+
+closeModal.addEventListener(
+    "click",
+    closeEdit
+);
+
+
+cancelEdit.addEventListener(
+    "click",
+    closeEdit
+);
+
+
+/* =====================================================
+   SAVE EDIT
+===================================================== */
+
+saveEdit.addEventListener(
+    "click",
+    async ()=>{
+
+        if(!editingWalletId){
+            return;
+        }
+
+
+        const coin =
+            editCoin.value;
+
+        const network =
+            editNetwork.value.trim();
+
+        const address =
+            editAddress.value.trim();
+
+
+        if(!network){
+
+            alert(
+                "Please enter the network."
+            );
+
+            return;
+
+        }
+
+
+        if(!address){
+
+            alert(
+                "Please enter the wallet address."
+            );
+
+            return;
+
+        }
+
+
+        saveEdit.disabled =
+            true;
+
+        saveEdit.textContent =
+            "Saving...";
+
+
+        try{
+
+            await updateDoc(
+                doc(
+                    db,
+                    "wallets",
+                    editingWalletId
+                ),
+                {
+
+                    coin:
+                        coin,
+
+                    cryptocurrency:
+                        coinNames[coin],
+
+                    network:
+                        network,
+
+                    address:
+                        address
+
+                }
+            );
+
+
+            closeEdit();
+
+            await loadWallets();
+
+
+        }catch(error){
+
+            console.error(
+                "Edit wallet error:",
+                error
+            );
+
+
+            alert(
+                "Unable to save changes."
+            );
+
+
+        }finally{
+
+            saveEdit.disabled =
+                false;
+
+            saveEdit.textContent =
+                "Save Changes";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   AUTHENTICATION
+===================================================== */
 
 onAuthStateChanged(
     auth,
-    async user => {
+    async user=>{
 
         if(!user){
 
@@ -1134,19 +2050,135 @@ onAuthStateChanged(
         }
 
 
-        adminUser = user;
+        try{
+
+            const userSnap =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
 
 
-        /*
-            Your existing admin protection
-            can be added here later.
+            if(
+                !userSnap.exists()
+            ){
 
-            For now the page requires
-            Firebase login.
-        */
+                await signOut(auth);
+
+                window.location.href =
+                    "../login.html";
+
+                return;
+
+            }
 
 
-        await loadWallets();
+            const userData =
+                userSnap.data();
+
+
+            if(
+                userData.role !== "admin"
+            ){
+
+                alert(
+                    "Access denied. Admin account required."
+                );
+
+
+                await signOut(auth);
+
+                window.location.href =
+                    "../login.html";
+
+                return;
+
+            }
+
+
+            adminName.textContent =
+                userData.fullname ||
+                userData.username ||
+                "Admin";
+
+
+            await loadWallets();
+
+
+            loadingScreen.style.display =
+                "none";
+
+
+        }catch(error){
+
+            console.error(
+                "Authentication error:",
+                error
+            );
+
+
+            alert(
+                "Unable to load admin account."
+            );
+
+
+            await signOut(auth);
+
+            window.location.href =
+                "../login.html";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+    .getElementById("logoutBtn")
+    .addEventListener(
+        "click",
+        async ()=>{
+
+            try{
+
+                await signOut(auth);
+
+                window.location.href =
+                    "../login.html";
+
+            }catch(error){
+
+                console.error(error);
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+===================================================== */
+
+editModal.addEventListener(
+    "click",
+    event=>{
+
+        if(
+            event.target ===
+            editModal
+        ){
+
+            closeEdit();
+
+        }
 
     }
 );
