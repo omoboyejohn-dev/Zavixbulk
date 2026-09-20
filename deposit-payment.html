@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zavixbulk | Submit Payment</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    padding:0 25px;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#4f8cff;
+}
+
+.main{
+    max-width:550px;
+    margin:auto;
+    padding:100px 20px 50px;
+}
+
+.box{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:18px;
+    padding:28px;
+}
+
+.title{
+    font-size:22px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#7b8daa;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+.coin{
+    background:#070c1c;
+    border:1px solid #1f2d4a;
+    border-radius:10px;
+    padding:14px;
+    margin-bottom:22px;
+    color:#8eabdf;
+    font-size:13px;
+}
+
+.label{
+    display:block;
+    color:#8495b4;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input{
+    width:100%;
+    padding:14px;
+    background:#070c1c;
+    border:1px solid #263653;
+    border-radius:9px;
+    color:#fff;
+    outline:none;
+    font-size:14px;
+}
+
+.input:focus{
+    border-color:#3977ff;
+}
+
+.submit{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.submit:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.success{
+    display:none;
+    margin-top:20px;
+    padding:16px;
+    border-radius:10px;
+    background:#0b251d;
+    border:1px solid #185d45;
+    color:#7de0b7;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.success.show{
+    display:block;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        ZAVIX<span>BULK</span>
+    </div>
+
+</header>
+
+<main class="main">
+
+<div class="box">
+
+    <div class="title">
+        Submit Payment
+    </div>
+
+    <div class="subtitle">
+        Tell us how much you paid and the wallet address
+        you sent the payment from.
+    </div>
+
+    <div class="coin">
+        Cryptocurrency:
+        <strong id="coinName">Bitcoin</strong>
+    </div>
+
+    <div class="input-group">
+
+        <label class="label">
+            Amount in USD
+        </label>
+
+        <input
+            class="input"
+            type="number"
+            id="amount"
+            placeholder="Example: 50"
+            min="1"
+            step="0.01"
+        >
+
+    </div>
+
+    <div class="input-group">
+
+        <label class="label">
+            Sender Wallet Address
+        </label>
+
+        <input
+            class="input"
+            type="text"
+            id="sender"
+            placeholder="Enter the wallet address you sent from"
+        >
+
+    </div>
+
+    <button class="submit" id="submit">
+        Submit Payment
+    </button>
+
+    <div class="success" id="success">
+
+        <strong>Payment submitted successfully ✓</strong>
+
+        <br><br>
+
+        Your deposit is now pending verification.
+        Your Zavixbulk wallet will be credited after
+        the payment has been verified.
+
+    </div>
+
+</div>
+
+</main>
+
+<script type="module">
+
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    addDoc,
+    collection,
+    serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+
+const firebaseConfig={
+
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
+    authDomain:"zavixbulk.firebaseapp.com",
+
+    projectId:"zavixbulk",
+
+    storageBucket:"zavixbulk.firebasestorage.app",
+
+    messagingSenderId:"819994897169",
+
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
+    measurementId:"G-GJ8RY0WYBL"
+
+};
+
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+
+const params=
+    new URLSearchParams(location.search);
+
+const coin=
+    params.get("coin") || "bitcoin";
+
+
+const names={
+
+    bitcoin:"Bitcoin",
+
+    litecoin:"Litecoin",
+
+    ethereum:"Ethereum"
+
+};
+
+
+const coinName=
+    names[coin] || "Bitcoin";
+
+
+document.getElementById("coinName").textContent=
+    coinName;
+
+
+const amount=
+    document.getElementById("amount");
+
+const sender=
+    document.getElementById("sender");
+
+const submit=
+    document.getElementById("submit");
+
+const success=
+    document.getElementById("success");
+
+
+let currentUser=null;
+
+
+onAuthStateChanged(auth,user=>{
+
+    if(!user){
+
+        location.href="login.html";
+
+        return;
+
+    }
+
+    currentUser=user;
+
+});
+
+
+submit.addEventListener("click",async()=>{
+
+    if(!currentUser){
+
+        alert("Please login first.");
+
+        return;
+
+    }
+
+
+    const amountValue=
+        Number(amount.value);
+
+    const senderValue=
+        sender.value.trim();
+
+
+    if(!amountValue || amountValue<=0){
+
+        alert("Please enter the amount you paid.");
+
+        return;
+
+    }
+
+
+    if(!senderValue){
+
+        alert("Please enter your sender wallet address.");
+
+        return;
+
+    }
+
+
+    submit.disabled=true;
+
+    submit.textContent=
+        "Submitting...";
+
+
+    try{
+
+        const userSnap=
+            await getDoc(
+                doc(
+                    db,
+                    "users",
+                    currentUser.uid
+                )
+            );
+
+
+        let userData={};
+
+        if(userSnap.exists()){
+
+            userData=
+                userSnap.data();
+
+        }
+
+
+        await addDoc(
+            collection(db,"deposits"),
+            {
+
+                userId:
+                    currentUser.uid,
+
+                customerName:
+                    userData.fullname ||
+                    userData.username ||
+                    "Customer",
+
+                username:
+                    userData.username ||
+                    "",
+
+                cryptocurrency:
+                    coinName,
+
+                method:
+                    coin,
+
+                amountUSD:
+                    amountValue,
+
+                senderWallet:
+                    senderValue,
+
+                status:
+                    "pending",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        success.classList.add("show");
+
+        amount.value="";
+        sender.value="";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Unable to submit payment. Please try again."
+        );
+
+    }finally{
+
+        submit.disabled=false;
+
+        submit.textContent=
+            "Submit Payment";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
