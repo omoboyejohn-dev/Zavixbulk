@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Zavixbulk | Deposit</title>
 
 <style>
-
 *{
     box-sizing:border-box;
     margin:0;
@@ -275,7 +272,6 @@ input:focus{
     border:1px solid rgba(255,255,255,.08);
     font-size:13px;
     line-height:1.6;
-    word-break:break-word;
 }
 
 .status.show{
@@ -351,11 +347,8 @@ input:focus{
     .balance{
         font-size:27px;
     }
-
 }
-
 </style>
-
 </head>
 
 <body>
@@ -372,14 +365,11 @@ input:focus{
 
 </header>
 
-
 <main class="container">
 
     <div class="title">
 
-        <h1>
-            Deposit
-        </h1>
+        <h1>Deposit</h1>
 
         <p>
             Choose a payment method and add funds to your
@@ -388,30 +378,22 @@ input:focus{
 
     </div>
 
-
-    <!-- BALANCE -->
-
     <div class="balance-card">
 
         <div class="balance-label">
             Current Wallet Balance
         </div>
 
-        <div
-            class="balance"
-            id="balance"
-        >
+        <div class="balance" id="balance">
             $0.00
         </div>
 
     </div>
 
 
-    <!-- PAYMENT METHODS -->
+    <!-- PAYMENT OPTIONS -->
 
     <div class="payment-methods">
-
-        <!-- PAYMENT 1 -->
 
         <div
             class="payment-method active"
@@ -436,8 +418,6 @@ input:focus{
 
         </div>
 
-
-        <!-- PAYMENT 2 -->
 
         <div
             class="payment-method"
@@ -465,12 +445,9 @@ input:focus{
     </div>
 
 
-    <!-- PAYMENT 1 -->
+    <!-- BITCOIN PAYMENT -->
 
-    <div
-        class="card"
-        id="payment1Card"
-    >
+    <div class="card" id="payment1Card">
 
         <h2>
             Bitcoin Deposit
@@ -482,17 +459,13 @@ input:focus{
             payment page.
         </p>
 
-
         <label for="amount">
             Deposit Amount (USD)
         </label>
 
-
         <div class="input-wrap">
 
-            <span class="currency">
-                $
-            </span>
+            <span class="currency">$</span>
 
             <input
                 type="number"
@@ -504,11 +477,9 @@ input:focus{
 
         </div>
 
-
         <div class="quick-title">
             Quick Amount
         </div>
-
 
         <div class="quick">
 
@@ -534,7 +505,6 @@ input:focus{
 
         </div>
 
-
         <button
             type="button"
             class="create-btn"
@@ -543,12 +513,10 @@ input:focus{
             Continue with Bitcoin
         </button>
 
-
         <div
             class="status"
             id="status"
         ></div>
-
 
         <div
             class="payment-box"
@@ -560,11 +528,10 @@ input:focus{
             </h3>
 
             <p>
-                Your Bitcoin invoice has been created.
+                Your payment invoice has been created.
                 Continue to the secure payment page to
-                complete your deposit.
+                complete your Bitcoin deposit.
             </p>
-
 
             <a
                 href="#"
@@ -577,7 +544,6 @@ input:focus{
             </a>
 
         </div>
-
 
         <div class="note">
 
@@ -610,8 +576,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
-/* FIREBASE */
-
 const firebaseConfig = {
 
     apiKey:
@@ -638,17 +602,15 @@ const firebaseConfig = {
 };
 
 
-const app =
-    initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-const auth =
-    getAuth(app);
+const auth = getAuth(app);
 
-const db =
-    getFirestore(app);
+const db = getFirestore(app);
 
 
-/* ELEMENTS */
+let currentUser = null;
+
 
 const amountInput =
     document.getElementById("amount");
@@ -665,26 +627,8 @@ const paymentBox =
 const payBtn =
     document.getElementById("payBtn");
 
-let currentUser = null;
 
-
-/* MONEY */
-
-function formatMoney(value){
-
-    return "$" +
-        Number(value || 0).toLocaleString(
-            "en-US",
-            {
-                minimumFractionDigits:2,
-                maximumFractionDigits:2
-            }
-        );
-
-}
-
-
-/* QUICK AMOUNT */
+/* QUICK AMOUNTS */
 
 window.setAmount = function(amount){
 
@@ -698,40 +642,26 @@ window.setAmount = function(amount){
 
 document
     .getElementById("payment2")
-    .addEventListener(
-        "click",
-        function(){
+    .addEventListener("click", function(){
 
-            document
-                .getElementById("payment2")
-                .classList.remove("active");
+        alert(
+            "Payment 2 is currently under development.\n\nPlease use Payment 1 (Bitcoin) for now."
+        );
 
-            document
-                .getElementById("payment1")
-                .classList.add("active");
-
-            alert(
-                "Payment 2 is coming soon.\n\nPlease use Payment 1 — Bitcoin — for now."
-            );
-
-        }
-    );
+    });
 
 
 /* PAYMENT 1 */
 
 document
     .getElementById("payment1")
-    .addEventListener(
-        "click",
-        function(){
+    .addEventListener("click", function(){
 
-            document
-                .getElementById("payment1")
-                .classList.add("active");
+        document
+            .getElementById("payment1")
+            .classList.add("active");
 
-        }
-    );
+    });
 
 
 /* LOAD USER */
@@ -749,33 +679,38 @@ onAuthStateChanged(
 
         }
 
-
         currentUser = user;
-
 
         try{
 
-            const userSnapshot =
-                await getDoc(
-                    doc(
-                        db,
-                        "users",
-                        user.uid
-                    )
+            const userRef =
+                doc(
+                    db,
+                    "users",
+                    user.uid
                 );
 
+            const userSnapshot =
+                await getDoc(userRef);
 
             if(userSnapshot.exists()){
 
                 const data =
                     userSnapshot.data();
 
+                const balance =
+                    Number(data.balance || 0);
 
                 document
                     .getElementById("balance")
                     .textContent =
-                    formatMoney(
-                        data.balance || 0
+                    "$" +
+                    balance.toLocaleString(
+                        "en-US",
+                        {
+                            minimumFractionDigits:2,
+                            maximumFractionDigits:2
+                        }
                     );
 
             }
@@ -793,150 +728,14 @@ onAuthStateChanged(
 );
 
 
-/* SAFE ERROR MESSAGE */
-
-function getErrorMessage(result){
-
-    if(!result){
-        return "Unable to create Bitcoin payment.";
-    }
-
-
-    if(typeof result.error === "string"){
-        return result.error;
-    }
-
-
-    if(typeof result.message === "string"){
-        return result.message;
-    }
-
-
-    if(
-        result.error &&
-        typeof result.error === "object"
-    ){
-
-        if(typeof result.error.message === "string"){
-            return result.error.message;
-        }
-
-        if(typeof result.error.error === "string"){
-            return result.error.error;
-        }
-
-        try{
-
-            return JSON.stringify(
-                result.error
-            );
-
-        }catch{
-
-            return "MG Crypto returned an error.";
-
-        }
-
-    }
-
-
-    if(
-        result.data &&
-        typeof result.data === "object" &&
-        typeof result.data.message === "string"
-    ){
-
-        return result.data.message;
-
-    }
-
-
-    return "Unable to create Bitcoin payment.";
-
-}
-
-
-/* FIND PAYMENT URL */
-
-function getPaymentUrl(result){
-
-    if(!result){
-        return null;
-    }
-
-
-    const possibleUrls = [
-
-        result.payment_url,
-
-        result.checkout_url,
-
-        result.invoice_url,
-
-        result.url,
-
-        result.paymentUrl,
-
-        result.checkoutUrl,
-
-        result.invoiceUrl,
-
-        result.data?.payment_url,
-
-        result.data?.checkout_url,
-
-        result.data?.invoice_url,
-
-        result.data?.url,
-
-        result.data?.paymentUrl,
-
-        result.data?.checkoutUrl,
-
-        result.data?.invoiceUrl,
-
-        result.invoice?.payment_url,
-
-        result.invoice?.checkout_url,
-
-        result.invoice?.invoice_url,
-
-        result.invoice?.url
-
-    ];
-
-
-    for(
-        const value of possibleUrls
-    ){
-
-        if(
-            typeof value === "string" &&
-            value.trim()
-        ){
-
-            return value.trim();
-
-        }
-
-    }
-
-
-    return null;
-
-}
-
-
-/* CREATE PAYMENT */
+/* CREATE MG CRYPTO INVOICE */
 
 createBtn.addEventListener(
     "click",
     async function(){
 
         const amount =
-            Number(
-                amountInput.value
-            );
+            Number(amountInput.value);
 
 
         paymentBox
@@ -948,10 +747,7 @@ createBtn.addEventListener(
             "status show";
 
 
-        if(
-            !Number.isFinite(amount) ||
-            amount < 1
-        ){
+        if(!amount || amount < 1){
 
             statusBox.classList.add("error");
 
@@ -975,18 +771,14 @@ createBtn.addEventListener(
         }
 
 
-        createBtn.disabled =
-            true;
+        createBtn.disabled = true;
 
         createBtn.textContent =
             "Creating Bitcoin Payment...";
 
 
-        statusBox.className =
-            "status show";
-
         statusBox.textContent =
-            "Creating your secure Bitcoin payment...";
+            "Creating your Bitcoin payment invoice...";
 
 
         try{
@@ -995,13 +787,10 @@ createBtn.addEventListener(
                 await fetch(
                     "/api/create-invoice",
                     {
-
                         method:"POST",
 
                         headers:{
                             "Content-Type":
-                                "application/json",
-                            "Accept":
                                 "application/json"
                         },
 
@@ -1020,81 +809,61 @@ createBtn.addEventListener(
                                 "Zavixbulk Bitcoin Wallet Deposit"
 
                         })
-
                     }
                 );
 
 
-            /*
-             * Read the response safely.
-             * This prevents [object Object].
-             */
-
-            const rawText =
-                await response.text();
-
-
             let result;
-
 
             try{
 
                 result =
-                    JSON.parse(rawText);
+                    await response.json();
 
             }catch{
 
-                result = {
-                    error:
-                        rawText ||
-                        "Invalid response from server."
-                };
+                result = {};
 
             }
-
-
-            console.log(
-                "Zavixbulk invoice response:",
-                result
-            );
 
 
             if(!response.ok){
 
                 throw new Error(
-                    getErrorMessage(result)
+                    result.error ||
+                    result.message ||
+                    "MG Crypto rejected the invoice request."
                 );
 
             }
 
 
-            if(result.success === false){
+            console.log(
+                "MG Crypto response:",
+                result
+            );
 
-                throw new Error(
-                    getErrorMessage(result)
-                );
 
-            }
-
+            /*
+             * Accept common checkout URL locations.
+             */
 
             const paymentUrl =
-                getPaymentUrl(result);
+                result.payment_url ||
+                result.checkout_url ||
+                result.invoice_url ||
+                result.url ||
+                result.data?.payment_url ||
+                result.data?.checkout_url ||
+                result.data?.invoice_url ||
+                result.data?.url;
 
 
             if(!paymentUrl){
 
-                statusBox.className =
-                    "status show error";
-
-                statusBox.textContent =
-                    getErrorMessage(result);
-
-                console.log(
-                    "Full server response:",
-                    result
+                throw new Error(
+                    "MG Crypto created a response, but no payment URL was returned."
                 );
-
-                return;
 
             }
 
@@ -1110,15 +879,13 @@ createBtn.addEventListener(
                 paymentUrl;
 
 
-            paymentBox
-                .classList
-                .add("show");
+            paymentBox.classList.add("show");
 
 
         }catch(error){
 
             console.error(
-                "Payment error:",
+                "MG Crypto error:",
                 error
             );
 
@@ -1129,7 +896,7 @@ createBtn.addEventListener(
 
             statusBox.textContent =
                 error.message ||
-                "Unable to create Bitcoin payment.";
+                "MG Crypto rejected the invoice request.";
 
         }finally{
 
