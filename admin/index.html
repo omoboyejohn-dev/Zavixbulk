@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Zavixbulk | Admin Dashboard</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -228,7 +230,7 @@ body{
 
 .quick-actions{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(5,1fr);
     gap:14px;
     margin-bottom:28px;
 }
@@ -409,15 +411,16 @@ tr:last-child td{
     z-index:850;
 }
 
-@media(max-width:1000px){
+@media(max-width:1100px){
 
     .stats{
         grid-template-columns:repeat(2,1fr);
     }
 
     .quick-actions{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:repeat(3,1fr);
     }
+
 }
 
 @media(max-width:700px){
@@ -481,6 +484,7 @@ tr:last-child td{
     .action{
         padding:15px;
     }
+
 }
 
 @media(max-width:430px){
@@ -492,21 +496,33 @@ tr:last-child td{
     .quick-actions{
         grid-template-columns:1fr;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
+
 
 <!-- =========================
      LOADING
 ========================= -->
 
-<div class="loading-screen" id="loadingScreen">
+<div
+    class="loading-screen"
+    id="loadingScreen"
+>
 
     <div class="spinner"></div>
 
-    <div style="color:#8192b4;font-size:13px;">
+    <div
+        style="
+        color:#8192b4;
+        font-size:13px;
+        "
+    >
         Loading admin panel...
     </div>
 
@@ -529,9 +545,13 @@ tr:last-child td{
 
     </div>
 
+
     <div class="header-right">
 
-        <div class="admin-name" id="adminName">
+        <div
+            class="admin-name"
+            id="adminName"
+        >
             Admin
         </div>
 
@@ -548,13 +568,13 @@ tr:last-child td{
 
 
 <!-- =========================
-     OVERLAY
+     MOBILE OVERLAY
 ========================= -->
 
 <div
     class="overlay"
-    id="overlay">
-</div>
+    id="overlay"
+></div>
 
 
 <!-- =========================
@@ -575,8 +595,13 @@ tr:last-child td{
         href="index.html"
         class="nav-link active"
     >
-        <span class="nav-icon">📊</span>
+
+        <span class="nav-icon">
+            📊
+        </span>
+
         Dashboard
+
     </a>
 
 
@@ -584,8 +609,13 @@ tr:last-child td{
         href="categories.html"
         class="nav-link"
     >
-        <span class="nav-icon">🗂️</span>
+
+        <span class="nav-icon">
+            🗂️
+        </span>
+
         Categories
+
     </a>
 
 
@@ -593,8 +623,29 @@ tr:last-child td{
         href="products.html"
         class="nav-link"
     >
-        <span class="nav-icon">📦</span>
+
+        <span class="nav-icon">
+            📦
+        </span>
+
         Products
+
+    </a>
+
+
+    <!-- NEW WALLET PAGE -->
+
+    <a
+        href="wallets.html"
+        class="nav-link"
+    >
+
+        <span class="nav-icon">
+            ₿
+        </span>
+
+        Wallets
+
     </a>
 
 
@@ -602,8 +653,13 @@ tr:last-child td{
         href="orders.html"
         class="nav-link"
     >
-        <span class="nav-icon">🛒</span>
+
+        <span class="nav-icon">
+            🛒
+        </span>
+
         Orders
+
     </a>
 
 
@@ -611,8 +667,13 @@ tr:last-child td{
         href="customers.html"
         class="nav-link"
     >
-        <span class="nav-icon">👥</span>
+
+        <span class="nav-icon">
+            👥
+        </span>
+
         Customers
+
     </a>
 
 
@@ -620,8 +681,13 @@ tr:last-child td{
         href="deposits.html"
         class="nav-link"
     >
-        <span class="nav-icon">💰</span>
+
+        <span class="nav-icon">
+            💰
+        </span>
+
         Deposits
+
     </a>
 
 
@@ -629,8 +695,13 @@ tr:last-child td{
         href="transactions.html"
         class="nav-link"
     >
-        <span class="nav-icon">💳</span>
+
+        <span class="nav-icon">
+            💳
+        </span>
+
         Transactions
+
     </a>
 
 
@@ -646,8 +717,13 @@ tr:last-child td{
         href="settings.html"
         class="nav-link"
     >
-        <span class="nav-icon">⚙️</span>
+
+        <span class="nav-icon">
+            ⚙️
+        </span>
+
         Settings
+
     </a>
 
 
@@ -655,8 +731,13 @@ tr:last-child td{
         class="nav-link logout"
         id="logoutBtn"
     >
-        <span class="nav-icon">🚪</span>
+
+        <span class="nav-icon">
+            🚪
+        </span>
+
         Logout
+
     </div>
 
 </aside>
@@ -668,12 +749,15 @@ tr:last-child td{
 
 <main class="main">
 
+
     <h1 class="page-title">
         Admin Dashboard
     </h1>
 
+
     <p class="page-subtitle">
-        Manage Zavixbulk products, customers, orders and payments.
+        Manage Zavixbulk products, customers, orders,
+        wallets and payments.
     </p>
 
 
@@ -906,6 +990,28 @@ tr:last-child td{
         </a>
 
 
+        <!-- NEW WALLET QUICK ACTION -->
+
+        <a
+            href="wallets.html"
+            class="action"
+        >
+
+            <div class="action-icon">
+                ₿
+            </div>
+
+            <div class="action-name">
+                Wallets
+            </div>
+
+            <div class="action-desc">
+                Manage payment wallet addresses
+            </div>
+
+        </a>
+
+
         <a
             href="orders.html"
             class="action"
@@ -977,11 +1083,27 @@ tr:last-child td{
                 <thead>
 
                     <tr>
-                        <th>Order</th>
-                        <th>Customer</th>
-                        <th>Product</th>
-                        <th>Amount</th>
-                        <th>Status</th>
+
+                        <th>
+                            Order
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
                     </tr>
 
                 </thead>
@@ -1038,10 +1160,23 @@ tr:last-child td{
                 <thead>
 
                     <tr>
-                        <th>Reference</th>
-                        <th>Customer</th>
-                        <th>Amount</th>
-                        <th>Status</th>
+
+                        <th>
+                            Reference
+                        </th>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Amount
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
                     </tr>
 
                 </thead>
@@ -1073,6 +1208,7 @@ tr:last-child td{
 
 <script type="module">
 
+
 /* =====================================================
    FIREBASE IMPORTS
 ===================================================== */
@@ -1082,12 +1218,14 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
+
 import {
     getAuth,
     onAuthStateChanged,
     signOut
 } from
 "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -1151,34 +1289,63 @@ const db =
 ===================================================== */
 
 const loadingScreen =
-    document.getElementById("loadingScreen");
+    document.getElementById(
+        "loadingScreen"
+    );
+
 
 const adminName =
-    document.getElementById("adminName");
+    document.getElementById(
+        "adminName"
+    );
+
 
 const customersCount =
-    document.getElementById("customersCount");
+    document.getElementById(
+        "customersCount"
+    );
+
 
 const productsCount =
-    document.getElementById("productsCount");
+    document.getElementById(
+        "productsCount"
+    );
+
 
 const pendingOrdersCount =
-    document.getElementById("pendingOrdersCount");
+    document.getElementById(
+        "pendingOrdersCount"
+    );
+
 
 const deliveredOrdersCount =
-    document.getElementById("deliveredOrdersCount");
+    document.getElementById(
+        "deliveredOrdersCount"
+    );
+
 
 const pendingDepositsCount =
-    document.getElementById("pendingDepositsCount");
+    document.getElementById(
+        "pendingDepositsCount"
+    );
+
 
 const totalSales =
-    document.getElementById("totalSales");
+    document.getElementById(
+        "totalSales"
+    );
+
 
 const ordersTable =
-    document.getElementById("ordersTable");
+    document.getElementById(
+        "ordersTable"
+    );
+
 
 const depositsTable =
-    document.getElementById("depositsTable");
+    document.getElementById(
+        "depositsTable"
+    );
 
 
 /* =====================================================
@@ -1186,29 +1353,45 @@ const depositsTable =
 ===================================================== */
 
 const menuBtn =
-    document.getElementById("menuBtn");
+    document.getElementById(
+        "menuBtn"
+    );
+
 
 const sidebar =
-    document.getElementById("sidebar");
+    document.getElementById(
+        "sidebar"
+    );
+
 
 const overlay =
-    document.getElementById("overlay");
+    document.getElementById(
+        "overlay"
+    );
 
 
 function openMenu(){
 
-    sidebar.classList.add("open");
+    sidebar.classList.add(
+        "open"
+    );
 
-    overlay.classList.add("show");
+    overlay.classList.add(
+        "show"
+    );
 
 }
 
 
 function closeMenu(){
 
-    sidebar.classList.remove("open");
+    sidebar.classList.remove(
+        "open"
+    );
 
-    overlay.classList.remove("show");
+    overlay.classList.remove(
+        "show"
+    );
 
 }
 
@@ -1218,7 +1401,9 @@ menuBtn.addEventListener(
     () => {
 
         if(
-            sidebar.classList.contains("open")
+            sidebar.classList.contains(
+                "open"
+            )
         ){
 
             closeMenu();
@@ -1240,13 +1425,17 @@ overlay.addEventListener(
 
 
 /* =====================================================
-   USD MONEY FORMAT
+   MONEY FORMAT
 ===================================================== */
 
-function formatMoney(amount){
+function formatMoney(
+    amount
+){
 
     return "$" +
-        Number(amount || 0).toLocaleString(
+        Number(
+            amount || 0
+        ).toLocaleString(
             "en-US",
             {
                 minimumFractionDigits:2,
@@ -1261,14 +1450,33 @@ function formatMoney(amount){
    ESCAPE HTML
 ===================================================== */
 
-function escapeHTML(value){
+function escapeHTML(
+    value
+){
 
-    return String(value ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
 
 }
 
@@ -1281,22 +1489,29 @@ async function loadDashboard(){
 
     try{
 
+
         /* =====================
            CUSTOMERS
         ===================== */
 
         const usersSnap =
             await getDocs(
-                collection(db,"users")
+                collection(
+                    db,
+                    "users"
+                )
             );
+
 
         let customers = 0;
 
+
         usersSnap.forEach(
-            (item) => {
+            item => {
 
                 const data =
                     item.data();
+
 
                 if(
                     data.role !== "admin"
@@ -1309,6 +1524,7 @@ async function loadDashboard(){
             }
         );
 
+
         customersCount.textContent =
             customers;
 
@@ -1319,10 +1535,15 @@ async function loadDashboard(){
 
         const productsSnap =
             await getDocs(
-                collection(db,"products")
+                collection(
+                    db,
+                    "products"
+                )
             );
 
+
         let productTotal = 0;
+
 
         productsSnap.forEach(
             () => {
@@ -1331,6 +1552,7 @@ async function loadDashboard(){
 
             }
         );
+
 
         productsCount.textContent =
             productTotal;
@@ -1342,8 +1564,12 @@ async function loadDashboard(){
 
         const ordersSnap =
             await getDocs(
-                collection(db,"orders")
+                collection(
+                    db,
+                    "orders"
+                )
             );
+
 
         let pendingOrders = 0;
 
@@ -1353,10 +1579,11 @@ async function loadDashboard(){
 
 
         ordersSnap.forEach(
-            (item) => {
+            item => {
 
                 const order =
                     item.data();
+
 
                 const status =
                     String(
@@ -1380,6 +1607,7 @@ async function loadDashboard(){
 
                     deliveredOrders++;
 
+
                     sales += Number(
                         order.price ||
                         order.amount ||
@@ -1395,11 +1623,15 @@ async function loadDashboard(){
         pendingOrdersCount.textContent =
             pendingOrders;
 
+
         deliveredOrdersCount.textContent =
             deliveredOrders;
 
+
         totalSales.textContent =
-            formatMoney(sales);
+            formatMoney(
+                sales
+            );
 
 
         /* =====================
@@ -1408,17 +1640,22 @@ async function loadDashboard(){
 
         const depositsSnap =
             await getDocs(
-                collection(db,"deposits")
+                collection(
+                    db,
+                    "deposits"
+                )
             );
+
 
         let pendingDeposits = 0;
 
 
         depositsSnap.forEach(
-            (item) => {
+            item => {
 
                 const deposit =
                     item.data();
+
 
                 const status =
                     String(
@@ -1467,13 +1704,19 @@ async function loadRecentOrders(){
 
     try{
 
+
         const ordersQuery =
             query(
-                collection(db,"orders"),
+                collection(
+                    db,
+                    "orders"
+                ),
+
                 orderBy(
                     "createdAt",
                     "desc"
                 ),
+
                 limit(8)
             );
 
@@ -1489,14 +1732,18 @@ async function loadRecentOrders(){
         ){
 
             ordersTable.innerHTML = `
+
                 <tr>
+
                     <td
                         colspan="5"
                         class="empty"
                     >
                         No orders yet
                     </td>
+
                 </tr>
+
             `;
 
             return;
@@ -1508,7 +1755,7 @@ async function loadRecentOrders(){
 
 
         snapshot.forEach(
-            (item) => {
+            item => {
 
                 const order =
                     item.data();
@@ -1533,14 +1780,20 @@ async function loadRecentOrders(){
                     statusClass =
                         "delivered";
 
-                }else if(
+                }
+
+
+                if(
                     status === "processing"
                 ){
 
                     statusClass =
                         "processing";
 
-                }else if(
+                }
+
+
+                if(
                     status === "rejected"
                 ){
 
@@ -1556,9 +1809,13 @@ async function loadRecentOrders(){
 
                         <td>
                             #${escapeHTML(
-                                item.id.slice(0,8)
+                                item.id.slice(
+                                    0,
+                                    8
+                                )
                             )}
                         </td>
+
 
                         <td>
                             ${escapeHTML(
@@ -1569,12 +1826,14 @@ async function loadRecentOrders(){
                             )}
                         </td>
 
+
                         <td>
                             ${escapeHTML(
                                 order.productName ||
                                 "Product"
                             )}
                         </td>
+
 
                         <td>
                             ${formatMoney(
@@ -1584,6 +1843,7 @@ async function loadRecentOrders(){
                             )}
                         </td>
 
+
                         <td>
 
                             <span
@@ -1591,8 +1851,8 @@ async function loadRecentOrders(){
                             >
                                 ${escapeHTML(
                                     status
-                                        .charAt(0)
-                                        .toUpperCase() +
+                                    .charAt(0)
+                                    .toUpperCase() +
                                     status.slice(1)
                                 )}
                             </span>
@@ -1620,14 +1880,18 @@ async function loadRecentOrders(){
 
 
         ordersTable.innerHTML = `
+
             <tr>
+
                 <td
                     colspan="5"
                     class="empty"
                 >
                     Unable to load orders
                 </td>
+
             </tr>
+
         `;
 
     }
@@ -1643,13 +1907,19 @@ async function loadRecentDeposits(){
 
     try{
 
+
         const depositsQuery =
             query(
-                collection(db,"deposits"),
+                collection(
+                    db,
+                    "deposits"
+                ),
+
                 orderBy(
                     "createdAt",
                     "desc"
                 ),
+
                 limit(8)
             );
 
@@ -1665,14 +1935,18 @@ async function loadRecentDeposits(){
         ){
 
             depositsTable.innerHTML = `
+
                 <tr>
+
                     <td
                         colspan="4"
                         class="empty"
                     >
                         No deposits yet
                     </td>
+
                 </tr>
+
             `;
 
             return;
@@ -1684,7 +1958,7 @@ async function loadRecentDeposits(){
 
 
         snapshot.forEach(
-            (item) => {
+            item => {
 
                 const deposit =
                     item.data();
@@ -1729,9 +2003,13 @@ async function loadRecentDeposits(){
                         <td>
                             ${escapeHTML(
                                 deposit.reference ||
-                                item.id.slice(0,10)
+                                item.id.slice(
+                                    0,
+                                    10
+                                )
                             )}
                         </td>
+
 
                         <td>
                             ${escapeHTML(
@@ -1742,11 +2020,15 @@ async function loadRecentDeposits(){
                             )}
                         </td>
 
+
                         <td>
                             ${formatMoney(
-                                deposit.amount || 0
+                                deposit.amount ||
+                                deposit.amountUSD ||
+                                0
                             )}
                         </td>
+
 
                         <td>
 
@@ -1755,8 +2037,8 @@ async function loadRecentDeposits(){
                             >
                                 ${escapeHTML(
                                     status
-                                        .charAt(0)
-                                        .toUpperCase() +
+                                    .charAt(0)
+                                    .toUpperCase() +
                                     status.slice(1)
                                 )}
                             </span>
@@ -1784,14 +2066,18 @@ async function loadRecentDeposits(){
 
 
         depositsTable.innerHTML = `
+
             <tr>
+
                 <td
                     colspan="4"
                     class="empty"
                 >
                     Unable to load deposits
                 </td>
+
             </tr>
+
         `;
 
     }
@@ -1805,7 +2091,8 @@ async function loadRecentDeposits(){
 
 onAuthStateChanged(
     auth,
-    async (user) => {
+    async user => {
+
 
         if(!user){
 
@@ -1818,6 +2105,7 @@ onAuthStateChanged(
 
 
         try{
+
 
             const userRef =
                 doc(
@@ -1837,7 +2125,9 @@ onAuthStateChanged(
                 !userSnap.exists()
             ){
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
 
                 window.location.href =
                     "../login.html";
@@ -1862,7 +2152,10 @@ onAuthStateChanged(
                 );
 
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
+
 
                 window.location.href =
                     "../login.html";
@@ -1898,7 +2191,10 @@ onAuthStateChanged(
             );
 
 
-            await signOut(auth);
+            await signOut(
+                auth
+            );
+
 
             window.location.href =
                 "../login.html";
@@ -1914,14 +2210,18 @@ onAuthStateChanged(
 ===================================================== */
 
 document
-    .getElementById("logoutBtn")
+    .getElementById(
+        "logoutBtn"
+    )
     .addEventListener(
         "click",
         async () => {
 
             try{
 
-                await signOut(auth);
+                await signOut(
+                    auth
+                );
 
                 window.location.href =
                     "../login.html";
@@ -1942,4 +2242,3 @@ document
 
 </body>
 </html>
-
