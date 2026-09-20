@@ -6,10 +6,14 @@
 <title>Zavixbulk | Deposit</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-    font-family:Arial,sans-serif;
+    font-family:Inter,Arial,sans-serif;
     background:#050817;
     color:#fff;
     min-height:100vh;
@@ -23,6 +27,11 @@ body{
     align-items:center;
     justify-content:space-between;
     padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
 }
 
 .logo{
@@ -30,7 +39,9 @@ body{
     font-weight:900;
 }
 
-.logo span{color:#4f8cff}
+.logo span{
+    color:#4f8cff;
+}
 
 .user-name{
     color:#9aa9c4;
@@ -43,17 +54,28 @@ body{
     padding:100px 20px 50px;
 }
 
-.title{
+.page-title{
     font-size:28px;
-    font-weight:800;
-    margin-bottom:8px;
+    margin-bottom:7px;
 }
 
-.subtitle{
+.page-subtitle{
     color:#7586a8;
     font-size:14px;
-    margin-bottom:28px;
+    margin-bottom:25px;
 }
+
+/* PAGE */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+/* COINS */
 
 .methods{
     display:grid;
@@ -64,8 +86,8 @@ body{
 .method{
     background:#0a1024;
     border:1px solid #1b2542;
-    border-radius:15px;
-    padding:25px;
+    border-radius:14px;
+    padding:22px;
     cursor:pointer;
     transition:.2s;
 }
@@ -75,27 +97,268 @@ body{
     transform:translateY(-2px);
 }
 
-.icon{
-    font-size:34px;
-    margin-bottom:13px;
+.coin-icon{
+    font-size:32px;
+    margin-bottom:12px;
 }
 
-.name{
+.coin-name{
     font-size:16px;
     font-weight:800;
     margin-bottom:5px;
 }
 
-.text{
+.coin-text{
     color:#7182a2;
     font-size:12px;
 }
 
+/* LOADING */
+
+.loading-page{
+    text-align:center;
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:16px;
+    padding:70px 25px;
+}
+
+.spinner{
+    width:45px;
+    height:45px;
+    border:4px solid #1a2948;
+    border-top-color:#4d86ff;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+    margin:0 auto 22px;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.loading-title{
+    font-size:18px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.loading-text{
+    color:#7182a2;
+    font-size:13px;
+}
+
+/* WALLET */
+
+.wallet-box{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:16px;
+    padding:25px;
+}
+
+.section-title{
+    font-size:20px;
+    font-weight:850;
+    margin-bottom:9px;
+}
+
+.section-text{
+    color:#7d8eac;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:22px;
+}
+
+.label{
+    display:block;
+    color:#8495b4;
+    font-size:11px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.address{
+    background:#070c1c;
+    border:1px solid #253454;
+    border-radius:10px;
+    padding:15px;
+    color:#8fb0ff;
+    font-size:13px;
+    word-break:break-all;
+    line-height:1.6;
+    margin-bottom:10px;
+}
+
+.copy-btn{
+    width:100%;
+    border:0;
+    background:#172b58;
+    color:#fff;
+    padding:13px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.copy-btn:hover{
+    background:#21417e;
+}
+
+.warning{
+    margin-top:15px;
+    background:#16172a;
+    border:1px solid #37365a;
+    color:#9ba6c7;
+    padding:13px;
+    border-radius:9px;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.timer-box{
+    margin-top:20px;
+    padding:17px;
+    border:1px solid #263653;
+    background:#070c1c;
+    border-radius:10px;
+    text-align:center;
+}
+
+.timer-label{
+    color:#7c8eac;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.timer{
+    color:#5d8dff;
+    font-size:27px;
+    font-weight:900;
+}
+
+.paid-btn{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+    font-size:14px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.paid-btn:hover{
+    opacity:.92;
+}
+
+/* SUBMISSION */
+
+.submit-box{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:16px;
+    padding:25px;
+}
+
+.crypto-display{
+    background:#070c1c;
+    border:1px solid #253454;
+    padding:13px;
+    border-radius:9px;
+    color:#8fb0ff;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:17px;
+}
+
+.input{
+    width:100%;
+    padding:14px;
+    background:#070c1c;
+    border:1px solid #263653;
+    border-radius:9px;
+    color:#fff;
+    outline:none;
+    font-size:14px;
+}
+
+.input:focus{
+    border-color:#3977ff;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.submit-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.info{
+    margin-top:16px;
+    color:#7182a2;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.success{
+    display:none;
+    margin-top:20px;
+    background:#0b251d;
+    border:1px solid #185d45;
+    color:#7de0b7;
+    padding:17px;
+    border-radius:10px;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.success.show{
+    display:block;
+}
+
 @media(max-width:650px){
-    .header{padding:0 16px}
-    .user-name{display:none}
-    .main{padding:90px 15px 35px}
-    .methods{grid-template-columns:1fr}
+
+    .header{
+        padding:0 16px;
+    }
+
+    .user-name{
+        display:none;
+    }
+
+    .main{
+        padding:92px 15px 35px;
+    }
+
+    .page-title{
+        font-size:24px;
+    }
+
+    .methods{
+        grid-template-columns:1fr;
+    }
+
+    .wallet-box,
+    .submit-box{
+        padding:20px;
+    }
 }
 </style>
 </head>
@@ -103,118 +366,802 @@ body{
 <body>
 
 <header class="header">
-    <div class="logo">ZAVIX<span>BULK</span></div>
-    <div class="user-name" id="userName">Customer</div>
+
+    <div class="logo">
+        ZAVIX<span>BULK</span>
+    </div>
+
+    <div class="user-name" id="userName">
+        Customer
+    </div>
+
 </header>
+
 
 <main class="main">
 
-    <h1 class="title">Deposit Funds</h1>
+    <!-- PAGE 1 -->
 
-    <p class="subtitle">
-        Choose a cryptocurrency to fund your Zavixbulk wallet.
-    </p>
+    <section class="page active" id="coinPage">
 
-    <div class="methods">
+        <h1 class="page-title">
+            Deposit Funds
+        </h1>
 
-        <div class="method" data-method="bitcoin">
-            <div class="icon">₿</div>
-            <div class="name">Bitcoin</div>
-            <div class="text">BTC Deposit</div>
+        <p class="page-subtitle">
+            Choose a cryptocurrency to fund your Zavixbulk wallet.
+        </p>
+
+        <div class="methods">
+
+            <div class="method" data-method="bitcoin">
+                <div class="coin-icon">₿</div>
+
+                <div class="coin-name">
+                    Bitcoin
+                </div>
+
+                <div class="coin-text">
+                    BTC Deposit
+                </div>
+            </div>
+
+
+            <div class="method" data-method="litecoin">
+                <div class="coin-icon">Ł</div>
+
+                <div class="coin-name">
+                    Litecoin
+                </div>
+
+                <div class="coin-text">
+                    LTC Deposit
+                </div>
+            </div>
+
+
+            <div class="method" data-method="ethereum">
+                <div class="coin-icon">♦</div>
+
+                <div class="coin-name">
+                    Ethereum
+                </div>
+
+                <div class="coin-text">
+                    ETH Deposit
+                </div>
+            </div>
+
         </div>
 
-        <div class="method" data-method="litecoin">
-            <div class="icon">Ł</div>
-            <div class="name">Litecoin</div>
-            <div class="text">LTC Deposit</div>
+    </section>
+
+
+    <!-- PAGE 2 : GENERATING -->
+
+    <section class="page" id="generatePage">
+
+        <div class="loading-page">
+
+            <div class="spinner"></div>
+
+            <div class="loading-title">
+                Preparing your payment
+            </div>
+
+            <div class="loading-text" id="generateText">
+                Generating Bitcoin wallet...
+            </div>
+
         </div>
 
-        <div class="method" data-method="ethereum">
-            <div class="icon">♦</div>
-            <div class="name">Ethereum</div>
-            <div class="text">ETH Deposit</div>
+    </section>
+
+
+    <!-- PAGE 3 : WALLET -->
+
+    <section class="page" id="walletPage">
+
+        <div class="wallet-box">
+
+            <div class="section-title" id="walletTitle">
+                Bitcoin Wallet
+            </div>
+
+            <div class="section-text">
+                Send your payment to the wallet address below.
+                Please make sure you use the correct cryptocurrency
+                network.
+            </div>
+
+
+            <label class="label">
+                WALLET ADDRESS
+            </label>
+
+            <div class="address" id="walletAddress">
+            </div>
+
+
+            <button class="copy-btn" id="copyBtn">
+                Copy Wallet Address
+            </button>
+
+
+            <div class="warning">
+
+                ⚠️ Send only the selected cryptocurrency to this
+                address. Sending another cryptocurrency or using
+                the wrong network may result in permanent loss of
+                funds.
+
+            </div>
+
+
+            <div class="timer-box">
+
+                <div class="timer-label">
+                    TIME REMAINING TO MAKE PAYMENT
+                </div>
+
+                <div class="timer" id="timer">
+                    20:00
+                </div>
+
+            </div>
+
+
+            <button class="paid-btn" id="paidBtn">
+                I Have Paid
+            </button>
+
         </div>
 
-    </div>
+    </section>
+
+
+    <!-- PAGE 4 : CHECKING PAYMENT -->
+
+    <section class="page" id="checkingPage">
+
+        <div class="loading-page">
+
+            <div class="spinner"></div>
+
+            <div class="loading-title">
+                Preparing payment submission
+            </div>
+
+            <div class="loading-text">
+                Please wait while we prepare the payment form...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAGE 5 : PAYMENT SUBMISSION -->
+
+    <section class="page" id="submitPage">
+
+        <div class="submit-box">
+
+            <div class="section-title">
+                Submit Payment
+            </div>
+
+            <div class="section-text">
+                Tell us how much you paid and the wallet address
+                you sent the payment from.
+            </div>
+
+
+            <label class="label">
+                Cryptocurrency
+            </label>
+
+            <div class="crypto-display" id="cryptoDisplay">
+                Bitcoin
+            </div>
+
+
+            <div class="input-group">
+
+                <label class="label">
+                    Amount in USD
+                </label>
+
+                <input
+                    type="number"
+                    id="amount"
+                    class="input"
+                    placeholder="Example: 50"
+                    min="1"
+                    step="0.01"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label class="label">
+                    Sender Wallet Address
+                </label>
+
+                <input
+                    type="text"
+                    id="senderAddress"
+                    class="input"
+                    placeholder="Enter the wallet address you sent the payment from"
+                >
+
+            </div>
+
+
+            <button
+                class="submit-btn"
+                id="submitBtn"
+            >
+                Submit Payment
+            </button>
+
+
+            <div class="info">
+                Your payment will remain pending until it has been
+                manually verified by Zavixbulk.
+            </div>
+
+
+            <div
+                class="success"
+                id="successMessage"
+            >
+
+                <strong>
+                    Payment submitted successfully.
+                </strong>
+
+                <br><br>
+
+                Your deposit is now pending verification.
+                Your Zavixbulk wallet will be credited after
+                the payment has been verified.
+
+            </div>
+
+        </div>
+
+    </section>
 
 </main>
 
+
 <script type="module">
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
 
 import {
     getFirestore,
     doc,
-    getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+    getDoc,
+    addDoc,
+    collection,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
-const firebaseConfig={
+
+const firebaseConfig = {
+
     apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
     authDomain:"zavixbulk.firebaseapp.com",
+
     projectId:"zavixbulk",
+
     storageBucket:"zavixbulk.firebasestorage.app",
+
     messagingSenderId:"819994897169",
+
     appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
     measurementId:"G-GJ8RY0WYBL"
+
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
 
-const userName=document.getElementById("userName");
+const app =
+    initializeApp(firebaseConfig);
 
-onAuthStateChanged(auth,async user=>{
+const auth =
+    getAuth(app);
 
-    if(!user){
-        location.href="login.html";
-        return;
-    }
+const db =
+    getFirestore(app);
 
-    try{
 
-        const snap=await getDoc(
-            doc(db,"users",user.uid)
-        );
+let currentUser = null;
+let selectedMethod = null;
+let timerInterval = null;
 
-        if(snap.exists()){
 
-            const data=snap.data();
+/* YOUR RECEIVING WALLETS */
 
-            userName.textContent=
-                data.fullname||
-                data.username||
-                "Customer";
-        }
+const wallets = {
 
-    }catch(error){
-        console.error(error);
-    }
+    bitcoin:
+        "bc1q3e4sq5p04tpad7xav4p04qyua5l7p3uxctqlxk",
 
-});
+    litecoin:
+        "ltc1q44hg0s3psaadzdme4anvq8alcv0gypcvcaey9r",
 
-document.querySelectorAll(".method").forEach(method=>{
+    ethereum:
+        "0xE55D8cB2Bd9b7EF8C6F396E6e2A89Eb92C6c793"
 
-    method.addEventListener("click",()=>{
+};
 
-        const coin=method.dataset.method;
 
-        location.href=
-            "deposit-generate.html?coin="+
-            encodeURIComponent(coin);
+const names = {
+
+    bitcoin:"Bitcoin",
+
+    litecoin:"Litecoin",
+
+    ethereum:"Ethereum"
+
+};
+
+
+/* PAGES */
+
+const coinPage =
+    document.getElementById("coinPage");
+
+const generatePage =
+    document.getElementById("generatePage");
+
+const walletPage =
+    document.getElementById("walletPage");
+
+const checkingPage =
+    document.getElementById("checkingPage");
+
+const submitPage =
+    document.getElementById("submitPage");
+
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(item => {
+
+            item.classList.remove("active");
+
+        });
+
+    page.classList.add("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* COIN SELECTION */
+
+document
+    .querySelectorAll(".method")
+    .forEach(method => {
+
+        method.addEventListener("click",()=>{
+
+            selectedMethod =
+                method.dataset.method;
+
+            const coin =
+                names[selectedMethod];
+
+
+            document.getElementById(
+                "generateText"
+            ).textContent =
+                "Generating " + coin + " wallet...";
+
+
+            showPage(generatePage);
+
+
+            /* 3 SECOND GENERATION */
+
+            setTimeout(()=>{
+
+                document.getElementById(
+                    "walletTitle"
+                ).textContent =
+                    coin + " Wallet";
+
+
+                document.getElementById(
+                    "walletAddress"
+                ).textContent =
+                    wallets[selectedMethod];
+
+
+                showPage(walletPage);
+
+
+                startPaymentTimer();
+
+            },3000);
+
+        });
 
     });
 
-});
+
+/* 20 MINUTE TIMER */
+
+function startPaymentTimer(){
+
+    clearInterval(timerInterval);
+
+    let remaining =
+        20 * 60;
+
+    updateTimer(remaining);
+
+
+    timerInterval =
+        setInterval(()=>{
+
+            remaining--;
+
+            updateTimer(remaining);
+
+
+            if(remaining <= 0){
+
+                clearInterval(timerInterval);
+
+                document.getElementById(
+                    "timer"
+                ).textContent =
+                    "00:00";
+
+            }
+
+        },1000);
+
+}
+
+
+function updateTimer(seconds){
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const secs =
+        seconds % 60;
+
+
+    document.getElementById(
+        "timer"
+    ).textContent =
+
+        String(minutes).padStart(2,"0")
+        + ":" +
+        String(secs).padStart(2,"0");
+
+}
+
+
+/* COPY WALLET */
+
+document
+    .getElementById("copyBtn")
+    .addEventListener("click",async()=>{
+
+        const address =
+            document.getElementById(
+                "walletAddress"
+            ).textContent;
+
+
+        try{
+
+            await navigator.clipboard.writeText(
+                address
+            );
+
+            document.getElementById(
+                "copyBtn"
+            ).textContent =
+                "Copied ✓";
+
+
+            setTimeout(()=>{
+
+                document.getElementById(
+                    "copyBtn"
+                ).textContent =
+                    "Copy Wallet Address";
+
+            },2000);
+
+        }catch(error){
+
+            alert(
+                "Unable to copy address. Please copy it manually."
+            );
+
+        }
+
+    });
+
+
+/* I HAVE PAID */
+
+document
+    .getElementById("paidBtn")
+    .addEventListener("click",()=>{
+
+        clearInterval(timerInterval);
+
+        showPage(checkingPage);
+
+
+        /* 3 SECOND CHECKING SCREEN */
+
+        setTimeout(()=>{
+
+            document.getElementById(
+                "cryptoDisplay"
+            ).textContent =
+                names[selectedMethod];
+
+
+            showPage(submitPage);
+
+        },3000);
+
+    });
+
+
+/* SUBMIT PAYMENT */
+
+document
+    .getElementById("submitBtn")
+    .addEventListener("click",async()=>{
+
+        if(!currentUser){
+
+            alert("Please login first.");
+
+            return;
+
+        }
+
+
+        const amount =
+            Number(
+                document.getElementById(
+                    "amount"
+                ).value
+            );
+
+
+        const senderAddress =
+            document.getElementById(
+                "senderAddress"
+            ).value.trim();
+
+
+        if(!amount || amount <= 0){
+
+            alert(
+                "Please enter the amount you paid."
+            );
+
+            return;
+
+        }
+
+
+        if(!senderAddress){
+
+            alert(
+                "Please enter the sender wallet address."
+            );
+
+            return;
+
+        }
+
+
+        const submitBtn =
+            document.getElementById(
+                "submitBtn"
+            );
+
+
+        submitBtn.disabled = true;
+
+        submitBtn.textContent =
+            "Submitting...";
+
+
+        try{
+
+            const userSnapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    )
+                );
+
+
+            let userData = {};
+
+
+            if(userSnapshot.exists()){
+
+                userData =
+                    userSnapshot.data();
+
+            }
+
+
+            await addDoc(
+                collection(
+                    db,
+                    "deposits"
+                ),
+                {
+
+                    userId:
+                        currentUser.uid,
+
+                    customerName:
+                        userData.fullname ||
+                        userData.username ||
+                        "Customer",
+
+                    username:
+                        userData.username ||
+                        "",
+
+                    method:
+                        selectedMethod,
+
+                    cryptocurrency:
+                        names[selectedMethod],
+
+                    amountUSD:
+                        amount,
+
+                    senderWallet:
+                        senderAddress,
+
+                    receivingWallet:
+                        wallets[selectedMethod],
+
+                    status:
+                        "pending",
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            document
+                .getElementById(
+                    "successMessage"
+                )
+                .classList.add("show");
+
+
+            document.getElementById(
+                "amount"
+            ).value = "";
+
+
+            document.getElementById(
+                "senderAddress"
+            ).value = "";
+
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "Unable to submit payment. Please try again."
+            );
+
+        }finally{
+
+            submitBtn.disabled =
+                false;
+
+            submitBtn.textContent =
+                "Submit Payment";
+
+        }
+
+    });
+
+
+/* AUTH */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        currentUser =
+            user;
+
+
+        try{
+
+            const snapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
+
+
+            if(snapshot.exists()){
+
+                const data =
+                    snapshot.data();
+
+
+                document.getElementById(
+                    "userName"
+                ).textContent =
+
+                    data.fullname ||
+                    data.username ||
+                    "Customer";
+
+            }
+
+        }catch(error){
+
+            console.error(error);
+
+        }
+
+    }
+);
 
 </script>
 
