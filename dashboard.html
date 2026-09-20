@@ -614,7 +614,6 @@ body{
         <span>Browse Products</span>
     </a>
 
-    <!-- DEPOSIT NOW OPENS deposit.html -->
     <a href="deposit.html" class="nav-item">
         <span class="nav-icon">💳</span>
         <span>Deposit</span>
@@ -833,6 +832,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
 
+/* FIREBASE */
+
 const firebaseConfig = {
 
     apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
@@ -862,6 +863,8 @@ const db =
     getFirestore(app);
 
 
+/* ELEMENTS */
+
 const menuBtn =
     document.getElementById("menuBtn");
 
@@ -875,8 +878,32 @@ const searchInput =
     document.getElementById("searchInput");
 
 
+/*
+    IMPORTANT
+
+    Products are stored separately from categories.
+
+    We therefore keep TWO realtime listeners:
+
+    1. products collection
+    2. categories collection
+
+    When Admin changes:
+
+    Facebook -> Facebbbok
+
+    the category listener receives the change
+    immediately and the customer dashboard
+    re-renders using the NEW category name.
+*/
+
+
 let allProducts = [];
 
+let allCategories = {};
+
+
+/* MENU */
 
 menuBtn.addEventListener("click",()=>{
 
@@ -932,7 +959,182 @@ function isImageUrl(value){
 }
 
 
-/* PRODUCTS */
+/*
+    LOAD CATEGORIES IN REAL TIME
+
+    This is the important fix.
+
+    Admin edits category document
+    ↓
+    Firestore updates
+    ↓
+    onSnapshot receives new category
+    ↓
+    dashboard re-renders
+*/
+
+function startCategoriesListener(){
+
+    const categoriesRef =
+        collection(db,"categories");
+
+
+    onSnapshot(
+        categoriesRef,
+
+        snapshot=>{
+
+            const newCategories = {};
+
+
+            snapshot.forEach(categoryDoc=>{
+
+                const data =
+                    categoryDoc.data();
+
+
+                /*
+                    Keep the category document ID.
+                */
+
+                newCategories[categoryDoc.id] = {
+
+                    id:categoryDoc.id,
+
+                    name:
+                        data.name ||
+                        data.categoryName ||
+                        "Other Products",
+
+                    icon:
+                        data.icon ||
+                        data.categoryIcon ||
+                        "📦",
+
+                    active:
+                        data.active !== false &&
+                        data.disabled !== true
+
+                };
+
+            });
+
+
+            /*
+                Replace the current category map.
+            */
+
+            allCategories =
+                newCategories;
+
+
+            /*
+                Re-render immediately.
+
+                No page refresh needed.
+            */
+
+            renderProducts();
+
+        },
+
+        error=>{
+
+            console.error(
+                "Categories loading error:",
+                error
+            );
+
+        }
+    );
+
+}
+
+
+/*
+    GET CURRENT CATEGORY
+
+    First we try categoryId.
+
+    This is the correct method because
+    categoryId stays the same when the
+    Admin changes the category name.
+
+    Example:
+
+    category ID:
+    abc123
+
+    Admin changes:
+    Facebook -> Facebbbok
+
+    Product still has:
+    categoryId = abc123
+
+    So customer gets:
+    Facebbbok
+*/
+
+
+function getProductCategory(product){
+
+    const categoryId =
+        product.categoryId;
+
+
+    if(
+        categoryId &&
+        allCategories[categoryId]
+    ){
+
+        return {
+
+            id:categoryId,
+
+            name:
+                allCategories[categoryId].name,
+
+            icon:
+                allCategories[categoryId].icon,
+
+            active:
+                allCategories[categoryId].active
+
+        };
+
+    }
+
+
+    /*
+        FALLBACK FOR OLD PRODUCTS
+
+        If an old product does not have
+        categoryId, use its saved category
+        information.
+    */
+
+    return {
+
+        id:
+            product.categoryName ||
+            "other",
+
+        name:
+            product.categoryName ||
+            "Other Products",
+
+        icon:
+            product.categoryIcon ||
+            "📦",
+
+        active:true
+
+    };
+
+}
+
+
+/* PRODUCTS REALTIME */
 
 function startProductsListener(){
 
@@ -941,8 +1143,10 @@ function startProductsListener(){
 
 
     onSnapshot(
+
         productsRef,
-        (snapshot)=>{
+
+        snapshot=>{
 
             allProducts = [];
 
@@ -953,8 +1157,14 @@ function startProductsListener(){
                     productDoc.data();
 
 
+                /*
+                    Do not show disabled products.
+                */
+
                 if(data.active === false){
+
                     return;
+
                 }
 
 
@@ -985,6 +1195,7 @@ function startProductsListener(){
             renderProducts();
 
         },
+
         error=>{
 
             console.error(
@@ -1010,12 +1221,13 @@ function startProductsListener(){
             `;
 
         }
+
     );
 
 }
 
 
-/* RENDER */
+/* RENDER PRODUCTS */
 
 function renderProducts(){
 
@@ -1029,6 +1241,8 @@ function renderProducts(){
         allProducts;
 
 
+    /* SEARCH */
+
     if(search){
 
         products =
@@ -1039,27 +1253,48 @@ function renderProducts(){
                         product.name || ""
                     ).toLowerCase();
 
+
                 const description =
                     String(
                         product.description || ""
                     ).toLowerCase();
 
+
+                /*
+                    IMPORTANT:
+
+                    Search also uses the CURRENT
+                    category name from Firestore.
+                */
+
                 const category =
+                    getProductCategory(product);
+
+
+                const categoryName =
                     String(
-                        product.categoryName || ""
+                        category.name || ""
                     ).toLowerCase();
 
 
                 return (
+
                     name.includes(search) ||
+
                     description.includes(search) ||
-                    category.includes(search)
+
+                    categoryName.includes(search)
+
                 );
 
             });
 
     }
 
+
+    /*
+        If no products
+    */
 
     if(products.length === 0){
 
@@ -1089,15 +1324,33 @@ function renderProducts(){
     }
 
 
+    /*
+        GROUP PRODUCTS BY CATEGORY
+    */
+
     const groups = {};
 
 
     products.forEach(product=>{
 
+        const category =
+            getProductCategory(product);
+
+
+        /*
+            If category has been disabled
+            by Admin, don't show it.
+        */
+
+        if(category.active === false){
+
+            return;
+
+        }
+
+
         const categoryId =
-            product.categoryId ||
-            product.categoryName ||
-            "other";
+            category.id;
 
 
         if(!groups[categoryId]){
@@ -1105,12 +1358,10 @@ function renderProducts(){
             groups[categoryId] = {
 
                 name:
-                    product.categoryName ||
-                    "Other Products",
+                    category.name,
 
                 icon:
-                    product.categoryIcon ||
-                    "📦",
+                    category.icon,
 
                 products:[]
 
@@ -1119,13 +1370,50 @@ function renderProducts(){
         }
 
 
-        groups[categoryId].products.push(product);
+        groups[categoryId].products.push(
+            product
+        );
 
     });
 
 
+    /*
+        If all categories are disabled
+    */
+
+    if(Object.keys(groups).length === 0){
+
+        productsContainer.innerHTML = `
+
+            <div class="empty-products">
+
+                <div class="empty-products-icon">
+                    🛍️
+                </div>
+
+                <h3>
+                    No products available
+                </h3>
+
+                <p>
+                    Products are currently unavailable.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
     let html = "";
 
+
+    /*
+        CREATE CATEGORY SECTIONS
+    */
 
     Object.values(groups).forEach(group=>{
 
@@ -1151,12 +1439,15 @@ function renderProducts(){
                             :
 
                             escapeHtml(group.icon)
+
                         }
 
                     </div>
 
                     <div class="category-title-text">
+
                         ${escapeHtml(group.name)}
+
                     </div>
 
                 </div>
@@ -1166,6 +1457,10 @@ function renderProducts(){
 
         `;
 
+
+        /*
+            PRODUCTS
+        */
 
         group.products.forEach(product=>{
 
@@ -1208,6 +1503,7 @@ function renderProducts(){
                             :
 
                             `📦`
+
                         }
 
                     </div>
@@ -1216,19 +1512,25 @@ function renderProducts(){
                     <div class="product-info">
 
                         <div class="product-name">
+
                             ${escapeHtml(name)}
+
                         </div>
 
 
                         <div class="product-description">
+
                             ${escapeHtml(description)}
+
                         </div>
 
 
                         <div class="product-bottom">
 
                             <div class="product-price">
+
                                 ${formatMoney(product.price)}
+
                             </div>
 
 
@@ -1270,7 +1572,9 @@ function renderProducts(){
 /* AUTH */
 
 onAuthStateChanged(
+
     auth,
+
     async user=>{
 
         if(!user){
@@ -1284,6 +1588,10 @@ onAuthStateChanged(
 
 
         try{
+
+            /*
+                CUSTOMER DATA
+            */
 
             const userSnap =
                 await getDoc(
@@ -1329,6 +1637,18 @@ onAuthStateChanged(
             }
 
 
+            /*
+                START BOTH REALTIME LISTENERS
+
+                Categories:
+                Admin changes appear instantly.
+
+                Products:
+                New products appear instantly.
+            */
+
+            startCategoriesListener();
+
             startProductsListener();
 
 
@@ -1342,6 +1662,7 @@ onAuthStateChanged(
         }
 
     }
+
 );
 
 
@@ -1350,7 +1671,9 @@ onAuthStateChanged(
 document.getElementById(
     "logoutBtn"
 ).addEventListener(
+
     "click",
+
     async e=>{
 
         e.preventDefault();
@@ -1370,6 +1693,7 @@ document.getElementById(
         }
 
     }
+
 );
 
 
@@ -1382,7 +1706,9 @@ searchInput.addEventListener(
 
 
 searchInput.addEventListener(
+
     "keypress",
+
     e=>{
 
         if(e.key === "Enter"){
@@ -1402,9 +1728,11 @@ searchInput.addEventListener(
         }
 
     }
+
 );
 
 </script>
 
 </body>
+
 </html>
