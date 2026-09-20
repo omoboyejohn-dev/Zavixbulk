@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Zavixbulk | Deposit</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -13,342 +16,312 @@
 }
 
 body{
-    font-family:Inter,Arial,sans-serif;
-    background:#080612;
+    font-family:Arial,sans-serif;
+    background:#050817;
     color:#fff;
     min-height:100vh;
 }
 
 .header{
     height:70px;
-    background:#0e0a1d;
-    border-bottom:1px solid rgba(255,255,255,.08);
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
     display:flex;
     align-items:center;
-    padding:0 20px;
-    position:sticky;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
     top:0;
-    z-index:10;
+    left:0;
+    right:0;
+    z-index:1000;
 }
 
 .logo{
     font-size:22px;
-    font-weight:800;
-    background:linear-gradient(90deg,#9b5cff,#00e5ff);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+    font-weight:900;
 }
 
-.back{
-    margin-left:auto;
-    text-decoration:none;
-    color:#fff;
-    background:#171126;
-    border:1px solid rgba(255,255,255,.1);
-    padding:10px 16px;
-    border-radius:10px;
+.logo span{
+    color:#4f8cff;
+}
+
+.user-name{
+    color:#9aa9c4;
+    font-size:13px;
+}
+
+.main{
+    max-width:900px;
+    margin:auto;
+    padding:100px 20px 50px;
+}
+
+.page-title{
+    font-size:28px;
+    margin-bottom:7px;
+}
+
+.page-subtitle{
+    color:#7586a8;
     font-size:14px;
-}
-
-.container{
-    width:100%;
-    max-width:650px;
-    margin:0 auto;
-    padding:35px 18px 60px;
-}
-
-.title{
     margin-bottom:25px;
 }
 
-.title h1{
-    font-size:30px;
-    margin-bottom:8px;
-}
-
-.title p{
-    color:#a9a3b8;
-    font-size:14px;
-    line-height:1.6;
-}
-
-.balance-card{
-    background:linear-gradient(135deg,#17102b,#0f1830);
-    border:1px solid rgba(155,92,255,.25);
-    border-radius:18px;
-    padding:22px;
-    margin-bottom:20px;
-}
-
-.balance-label{
-    color:#aaa4b8;
-    font-size:13px;
-    margin-bottom:8px;
-}
-
-.balance{
-    font-size:32px;
-    font-weight:800;
-}
-
-/* PAYMENT METHODS */
-
-.payment-methods{
+.methods{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:20px;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-bottom:25px;
 }
 
-.payment-method{
-    background:#100b1f;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:15px;
-    padding:18px;
+.method{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:14px;
+    padding:22px;
     cursor:pointer;
     transition:.2s;
 }
 
-.payment-method:hover{
-    border-color:#8d4dff;
+.method:hover{
+    border-color:#3977ff;
     transform:translateY(-2px);
 }
 
-.payment-method.active{
-    border-color:#8d4dff;
-    box-shadow:0 0 0 1px rgba(141,77,255,.25);
+.method.active{
+    border-color:#3977ff;
+    background:#0d1733;
 }
 
-.payment-icon{
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    background:#171126;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
+.coin-icon{
+    font-size:32px;
     margin-bottom:12px;
 }
 
-.payment-name{
-    font-size:15px;
+.coin-name{
+    font-size:16px;
     font-weight:800;
     margin-bottom:5px;
 }
 
-.payment-description{
-    color:#898298;
-    font-size:11px;
-    line-height:1.5;
+.coin-text{
+    color:#7182a2;
+    font-size:12px;
 }
 
-.payment-status{
-    display:inline-block;
-    margin-top:10px;
-    padding:4px 8px;
-    border-radius:20px;
-    background:rgba(0,229,255,.08);
-    color:#00dff5;
-    font-size:10px;
-    font-weight:700;
+.deposit-box{
+    display:none;
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:16px;
+    padding:25px;
 }
 
-.payment-status.soon{
-    background:rgba(255,193,7,.08);
-    color:#ffc857;
+.deposit-box.show{
+    display:block;
 }
 
-/* CARD */
-
-.card{
-    background:#100b1f;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:18px;
-    padding:22px;
-    box-shadow:0 15px 40px rgba(0,0,0,.2);
-}
-
-.card h2{
-    font-size:20px;
+.section-title{
+    font-size:19px;
+    font-weight:800;
     margin-bottom:8px;
 }
 
-.card-description{
-    color:#9e98ad;
+.section-text{
+    color:#7d8eac;
     font-size:13px;
-    line-height:1.5;
+    line-height:1.6;
     margin-bottom:20px;
 }
 
-label{
-    display:block;
-    font-size:13px;
-    color:#c7c1d2;
-    margin-bottom:8px;
-}
-
-.input-wrap{
-    position:relative;
-}
-
-.currency{
-    position:absolute;
-    left:15px;
-    top:50%;
-    transform:translateY(-50%);
-    color:#a9a1b8;
-    font-weight:700;
-}
-
-input{
+.generate-btn{
     width:100%;
-    height:52px;
-    background:#080612;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:12px;
-    color:#fff;
-    font-size:17px;
-    padding:0 15px 0 38px;
-    outline:none;
-}
-
-input:focus{
-    border-color:#8e55ff;
-    box-shadow:0 0 0 3px rgba(142,85,255,.1);
-}
-
-.quick-title{
-    color:#aaa4b8;
-    font-size:12px;
-    margin:18px 0 10px;
-}
-
-.quick{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:8px;
-}
-
-.quick button{
-    border:1px solid rgba(255,255,255,.1);
-    background:#171126;
-    color:#fff;
-    padding:11px 5px;
-    border-radius:9px;
-    cursor:pointer;
-    font-size:12px;
-}
-
-.quick button:hover{
-    border-color:#8e55ff;
-}
-
-.create-btn{
-    width:100%;
-    height:53px;
-    margin-top:22px;
+    padding:14px;
     border:0;
-    border-radius:12px;
-    background:linear-gradient(90deg,#8d4dff,#00cfe8);
+    border-radius:9px;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
     color:#fff;
-    font-size:15px;
+    font-size:14px;
     font-weight:800;
     cursor:pointer;
 }
 
-.create-btn:disabled{
+.generate-btn:disabled{
     opacity:.6;
     cursor:not-allowed;
 }
 
-.status{
+.countdown{
     display:none;
-    margin-top:18px;
-    padding:15px;
-    border-radius:12px;
-    background:#171126;
-    border:1px solid rgba(255,255,255,.08);
-    font-size:13px;
-    line-height:1.6;
+    text-align:center;
+    padding:25px;
+    color:#7994cf;
 }
 
-.status.show{
+.countdown.show{
     display:block;
 }
 
-.status.success{
-    border-color:rgba(0,229,255,.35);
-}
-
-.status.error{
-    border-color:rgba(255,70,100,.35);
-    color:#ff9baa;
-}
-
-.payment-box{
-    display:none;
-    margin-top:18px;
-    padding:18px;
-    border-radius:14px;
-    background:#0b0815;
-    border:1px solid rgba(0,229,255,.2);
-}
-
-.payment-box.show{
-    display:block;
-}
-
-.payment-box h3{
-    font-size:17px;
+.count-number{
+    font-size:35px;
+    font-weight:900;
+    color:#4d86ff;
     margin-bottom:8px;
 }
 
-.payment-box p{
-    color:#aaa4b8;
-    font-size:13px;
-    line-height:1.6;
+.address-box{
+    display:none;
+    margin-top:20px;
 }
 
-.pay-btn{
+.address-box.show{
     display:block;
-    text-align:center;
-    text-decoration:none;
-    margin-top:15px;
-    padding:13px;
-    border-radius:10px;
-    background:#fff;
-    color:#080612;
-    font-weight:800;
 }
 
-.note{
-    margin-top:18px;
-    color:#777184;
+.label{
+    display:block;
+    color:#8495b4;
+    font-size:12px;
+    margin-bottom:8px;
+}
+
+.address-row{
+    display:flex;
+    gap:8px;
+}
+
+.address{
+    flex:1;
+    background:#070c1c;
+    border:1px solid #253454;
+    border-radius:9px;
+    padding:13px;
+    color:#8fb0ff;
+    font-size:12px;
+    word-break:break-all;
+}
+
+.copy-btn{
+    border:0;
+    background:#172b58;
+    color:#fff;
+    border-radius:9px;
+    padding:0 15px;
+    cursor:pointer;
+    font-weight:700;
+}
+
+.copy-btn:hover{
+    background:#21417e;
+}
+
+.warning{
+    margin-top:14px;
+    background:#16172a;
+    border:1px solid #37365a;
+    color:#9ba6c7;
+    padding:13px;
+    border-radius:9px;
     font-size:11px;
     line-height:1.6;
 }
 
-@media(max-width:500px){
+.form{
+    margin-top:25px;
+    border-top:1px solid #1b2542;
+    padding-top:25px;
+}
 
-    .payment-methods{
+.input-group{
+    margin-bottom:17px;
+}
+
+.input{
+    width:100%;
+    padding:14px;
+    background:#070c1c;
+    border:1px solid #263653;
+    border-radius:9px;
+    color:#fff;
+    outline:none;
+    font-size:14px;
+}
+
+.input:focus{
+    border-color:#3977ff;
+}
+
+.submit-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.submit-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.success{
+    display:none;
+    background:#0b251d;
+    border:1px solid #185d45;
+    color:#7de0b7;
+    padding:17px;
+    border-radius:10px;
+    margin-top:20px;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.success.show{
+    display:block;
+}
+
+@media(max-width:650px){
+
+    .header{
+        padding:0 16px;
+    }
+
+    .user-name{
+        display:none;
+    }
+
+    .main{
+        padding:92px 15px 35px;
+    }
+
+    .page-title{
+        font-size:24px;
+    }
+
+    .methods{
         grid-template-columns:1fr;
     }
 
-    .quick{
-        grid-template-columns:repeat(3,1fr);
+    .deposit-box{
+        padding:20px;
     }
 
-    .title h1{
-        font-size:26px;
+    .address-row{
+        flex-direction:column;
     }
 
-    .balance{
-        font-size:27px;
+    .copy-btn{
+        padding:12px;
     }
+
 }
+
 </style>
+
 </head>
 
 <body>
@@ -356,200 +329,243 @@ input:focus{
 <header class="header">
 
     <div class="logo">
-        Zavixbulk
+        ZAVIX<span>BULK</span>
     </div>
 
-    <a href="dashboard.html" class="back">
-        ← Dashboard
-    </a>
+    <div
+        class="user-name"
+        id="userName"
+    >
+        Customer
+    </div>
 
 </header>
 
-<main class="container">
 
-    <div class="title">
+<main class="main">
 
-        <h1>Deposit</h1>
+    <h1 class="page-title">
+        Deposit Funds
+    </h1>
 
-        <p>
-            Choose a payment method and add funds to your
-            Zavixbulk wallet.
-        </p>
-
-    </div>
-
-    <div class="balance-card">
-
-        <div class="balance-label">
-            Current Wallet Balance
-        </div>
-
-        <div class="balance" id="balance">
-            $0.00
-        </div>
-
-    </div>
+    <p class="page-subtitle">
+        Choose a cryptocurrency to fund your Zavixbulk wallet.
+    </p>
 
 
-    <!-- PAYMENT OPTIONS -->
+    <!-- PAYMENT METHODS -->
 
-    <div class="payment-methods">
+    <div class="methods">
 
         <div
-            class="payment-method active"
-            id="payment1"
+            class="method"
+            data-method="bitcoin"
         >
 
-            <div class="payment-icon">
+            <div class="coin-icon">
                 ₿
             </div>
 
-            <div class="payment-name">
-                Payment 1
+            <div class="coin-name">
+                Bitcoin
             </div>
 
-            <div class="payment-description">
-                Pay with Bitcoin using MG Crypto.
+            <div class="coin-text">
+                BTC Deposit
             </div>
-
-            <span class="payment-status">
-                AVAILABLE
-            </span>
 
         </div>
 
 
         <div
-            class="payment-method"
-            id="payment2"
+            class="method"
+            data-method="litecoin"
         >
 
-            <div class="payment-icon">
-                🌐
+            <div class="coin-icon">
+                Ł
             </div>
 
-            <div class="payment-name">
-                Payment 2
+            <div class="coin-name">
+                Litecoin
             </div>
 
-            <div class="payment-description">
-                Pay using other supported cryptocurrencies.
+            <div class="coin-text">
+                LTC Deposit
             </div>
 
-            <span class="payment-status soon">
-                COMING SOON
-            </span>
+        </div>
+
+
+        <div
+            class="method"
+            data-method="ethereum"
+        >
+
+            <div class="coin-icon">
+                ♦
+            </div>
+
+            <div class="coin-name">
+                Ethereum
+            </div>
+
+            <div class="coin-text">
+                ETH Deposit
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- BITCOIN PAYMENT -->
+    <!-- DEPOSIT BOX -->
 
-    <div class="card" id="payment1Card">
+    <div
+        class="deposit-box"
+        id="depositBox"
+    >
 
-        <h2>
+        <div class="section-title" id="coinTitle">
             Bitcoin Deposit
-        </h2>
-
-        <p class="card-description">
-            Enter the amount you want to deposit in USD.
-            You will then be taken to the secure Bitcoin
-            payment page.
-        </p>
-
-        <label for="amount">
-            Deposit Amount (USD)
-        </label>
-
-        <div class="input-wrap">
-
-            <span class="currency">$</span>
-
-            <input
-                type="number"
-                id="amount"
-                min="1"
-                step="0.01"
-                placeholder="10.00"
-            >
-
         </div>
 
-        <div class="quick-title">
-            Quick Amount
+        <div class="section-text">
+            Click the button below to generate your payment address.
+            After sending your payment, submit the payment details below.
         </div>
 
-        <div class="quick">
-
-            <button type="button" onclick="setAmount(5)">
-                $5
-            </button>
-
-            <button type="button" onclick="setAmount(10)">
-                $10
-            </button>
-
-            <button type="button" onclick="setAmount(20)">
-                $20
-            </button>
-
-            <button type="button" onclick="setAmount(50)">
-                $50
-            </button>
-
-            <button type="button" onclick="setAmount(100)">
-                $100
-            </button>
-
-        </div>
 
         <button
-            type="button"
-            class="create-btn"
-            id="createBtn"
+            class="generate-btn"
+            id="generateBtn"
         >
-            Continue with Bitcoin
+            Generate Bitcoin Address
         </button>
 
-        <div
-            class="status"
-            id="status"
-        ></div>
+
+        <!-- COUNTDOWN -->
 
         <div
-            class="payment-box"
-            id="paymentBox"
+            class="countdown"
+            id="countdown"
         >
 
-            <h3>
-                Bitcoin Payment Ready
-            </h3>
-
-            <p>
-                Your payment invoice has been created.
-                Continue to the secure payment page to
-                complete your Bitcoin deposit.
-            </p>
-
-            <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="pay-btn"
-                id="payBtn"
+            <div
+                class="count-number"
+                id="countNumber"
             >
-                Continue to Bitcoin Payment
-            </a>
+                3
+            </div>
+
+            Generating payment address...
 
         </div>
 
-        <div class="note">
 
-            Your wallet balance will only be credited after
-            MG Crypto confirms that the Bitcoin payment has
-            been successfully received.
+        <!-- ADDRESS -->
+
+        <div
+            class="address-box"
+            id="addressBox"
+        >
+
+            <label class="label">
+                Send your payment to this address
+            </label>
+
+
+            <div class="address-row">
+
+                <div
+                    class="address"
+                    id="walletAddress"
+                ></div>
+
+                <button
+                    class="copy-btn"
+                    id="copyBtn"
+                >
+                    Copy
+                </button>
+
+            </div>
+
+
+            <div class="warning">
+
+                ⚠️ Make sure you send the payment to the
+                correct address and cryptocurrency network.
+                Sending to the wrong address or network may
+                result in permanent loss of funds.
+
+            </div>
+
+
+            <!-- FORM -->
+
+            <div class="form">
+
+                <div class="input-group">
+
+                    <label class="label">
+                        Amount in USD
+                    </label>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        class="input"
+                        placeholder="Example: 50"
+                        min="1"
+                        step="0.01"
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label class="label">
+                        Sender Wallet Address
+                    </label>
+
+                    <input
+                        type="text"
+                        id="senderAddress"
+                        class="input"
+                        placeholder="Enter the wallet address you sent from"
+                    >
+
+                </div>
+
+
+                <button
+                    class="submit-btn"
+                    id="submitBtn"
+                >
+                    Submit Payment
+                </button>
+
+
+                <div
+                    class="success"
+                    id="successMessage"
+                >
+
+                    <strong>
+                        Payment submitted successfully.
+                    </strong>
+
+                    <br>
+
+                    Your deposit is now pending verification.
+                    Your Zavixbulk wallet will be credited after
+                    the payment has been verified.
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -562,113 +578,447 @@ input:focus{
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
 
 import {
     getFirestore,
     doc,
-    getDoc
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+    getDoc,
+    addDoc,
+    collection,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
 
 const firebaseConfig = {
 
-    apiKey:
-        "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
 
-    authDomain:
-        "zavixbulk.firebaseapp.com",
+    authDomain:"zavixbulk.firebaseapp.com",
 
-    projectId:
-        "zavixbulk",
+    projectId:"zavixbulk",
 
-    storageBucket:
-        "zavixbulk.firebasestorage.app",
+    storageBucket:"zavixbulk.firebasestorage.app",
 
-    messagingSenderId:
-        "819994897169",
+    messagingSenderId:"819994897169",
 
-    appId:
-        "1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
 
-    measurementId:
-        "G-GJ8RY0WYBL"
+    measurementId:"G-GJ8RY0WYBL"
 
 };
 
 
-const app = initializeApp(firebaseConfig);
+const app =
+    initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+const auth =
+    getAuth(app);
 
-const db = getFirestore(app);
+const db =
+    getFirestore(app);
 
 
 let currentUser = null;
 
-
-const amountInput =
-    document.getElementById("amount");
-
-const createBtn =
-    document.getElementById("createBtn");
-
-const statusBox =
-    document.getElementById("status");
-
-const paymentBox =
-    document.getElementById("paymentBox");
-
-const payBtn =
-    document.getElementById("payBtn");
+let selectedMethod = null;
 
 
-/* QUICK AMOUNTS */
+/*
+    YOUR RECEIVING ADDRESSES
+*/
 
-window.setAmount = function(amount){
+const wallets = {
 
-    amountInput.value =
-        Number(amount).toFixed(2);
+    bitcoin:
+        "bc1q3e4sq5p04tpad7xav4p04qyua5l7p3uxctqlxk",
+
+    litecoin:
+        "ltc1q44hg0s3psaadzdme4anvq8alcv0gypcvcaey9r",
+
+    ethereum:
+        "0xE55D8cB2Bd9b7EF8C6F396E6e2A89Eb92C6c793"
 
 };
 
 
-/* PAYMENT 2 */
+const names = {
 
-document
-    .getElementById("payment2")
-    .addEventListener("click", function(){
+    bitcoin:"Bitcoin",
 
-        alert(
-            "Payment 2 is currently under development.\n\nPlease use Payment 1 (Bitcoin) for now."
+    litecoin:"Litecoin",
+
+    ethereum:"Ethereum"
+
+};
+
+
+const methods =
+    document.querySelectorAll(".method");
+
+const depositBox =
+    document.getElementById("depositBox");
+
+const coinTitle =
+    document.getElementById("coinTitle");
+
+const generateBtn =
+    document.getElementById("generateBtn");
+
+const countdown =
+    document.getElementById("countdown");
+
+const countNumber =
+    document.getElementById("countNumber");
+
+const addressBox =
+    document.getElementById("addressBox");
+
+const walletAddress =
+    document.getElementById("walletAddress");
+
+const copyBtn =
+    document.getElementById("copyBtn");
+
+const amountInput =
+    document.getElementById("amount");
+
+const senderAddressInput =
+    document.getElementById("senderAddress");
+
+const submitBtn =
+    document.getElementById("submitBtn");
+
+const successMessage =
+    document.getElementById("successMessage");
+
+const userName =
+    document.getElementById("userName");
+
+
+/*
+    SELECT COIN
+*/
+
+methods.forEach(method => {
+
+    method.addEventListener("click",()=>{
+
+        methods.forEach(item =>
+            item.classList.remove("active")
         );
 
+        method.classList.add("active");
+
+        selectedMethod =
+            method.dataset.method;
+
+        const coin =
+            names[selectedMethod];
+
+
+        depositBox.classList.add("show");
+
+        coinTitle.textContent =
+            coin + " Deposit";
+
+
+        generateBtn.textContent =
+            "Generate " + coin + " Address";
+
+
+        addressBox.classList.remove("show");
+
+        countdown.classList.remove("show");
+
+        successMessage.classList.remove("show");
+
+        amountInput.value = "";
+
+        senderAddressInput.value = "";
+
     });
 
-
-/* PAYMENT 1 */
-
-document
-    .getElementById("payment1")
-    .addEventListener("click", function(){
-
-        document
-            .getElementById("payment1")
-            .classList.add("active");
-
-    });
+});
 
 
-/* LOAD USER */
+/*
+    GENERATE ADDRESS
+*/
+
+generateBtn.addEventListener(
+    "click",
+    ()=>{
+
+        if(!selectedMethod){
+            return;
+        }
+
+
+        generateBtn.disabled = true;
+
+        countdown.classList.add("show");
+
+        addressBox.classList.remove("show");
+
+
+        let number = 3;
+
+        countNumber.textContent =
+            number;
+
+
+        const timer =
+            setInterval(()=>{
+
+                number--;
+
+                countNumber.textContent =
+                    number;
+
+
+                if(number <= 0){
+
+                    clearInterval(timer);
+
+                    countdown.classList.remove(
+                        "show"
+                    );
+
+
+                    walletAddress.textContent =
+                        wallets[selectedMethod];
+
+
+                    addressBox.classList.add(
+                        "show"
+                    );
+
+
+                    generateBtn.disabled =
+                        false;
+
+                }
+
+            },1000);
+
+    }
+);
+
+
+/*
+    COPY ADDRESS
+*/
+
+copyBtn.addEventListener(
+    "click",
+    async ()=>{
+
+        try{
+
+            await navigator.clipboard.writeText(
+                walletAddress.textContent
+            );
+
+            copyBtn.textContent =
+                "Copied ✓";
+
+
+            setTimeout(()=>{
+
+                copyBtn.textContent =
+                    "Copy";
+
+            },2000);
+
+        }catch(error){
+
+            alert(
+                "Unable to copy address. Please copy it manually."
+            );
+
+        }
+
+    }
+);
+
+
+/*
+    SUBMIT PAYMENT
+*/
+
+submitBtn.addEventListener(
+    "click",
+    async ()=>{
+
+        if(!currentUser){
+
+            alert(
+                "Please login first."
+            );
+
+            return;
+
+        }
+
+
+        const amount =
+            Number(amountInput.value);
+
+        const senderAddress =
+            senderAddressInput.value.trim();
+
+
+        if(!amount || amount <= 0){
+
+            alert(
+                "Please enter the amount you paid."
+            );
+
+            return;
+
+        }
+
+
+        if(!senderAddress){
+
+            alert(
+                "Please enter your sender wallet address."
+            );
+
+            return;
+
+        }
+
+
+        if(!selectedMethod){
+
+            alert(
+                "Please select a payment method."
+            );
+
+            return;
+
+        }
+
+
+        submitBtn.disabled =
+            true;
+
+        submitBtn.textContent =
+            "Submitting...";
+
+
+        try{
+
+            const userSnapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        currentUser.uid
+                    )
+                );
+
+
+            let userData = {};
+
+            if(userSnapshot.exists()){
+
+                userData =
+                    userSnapshot.data();
+
+            }
+
+
+            await addDoc(
+                collection(
+                    db,
+                    "deposits"
+                ),
+                {
+
+                    userId:
+                        currentUser.uid,
+
+                    customerName:
+                        userData.fullname ||
+                        userData.username ||
+                        "Customer",
+
+                    username:
+                        userData.username ||
+                        "",
+
+                    method:
+                        selectedMethod,
+
+                    cryptocurrency:
+                        names[selectedMethod],
+
+                    amountUSD:
+                        amount,
+
+                    senderWallet:
+                        senderAddress,
+
+                    receivingWallet:
+                        wallets[selectedMethod],
+
+                    status:
+                        "pending",
+
+                    createdAt:
+                        serverTimestamp()
+
+                }
+            );
+
+
+            successMessage.classList.add(
+                "show"
+            );
+
+
+            amountInput.value = "";
+
+            senderAddressInput.value = "";
+
+
+        }catch(error){
+
+            console.error(error);
+
+            alert(
+                "Unable to submit payment. Please try again."
+            );
+
+        }finally{
+
+            submitBtn.disabled =
+                false;
+
+            submitBtn.textContent =
+                "Submit Payment";
+
+        }
+
+    }
+);
+
+
+/*
+    AUTH
+*/
 
 onAuthStateChanged(
     auth,
-    async function(user){
+    async user => {
 
         if(!user){
 
@@ -679,232 +1029,39 @@ onAuthStateChanged(
 
         }
 
-        currentUser = user;
+
+        currentUser =
+            user;
+
 
         try{
 
-            const userRef =
-                doc(
-                    db,
-                    "users",
-                    user.uid
+            const snapshot =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
                 );
 
-            const userSnapshot =
-                await getDoc(userRef);
 
-            if(userSnapshot.exists()){
+            if(snapshot.exists()){
 
                 const data =
-                    userSnapshot.data();
+                    snapshot.data();
 
-                const balance =
-                    Number(data.balance || 0);
 
-                document
-                    .getElementById("balance")
-                    .textContent =
-                    "$" +
-                    balance.toLocaleString(
-                        "en-US",
-                        {
-                            minimumFractionDigits:2,
-                            maximumFractionDigits:2
-                        }
-                    );
+                userName.textContent =
+                    data.fullname ||
+                    data.username ||
+                    "Customer";
 
             }
 
         }catch(error){
 
-            console.error(
-                "Balance error:",
-                error
-            );
-
-        }
-
-    }
-);
-
-
-/* CREATE MG CRYPTO INVOICE */
-
-createBtn.addEventListener(
-    "click",
-    async function(){
-
-        const amount =
-            Number(amountInput.value);
-
-
-        paymentBox
-            .classList
-            .remove("show");
-
-
-        statusBox.className =
-            "status show";
-
-
-        if(!amount || amount < 1){
-
-            statusBox.classList.add("error");
-
-            statusBox.textContent =
-                "Please enter a deposit amount of at least $1.";
-
-            return;
-
-        }
-
-
-        if(!currentUser){
-
-            statusBox.classList.add("error");
-
-            statusBox.textContent =
-                "Please login before making a deposit.";
-
-            return;
-
-        }
-
-
-        createBtn.disabled = true;
-
-        createBtn.textContent =
-            "Creating Bitcoin Payment...";
-
-
-        statusBox.textContent =
-            "Creating your Bitcoin payment invoice...";
-
-
-        try{
-
-            const response =
-                await fetch(
-                    "/api/create-invoice",
-                    {
-                        method:"POST",
-
-                        headers:{
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:JSON.stringify({
-
-                            amount_usd:
-                                amount,
-
-                            user_id:
-                                currentUser.uid,
-
-                            email:
-                                currentUser.email || "",
-
-                            description:
-                                "Zavixbulk Bitcoin Wallet Deposit"
-
-                        })
-                    }
-                );
-
-
-            let result;
-
-            try{
-
-                result =
-                    await response.json();
-
-            }catch{
-
-                result = {};
-
-            }
-
-
-            if(!response.ok){
-
-                throw new Error(
-                    result.error ||
-                    result.message ||
-                    "MG Crypto rejected the invoice request."
-                );
-
-            }
-
-
-            console.log(
-                "MG Crypto response:",
-                result
-            );
-
-
-            /*
-             * Accept common checkout URL locations.
-             */
-
-            const paymentUrl =
-                result.payment_url ||
-                result.checkout_url ||
-                result.invoice_url ||
-                result.url ||
-                result.data?.payment_url ||
-                result.data?.checkout_url ||
-                result.data?.invoice_url ||
-                result.data?.url;
-
-
-            if(!paymentUrl){
-
-                throw new Error(
-                    "MG Crypto created a response, but no payment URL was returned."
-                );
-
-            }
-
-
-            statusBox.className =
-                "status show success";
-
-            statusBox.textContent =
-                "Bitcoin payment created successfully.";
-
-
-            payBtn.href =
-                paymentUrl;
-
-
-            paymentBox.classList.add("show");
-
-
-        }catch(error){
-
-            console.error(
-                "MG Crypto error:",
-                error
-            );
-
-
-            statusBox.className =
-                "status show error";
-
-
-            statusBox.textContent =
-                error.message ||
-                "MG Crypto rejected the invoice request.";
-
-        }finally{
-
-            createBtn.disabled =
-                false;
-
-            createBtn.textContent =
-                "Continue with Bitcoin";
+            console.error(error);
 
         }
 
