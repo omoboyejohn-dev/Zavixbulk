@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Zavixbulk | Wallet Address</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.box{
+    width:92%;
+    max-width:500px;
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:18px;
+    padding:28px;
+}
+
+.title{
+    font-size:21px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#7b8daa;
+    font-size:13px;
+    line-height:1.6;
+    margin-bottom:22px;
+}
+
+.label{
+    color:#8293b1;
+    font-size:11px;
+    margin-bottom:8px;
+    display:block;
+}
+
+.address{
+    background:#070c1c;
+    border:1px solid #263653;
+    border-radius:10px;
+    padding:15px;
+    color:#8fb0ff;
+    font-size:12px;
+    line-height:1.6;
+    word-break:break-all;
+}
+
+.copy{
+    width:100%;
+    margin-top:10px;
+    padding:12px;
+    border:0;
+    border-radius:9px;
+    background:#172b58;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.warning{
+    margin-top:15px;
+    background:#16172a;
+    border:1px solid #37365a;
+    border-radius:10px;
+    padding:13px;
+    color:#9ba6c7;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.next{
+    text-align:center;
+    color:#607ba9;
+    font-size:11px;
+    margin-top:20px;
+}
+
+#seconds{
+    color:#5d8dff;
+    font-weight:800;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="title" id="title">
+        Bitcoin Wallet
+    </div>
+
+    <div class="subtitle">
+        Send your payment to the wallet address below.
+        Please make sure you use the correct cryptocurrency network.
+    </div>
+
+    <label class="label">
+        WALLET ADDRESS
+    </label>
+
+    <div class="address" id="address"></div>
+
+    <button class="copy" id="copy">
+        Copy Wallet Address
+    </button>
+
+    <div class="warning">
+        ⚠️ Send only the selected cryptocurrency to this address.
+        Sending another cryptocurrency or using the wrong network
+        may result in permanent loss of funds.
+    </div>
+
+    <div class="next">
+        Continue to payment submission in
+        <span id="seconds">3</span>
+        seconds
+    </div>
+
+</div>
+
+<script>
+
+const params=
+    new URLSearchParams(location.search);
+
+const coin=
+    params.get("coin") || "bitcoin";
+
+const wallets={
+
+    bitcoin:
+    "bc1q3e4sq5p04tpad7xav4p04qyua5l7p3uxctqlxk",
+
+    litecoin:
+    "ltc1q44hg0s3psaadzdme4anvq8alcv0gypcvcaey9r",
+
+    ethereum:
+    "0xE55D8cB2Bd9b7EF8C6F396E6e2A89Eb92C6c793"
+
+};
+
+const names={
+
+    bitcoin:"Bitcoin",
+
+    litecoin:"Litecoin",
+
+    ethereum:"Ethereum"
+
+};
+
+const address=
+    wallets[coin] || wallets.bitcoin;
+
+const name=
+    names[coin] || "Bitcoin";
+
+document.getElementById("title").textContent=
+    name+" Wallet";
+
+document.getElementById("address").textContent=
+    address;
+
+
+/* COPY */
+
+document.getElementById("copy").onclick=
+async()=>{
+
+    try{
+
+        await navigator.clipboard.writeText(address);
+
+        const button=
+            document.getElementById("copy");
+
+        button.textContent=
+            "Copied ✓";
+
+        setTimeout(()=>{
+
+            button.textContent=
+                "Copy Wallet Address";
+
+        },2000);
+
+    }catch(error){
+
+        alert("Please copy the wallet address manually.");
+
+    }
+
+};
+
+
+/* 3 SECOND WAIT */
+
+let seconds=3;
+
+const secondsElement=
+    document.getElementById("seconds");
+
+const timer=setInterval(()=>{
+
+    seconds--;
+
+    secondsElement.textContent=
+        seconds;
+
+    if(seconds<=0){
+
+        clearInterval(timer);
+
+        location.href=
+            "deposit-payment.html?coin="+
+            encodeURIComponent(coin);
+
+    }
+
+},1000);
+
+</script>
+
+</body>
+</html>
