@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Zavixbulk | Wallet Addresses</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#050817;
+    color:#fff;
+    min-height:100vh;
+}
+
+.header{
+    height:70px;
+    background:#0a1024;
+    border-bottom:1px solid #1b2542;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 25px;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#4f8cff;
+}
+
+.admin-name{
+    color:#9aa9c4;
+    font-size:13px;
+}
+
+.main{
+    max-width:1100px;
+    margin:auto;
+    padding:100px 20px 50px;
+}
+
+.back{
+    display:inline-block;
+    color:#7393d7;
+    text-decoration:none;
+    font-size:13px;
+    margin-bottom:20px;
+}
+
+.title{
+    font-size:28px;
+    font-weight:850;
+    margin-bottom:7px;
+}
+
+.subtitle{
+    color:#7182a2;
+    font-size:14px;
+    margin-bottom:28px;
+}
+
+.card{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:18px;
+}
+
+.coin-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.coin-title{
+    font-size:18px;
+    font-weight:800;
+}
+
+.coin-symbol{
+    color:#7898e8;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.add-btn{
+    border:0;
+    background:linear-gradient(135deg,#1c4ed8,#2868ff);
+    color:#fff;
+    padding:11px 15px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:800;
+    font-size:12px;
+}
+
+.form{
+    display:none;
+    background:#070c1c;
+    border:1px solid #202e4b;
+    border-radius:12px;
+    padding:17px;
+    margin-bottom:18px;
+}
+
+.form.show{
+    display:block;
+}
+
+.label{
+    display:block;
+    color:#8798b6;
+    font-size:11px;
+    margin-bottom:7px;
+}
+
+.input{
+    width:100%;
+    padding:13px;
+    background:#050817;
+    border:1px solid #263653;
+    border-radius:8px;
+    color:#fff;
+    outline:none;
+    font-size:13px;
+}
+
+.input:focus{
+    border-color:#3977ff;
+}
+
+.form-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+}
+
+.save-btn,
+.cancel-btn{
+    border:0;
+    padding:11px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:800;
+    font-size:12px;
+}
+
+.save-btn{
+    background:#1c4ed8;
+    color:#fff;
+}
+
+.cancel-btn{
+    background:#18233b;
+    color:#a9b8d5;
+}
+
+.wallet-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.wallet{
+    background:#070c1c;
+    border:1px solid #1b2947;
+    border-radius:11px;
+    padding:15px;
+}
+
+.wallet-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+}
+
+.wallet-address{
+    color:#a8bcf1;
+    font-size:12px;
+    word-break:break-all;
+    line-height:1.5;
+}
+
+.badge{
+    flex-shrink:0;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:9px;
+    font-weight:800;
+}
+
+.active-badge{
+    background:#102d20;
+    color:#62d99a;
+}
+
+.disabled-badge{
+    background:#302713;
+    color:#e6c66b;
+}
+
+.assigned-badge{
+    background:#17294d;
+    color:#72a5ff;
+}
+
+.wallet-actions{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.action-btn{
+    border:0;
+    border-radius:7px;
+    padding:8px 11px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:700;
+}
+
+.toggle-btn{
+    background:#172b58;
+    color:#8fb0ff;
+}
+
+.delete-btn{
+    background:#321820;
+    color:#ff7888;
+}
+
+.empty{
+    color:#687a99;
+    text-align:center;
+    padding:25px;
+    border:1px dashed #243454;
+    border-radius:10px;
+    font-size:12px;
+}
+
+.loading{
+    color:#687a99;
+    text-align:center;
+    padding:20px;
+    font-size:12px;
+}
+
+.notice{
+    background:#111b32;
+    border:1px solid #25385e;
+    color:#8799ba;
+    padding:13px;
+    border-radius:10px;
+    font-size:11px;
+    line-height:1.6;
+    margin-bottom:22px;
+}
+
+@media(max-width:600px){
+
+    .header{
+        padding:0 16px;
+    }
+
+    .admin-name{
+        display:none;
+    }
+
+    .main{
+        padding:92px 15px 35px;
+    }
+
+    .title{
+        font-size:24px;
+    }
+
+    .coin-header{
+        align-items:flex-start;
+    }
+
+    .wallet-top{
+        align-items:flex-start;
+    }
+
+    .wallet-actions{
+        flex-wrap:wrap;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        ZAVIX<span>BULK</span>
+    </div>
+
+    <div class="admin-name">
+        ADMIN PANEL
+    </div>
+
+</header>
+
+
+<main class="main">
+
+    <a href="index.html" class="back">
+        ← Back to Admin
+    </a>
+
+    <h1 class="title">
+        Wallet Addresses
+    </h1>
+
+    <p class="subtitle">
+        Manage the cryptocurrency addresses used for customer deposits.
+    </p>
+
+
+    <div class="notice">
+
+        ⚠️ Only add wallet addresses that you control.
+        Customers will be assigned an available address when they start
+        a deposit. An address assigned to an active deposit should remain
+        attached to that deposit.
+
+    </div>
+
+
+    <!-- BITCOIN -->
+
+    <section class="card">
+
+        <div class="coin-header">
+
+            <div>
+
+                <div class="coin-title">
+                    ₿ Bitcoin Wallets
+                </div>
+
+                <div class="coin-symbol">
+                    BTC
+                </div>
+
+            </div>
+
+            <button
+                class="add-btn"
+                data-coin="bitcoin"
+            >
+                + Add Bitcoin Address
+            </button>
+
+        </div>
+
+
+        <div
+            class="form"
+            id="form-bitcoin"
+        >
+
+            <label class="label">
+                Bitcoin Wallet Address
+            </label>
+
+            <input
+                type="text"
+                class="input"
+                id="input-bitcoin"
+                placeholder="Enter your Bitcoin address"
+                autocomplete="off"
+            >
+
+            <div class="form-buttons">
+
+                <button
+                    class="save-btn"
+                    data-save="bitcoin"
+                >
+                    Save Address
+                </button>
+
+                <button
+                    class="cancel-btn"
+                    data-cancel="bitcoin"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="wallet-list"
+            id="list-bitcoin"
+        >
+
+            <div class="loading">
+                Loading Bitcoin addresses...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- LITECOIN -->
+
+    <section class="card">
+
+        <div class="coin-header">
+
+            <div>
+
+                <div class="coin-title">
+                    Ł Litecoin Wallets
+                </div>
+
+                <div class="coin-symbol">
+                    LTC
+                </div>
+
+            </div>
+
+            <button
+                class="add-btn"
+                data-coin="litecoin"
+            >
+                + Add Litecoin Address
+            </button>
+
+        </div>
+
+
+        <div
+            class="form"
+            id="form-litecoin"
+        >
+
+            <label class="label">
+                Litecoin Wallet Address
+            </label>
+
+            <input
+                type="text"
+                class="input"
+                id="input-litecoin"
+                placeholder="Enter your Litecoin address"
+                autocomplete="off"
+            >
+
+            <div class="form-buttons">
+
+                <button
+                    class="save-btn"
+                    data-save="litecoin"
+                >
+                    Save Address
+                </button>
+
+                <button
+                    class="cancel-btn"
+                    data-cancel="litecoin"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="wallet-list"
+            id="list-litecoin"
+        >
+
+            <div class="loading">
+                Loading Litecoin addresses...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ETHEREUM -->
+
+    <section class="card">
+
+        <div class="coin-header">
+
+            <div>
+
+                <div class="coin-title">
+                    ♦ Ethereum Wallets
+                </div>
+
+                <div class="coin-symbol">
+                    ETH
+                </div>
+
+            </div>
+
+            <button
+                class="add-btn"
+                data-coin="ethereum"
+            >
+                + Add Ethereum Address
+            </button>
+
+        </div>
+
+
+        <div
+            class="form"
+            id="form-ethereum"
+        >
+
+            <label class="label">
+                Ethereum Wallet Address
+            </label>
+
+            <input
+                type="text"
+                class="input"
+                id="input-ethereum"
+                placeholder="Enter your Ethereum address"
+                autocomplete="off"
+            >
+
+            <div class="form-buttons">
+
+                <button
+                    class="save-btn"
+                    data-save="ethereum"
+                >
+                    Save Address
+                </button>
+
+                <button
+                    class="cancel-btn"
+                    data-cancel="ethereum"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="wallet-list"
+            id="list-ethereum"
+        >
+
+            <div class="loading">
+                Loading Ethereum addresses...
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    doc,
+    updateDoc,
+    deleteDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
+    authDomain:"zavixbulk.firebaseapp.com",
+
+    projectId:"zavixbulk",
+
+    storageBucket:"zavixbulk.firebasestorage.app",
+
+    messagingSenderId:"819994897169",
+
+    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
+    measurementId:"G-GJ8RY0WYBL"
+
+};
+
+
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+const coins = [
+    "bitcoin",
+    "litecoin",
+    "ethereum"
+];
+
+
+let adminUser = null;
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================
+   OPEN FORMS
+========================= */
+
+document
+    .querySelectorAll(".add-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const coin =
+                    button.dataset.coin;
+
+                const form =
+                    document.getElementById(
+                        "form-" + coin
+                    );
+
+                form.classList.toggle("show");
+
+            }
+        );
+
+    });
+
+
+/* =========================
+   CANCEL
+========================= */
+
+document
+    .querySelectorAll(".cancel-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const coin =
+                    button.dataset.cancel;
+
+                document
+                    .getElementById(
+                        "form-" + coin
+                    )
+                    .classList.remove("show");
+
+                document
+                    .getElementById(
+                        "input-" + coin
+                    )
+                    .value = "";
+
+            }
+        );
+
+    });
+
+
+/* =========================
+   LOAD WALLETS
+========================= */
+
+async function loadWallets(){
+
+    for(const coin of coins){
+
+        const list =
+            document.getElementById(
+                "list-" + coin
+            );
+
+        try{
+
+            const snapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "walletAddresses"
+                    )
+                );
+
+
+            const wallets = [];
+
+            snapshot.forEach(item => {
+
+                const data =
+                    item.data();
+
+                if(data.cryptocurrency === coin){
+
+                    wallets.push({
+                        id:item.id,
+                        ...data
+                    });
+
+                }
+
+            });
+
+
+            if(!wallets.length){
+
+                list.innerHTML = `
+                    <div class="empty">
+                        No ${coin} wallet addresses added yet.
+                    </div>
+                `;
+
+                continue;
+
+            }
+
+
+            list.innerHTML = wallets.map(
+                wallet => {
+
+                    const active =
+                        wallet.active !== false;
+
+                    const assigned =
+                        wallet.assigned === true;
+
+
+                    return `
+
+                        <div class="wallet">
+
+                            <div class="wallet-top">
+
+                                <div class="wallet-address">
+                                    ${escapeHTML(wallet.address)}
+                                </div>
+
+                                ${
+                                    assigned
+
+                                    ?
+
+                                    `<span class="badge assigned-badge">
+                                        ASSIGNED
+                                    </span>`
+
+                                    :
+
+                                    active
+
+                                    ?
+
+                                    `<span class="badge active-badge">
+                                        ACTIVE
+                                    </span>`
+
+                                    :
+
+                                    `<span class="badge disabled-badge">
+                                        DISABLED
+                                    </span>`
+                                }
+
+                            </div>
+
+
+                            <div class="wallet-actions">
+
+                                <button
+                                    class="action-btn toggle-btn"
+                                    data-toggle="${wallet.id}"
+                                    data-active="${active}"
+                                >
+                                    ${
+                                        active
+                                        ? "Disable"
+                                        : "Enable"
+                                    }
+                                </button>
+
+
+                                <button
+                                    class="action-btn delete-btn"
+                                    data-delete="${wallet.id}"
+                                    data-assigned="${assigned}"
+                                >
+                                    Delete
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            ).join("");
+
+
+            attachWalletActions();
+
+        }catch(error){
+
+            console.error(error);
+
+            list.innerHTML = `
+                <div class="empty">
+                    Unable to load ${coin} wallets.
+                </div>
+            `;
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   SAVE WALLET
+========================= */
+
+document
+    .querySelectorAll(".save-btn")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            async () => {
+
+                const coin =
+                    button.dataset.save;
+
+                const input =
+                    document.getElementById(
+                        "input-" + coin
+                    );
+
+                const address =
+                    input.value.trim();
+
+
+                if(!address){
+
+                    alert(
+                        "Please enter a wallet address."
+                    );
+
+                    return;
+
+                }
+
+
+                button.disabled = true;
+
+                button.textContent =
+                    "Saving...";
+
+
+                try{
+
+                    await addDoc(
+                        collection(
+                            db,
+                            "walletAddresses"
+                        ),
+                        {
+
+                            cryptocurrency:
+                                coin,
+
+                            address:
+                                address,
+
+                            active:
+                                true,
+
+                            assigned:
+                                false,
+
+                            assignedTo:
+                                null,
+
+                            createdAt:
+                                serverTimestamp()
+
+                        }
+                    );
+
+
+                    input.value = "";
+
+                    document
+                        .getElementById(
+                            "form-" + coin
+                        )
+                        .classList.remove("show");
+
+
+                    await loadWallets();
+
+
+                }catch(error){
+
+                    console.error(error);
+
+                    alert(
+                        "Unable to save wallet address."
+                    );
+
+                }finally{
+
+                    button.disabled = false;
+
+                    button.textContent =
+                        "Save Address";
+
+                }
+
+            }
+        );
+
+    });
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+function attachWalletActions(){
+
+    document
+        .querySelectorAll("[data-toggle]")
+        .forEach(button => {
+
+            button.onclick =
+                async () => {
+
+                    const id =
+                        button.dataset.toggle;
+
+                    const currentlyActive =
+                        button.dataset.active === "true";
+
+
+                    try{
+
+                        await updateDoc(
+                            doc(
+                                db,
+                                "walletAddresses",
+                                id
+                            ),
+                            {
+                                active:
+                                    !currentlyActive
+                            }
+                        );
+
+
+                        await loadWallets();
+
+                    }catch(error){
+
+                        console.error(error);
+
+                        alert(
+                            "Unable to update wallet."
+                        );
+
+                    }
+
+                };
+
+        });
+
+
+    document
+        .querySelectorAll("[data-delete]")
+        .forEach(button => {
+
+            button.onclick =
+                async () => {
+
+                    const id =
+                        button.dataset.delete;
+
+                    const assigned =
+                        button.dataset.assigned === "true";
+
+
+                    if(assigned){
+
+                        alert(
+                            "This wallet is currently assigned to a customer deposit. It cannot be deleted until that assignment is finished."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const confirmDelete =
+                        confirm(
+                            "Delete this wallet address?"
+                        );
+
+
+                    if(!confirmDelete){
+                        return;
+                    }
+
+
+                    try{
+
+                        await deleteDoc(
+                            doc(
+                                db,
+                                "walletAddresses",
+                                id
+                            )
+                        );
+
+
+                        await loadWallets();
+
+                    }catch(error){
+
+                        console.error(error);
+
+                        alert(
+                            "Unable to delete wallet."
+                        );
+
+                    }
+
+                };
+
+        });
+
+}
+
+
+/* =========================
+   ADMIN AUTH
+========================= */
+
+onAuthStateChanged(
+    auth,
+    async user => {
+
+        if(!user){
+
+            window.location.href =
+                "../login.html";
+
+            return;
+
+        }
+
+
+        adminUser = user;
+
+
+        /*
+            Your existing admin protection
+            can be added here later.
+
+            For now the page requires
+            Firebase login.
+        */
+
+
+        await loadWallets();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
