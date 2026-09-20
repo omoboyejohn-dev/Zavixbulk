@@ -145,26 +145,31 @@ body{
 .balance-label{
     color:#b9c8e8;
     font-size:14px;
-    margin-bottom:8px;
+    margin-bottom:12px;
 }
 
 /*
     BALANCE ROW
 
-    $0.00 and Deposit button
-    stay on the same horizontal line.
+    Total Balance
+    $0.00                         [ Deposit ]
+
+    The balance and Deposit button
+    stay on the SAME horizontal line.
 */
 
 .balance-row{
+    width:100%;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:15px;
+    gap:20px;
 }
 
 .balance{
     font-size:32px;
     font-weight:bold;
+    line-height:1;
 }
 
 .deposit-btn{
@@ -178,6 +183,7 @@ body{
     text-decoration:none;
     font-weight:bold;
     white-space:nowrap;
+    flex-shrink:0;
 }
 
 .deposit-btn:hover{
@@ -467,7 +473,7 @@ body{
     text-align:center;
 }
 
-/* MOBILE */
+/* TABLET */
 
 @media(max-width:900px){
 
@@ -476,6 +482,8 @@ body{
     }
 
 }
+
+/* MOBILE */
 
 @media(max-width:700px){
 
@@ -507,6 +515,15 @@ body{
 
     .welcome h1{
         font-size:22px;
+    }
+
+    /*
+        KEEP BALANCE AND DEPOSIT
+        ON THE SAME LINE.
+    */
+
+    .balance-card{
+        padding:20px;
     }
 
     .balance{
@@ -554,6 +571,8 @@ body{
 
 }
 
+/* SMALL MOBILE */
+
 @media(max-width:450px){
 
     .quick-actions{
@@ -566,19 +585,27 @@ body{
     }
 
     .balance-card{
-        padding:20px;
+        padding:18px;
     }
 
     .balance-label{
-        margin-bottom:8px;
+        margin-bottom:10px;
+    }
+
+    /*
+        Still SAME LINE on small phones.
+    */
+
+    .balance-row{
+        gap:8px;
     }
 
     .balance{
-        font-size:24px;
+        font-size:22px;
     }
 
     .deposit-btn{
-        padding:9px 12px;
+        padding:9px 11px;
         font-size:12px;
     }
 
@@ -729,7 +756,7 @@ body{
         </div>
 
         <a href="deposit.html" class="deposit-btn">
-            + Deposit
+            Deposit
         </a>
 
     </div>
