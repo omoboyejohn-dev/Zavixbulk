@@ -614,10 +614,18 @@ function escapeHTML(value){
 }
 
 
+/* USD MONEY FORMAT */
+
 function formatMoney(value){
 
-    return "₦" + Number(value || 0).toLocaleString(
-        "en-NG",
+    const amount = Number(value);
+
+    if(!Number.isFinite(amount)){
+        return "$0.00";
+    }
+
+    return "$" + amount.toLocaleString(
+        "en-US",
         {
             minimumFractionDigits:2,
             maximumFractionDigits:2
@@ -661,6 +669,7 @@ async function loadCategories(){
 
         });
 
+
         document
             .querySelectorAll(".category-btn")
             .forEach(button => {
@@ -689,7 +698,10 @@ async function loadCategories(){
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "Category loading error:",
+            error
+        );
 
     }
 
@@ -731,11 +743,16 @@ async function loadProducts(){
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            "Product loading error:",
+            error
+        );
 
         productGrid.innerHTML = `
             <div class="empty">
                 Unable to load products.
+                <br><br>
+                Please refresh the page.
             </div>
         `;
 
@@ -759,6 +776,7 @@ function renderProducts(){
                 selectedCategory === "all" ||
                 product.categoryId === selectedCategory;
 
+
             const text =
                 (
                     (product.name || "") +
@@ -768,11 +786,14 @@ function renderProducts(){
                     (product.description || "")
                 ).toLowerCase();
 
+
             const matchesSearch =
                 !search ||
                 text.includes(search);
 
-            return matchesCategory && matchesSearch;
+
+            return matchesCategory &&
+                   matchesSearch;
 
         });
 
@@ -800,6 +821,7 @@ function renderProducts(){
             product.image ||
             "";
 
+
         html += `
 
             <div class="product-card">
@@ -816,6 +838,7 @@ function renderProducts(){
                             alt="${escapeHTML(product.name)}"
                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
                         >
+
                         <div
                             class="no-image"
                             style="display:none;"
@@ -836,15 +859,26 @@ function renderProducts(){
                 <div class="product-content">
 
                     <div class="category-name">
-                        ${escapeHTML(product.categoryName || "Product")}
+                        ${escapeHTML(
+                            product.categoryName ||
+                            "Product"
+                        )}
                     </div>
+
 
                     <div class="product-name">
-                        ${escapeHTML(product.name || "Product")}
+                        ${escapeHTML(
+                            product.name ||
+                            "Product"
+                        )}
                     </div>
 
+
                     <div class="product-description">
-                        ${escapeHTML(product.description || "View product details.")}
+                        ${escapeHTML(
+                            product.description ||
+                            "View product details."
+                        )}
                     </div>
 
 
@@ -853,6 +887,7 @@ function renderProducts(){
                         <div class="price">
                             ${formatMoney(product.price)}
                         </div>
+
 
                         <a
                             class="buy-btn"
@@ -872,7 +907,8 @@ function renderProducts(){
     });
 
 
-    productGrid.innerHTML = html;
+    productGrid.innerHTML =
+        html;
 
 }
 
@@ -895,22 +931,28 @@ const overlay =
     document.getElementById("overlay");
 
 
-menuBtn.addEventListener("click",() => {
+menuBtn.addEventListener(
+    "click",
+    () => {
 
-    sidebar.classList.toggle("open");
+        sidebar.classList.toggle("open");
 
-    overlay.classList.toggle("show");
+        overlay.classList.toggle("show");
 
-});
+    }
+);
 
 
-overlay.addEventListener("click",() => {
+overlay.addEventListener(
+    "click",
+    () => {
 
-    sidebar.classList.remove("open");
+        sidebar.classList.remove("open");
 
-    overlay.classList.remove("show");
+        overlay.classList.remove("show");
 
-});
+    }
+);
 
 
 /* AUTH */
@@ -928,12 +970,14 @@ onAuthStateChanged(
 
         }
 
+
         try{
 
             const userSnapshot =
                 await getDoc(
                     doc(db,"users",user.uid)
                 );
+
 
             if(userSnapshot.exists()){
 
@@ -947,13 +991,17 @@ onAuthStateChanged(
 
             }
 
+
             await loadCategories();
 
             await loadProducts();
 
         }catch(error){
 
-            console.error(error);
+            console.error(
+                "Authentication/page loading error:",
+                error
+            );
 
         }
 
@@ -965,14 +1013,25 @@ onAuthStateChanged(
 
 document
     .getElementById("logoutBtn")
-    .addEventListener("click",async()=>{
+    .addEventListener(
+        "click",
+        async () => {
 
-        await signOut(auth);
+            try{
 
-        window.location.href =
-            "login.html";
+                await signOut(auth);
 
-    });
+                window.location.href =
+                    "login.html";
+
+            }catch(error){
+
+                console.error(error);
+
+            }
+
+        }
+    );
 
 </script>
 
