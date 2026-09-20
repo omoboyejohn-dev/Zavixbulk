@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Zavixbulk | Deposit</title>
 
 <style>
-
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
     font-family:Arial,sans-serif;
@@ -30,11 +23,6 @@ body{
     align-items:center;
     justify-content:space-between;
     padding:0 25px;
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    z-index:1000;
 }
 
 .logo{
@@ -42,9 +30,7 @@ body{
     font-weight:900;
 }
 
-.logo span{
-    color:#4f8cff;
-}
+.logo span{color:#4f8cff}
 
 .user-name{
     color:#9aa9c4;
@@ -52,34 +38,34 @@ body{
 }
 
 .main{
-    max-width:900px;
+    max-width:850px;
     margin:auto;
     padding:100px 20px 50px;
 }
 
-.page-title{
+.title{
     font-size:28px;
-    margin-bottom:7px;
+    font-weight:800;
+    margin-bottom:8px;
 }
 
-.page-subtitle{
+.subtitle{
     color:#7586a8;
     font-size:14px;
-    margin-bottom:25px;
+    margin-bottom:28px;
 }
 
 .methods{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:15px;
-    margin-bottom:25px;
 }
 
 .method{
     background:#0a1024;
     border:1px solid #1b2542;
-    border-radius:14px;
-    padding:22px;
+    border-radius:15px;
+    padding:25px;
     cursor:pointer;
     transition:.2s;
 }
@@ -89,984 +75,146 @@ body{
     transform:translateY(-2px);
 }
 
-.method.active{
-    border-color:#3977ff;
-    background:#0d1733;
+.icon{
+    font-size:34px;
+    margin-bottom:13px;
 }
 
-.coin-icon{
-    font-size:32px;
-    margin-bottom:12px;
-}
-
-.coin-name{
+.name{
     font-size:16px;
     font-weight:800;
     margin-bottom:5px;
 }
 
-.coin-text{
+.text{
     color:#7182a2;
     font-size:12px;
 }
 
-.deposit-box{
-    display:none;
-    background:#0a1024;
-    border:1px solid #1b2542;
-    border-radius:16px;
-    padding:25px;
-}
-
-.deposit-box.show{
-    display:block;
-}
-
-.section-title{
-    font-size:19px;
-    font-weight:800;
-    margin-bottom:8px;
-}
-
-.section-text{
-    color:#7d8eac;
-    font-size:13px;
-    line-height:1.6;
-    margin-bottom:20px;
-}
-
-.generate-btn{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:9px;
-    background:linear-gradient(135deg,#1c4ed8,#2868ff);
-    color:#fff;
-    font-size:14px;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.generate-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-.countdown{
-    display:none;
-    text-align:center;
-    padding:25px;
-    color:#7994cf;
-}
-
-.countdown.show{
-    display:block;
-}
-
-.count-number{
-    font-size:35px;
-    font-weight:900;
-    color:#4d86ff;
-    margin-bottom:8px;
-}
-
-.address-box{
-    display:none;
-    margin-top:20px;
-}
-
-.address-box.show{
-    display:block;
-}
-
-.label{
-    display:block;
-    color:#8495b4;
-    font-size:12px;
-    margin-bottom:8px;
-}
-
-.address-row{
-    display:flex;
-    gap:8px;
-}
-
-.address{
-    flex:1;
-    background:#070c1c;
-    border:1px solid #253454;
-    border-radius:9px;
-    padding:13px;
-    color:#8fb0ff;
-    font-size:12px;
-    word-break:break-all;
-}
-
-.copy-btn{
-    border:0;
-    background:#172b58;
-    color:#fff;
-    border-radius:9px;
-    padding:0 15px;
-    cursor:pointer;
-    font-weight:700;
-}
-
-.copy-btn:hover{
-    background:#21417e;
-}
-
-.warning{
-    margin-top:14px;
-    background:#16172a;
-    border:1px solid #37365a;
-    color:#9ba6c7;
-    padding:13px;
-    border-radius:9px;
-    font-size:11px;
-    line-height:1.6;
-}
-
-.form{
-    margin-top:25px;
-    border-top:1px solid #1b2542;
-    padding-top:25px;
-}
-
-.input-group{
-    margin-bottom:17px;
-}
-
-.input{
-    width:100%;
-    padding:14px;
-    background:#070c1c;
-    border:1px solid #263653;
-    border-radius:9px;
-    color:#fff;
-    outline:none;
-    font-size:14px;
-}
-
-.input:focus{
-    border-color:#3977ff;
-}
-
-.submit-btn{
-    width:100%;
-    padding:14px;
-    border:0;
-    border-radius:9px;
-    background:linear-gradient(135deg,#1c4ed8,#2868ff);
-    color:#fff;
-    font-weight:800;
-    cursor:pointer;
-}
-
-.submit-btn:disabled{
-    opacity:.6;
-    cursor:not-allowed;
-}
-
-.success{
-    display:none;
-    background:#0b251d;
-    border:1px solid #185d45;
-    color:#7de0b7;
-    padding:17px;
-    border-radius:10px;
-    margin-top:20px;
-    font-size:13px;
-    line-height:1.6;
-}
-
-.success.show{
-    display:block;
-}
-
 @media(max-width:650px){
-
-    .header{
-        padding:0 16px;
-    }
-
-    .user-name{
-        display:none;
-    }
-
-    .main{
-        padding:92px 15px 35px;
-    }
-
-    .page-title{
-        font-size:24px;
-    }
-
-    .methods{
-        grid-template-columns:1fr;
-    }
-
-    .deposit-box{
-        padding:20px;
-    }
-
-    .address-row{
-        flex-direction:column;
-    }
-
-    .copy-btn{
-        padding:12px;
-    }
-
+    .header{padding:0 16px}
+    .user-name{display:none}
+    .main{padding:90px 15px 35px}
+    .methods{grid-template-columns:1fr}
 }
-
 </style>
-
 </head>
 
 <body>
 
 <header class="header">
-
-    <div class="logo">
-        ZAVIX<span>BULK</span>
-    </div>
-
-    <div
-        class="user-name"
-        id="userName"
-    >
-        Customer
-    </div>
-
+    <div class="logo">ZAVIX<span>BULK</span></div>
+    <div class="user-name" id="userName">Customer</div>
 </header>
-
 
 <main class="main">
 
-    <h1 class="page-title">
-        Deposit Funds
-    </h1>
+    <h1 class="title">Deposit Funds</h1>
 
-    <p class="page-subtitle">
+    <p class="subtitle">
         Choose a cryptocurrency to fund your Zavixbulk wallet.
     </p>
 
-
-    <!-- PAYMENT METHODS -->
-
     <div class="methods">
 
-        <div
-            class="method"
-            data-method="bitcoin"
-        >
-
-            <div class="coin-icon">
-                ₿
-            </div>
-
-            <div class="coin-name">
-                Bitcoin
-            </div>
-
-            <div class="coin-text">
-                BTC Deposit
-            </div>
-
+        <div class="method" data-method="bitcoin">
+            <div class="icon">₿</div>
+            <div class="name">Bitcoin</div>
+            <div class="text">BTC Deposit</div>
         </div>
 
-
-        <div
-            class="method"
-            data-method="litecoin"
-        >
-
-            <div class="coin-icon">
-                Ł
-            </div>
-
-            <div class="coin-name">
-                Litecoin
-            </div>
-
-            <div class="coin-text">
-                LTC Deposit
-            </div>
-
+        <div class="method" data-method="litecoin">
+            <div class="icon">Ł</div>
+            <div class="name">Litecoin</div>
+            <div class="text">LTC Deposit</div>
         </div>
 
-
-        <div
-            class="method"
-            data-method="ethereum"
-        >
-
-            <div class="coin-icon">
-                ♦
-            </div>
-
-            <div class="coin-name">
-                Ethereum
-            </div>
-
-            <div class="coin-text">
-                ETH Deposit
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- DEPOSIT BOX -->
-
-    <div
-        class="deposit-box"
-        id="depositBox"
-    >
-
-        <div class="section-title" id="coinTitle">
-            Bitcoin Deposit
-        </div>
-
-        <div class="section-text">
-            Click the button below to generate your payment address.
-            After sending your payment, submit the payment details below.
-        </div>
-
-
-        <button
-            class="generate-btn"
-            id="generateBtn"
-        >
-            Generate Bitcoin Address
-        </button>
-
-
-        <!-- COUNTDOWN -->
-
-        <div
-            class="countdown"
-            id="countdown"
-        >
-
-            <div
-                class="count-number"
-                id="countNumber"
-            >
-                3
-            </div>
-
-            Generating payment address...
-
-        </div>
-
-
-        <!-- ADDRESS -->
-
-        <div
-            class="address-box"
-            id="addressBox"
-        >
-
-            <label class="label">
-                Send your payment to this address
-            </label>
-
-
-            <div class="address-row">
-
-                <div
-                    class="address"
-                    id="walletAddress"
-                ></div>
-
-                <button
-                    class="copy-btn"
-                    id="copyBtn"
-                >
-                    Copy
-                </button>
-
-            </div>
-
-
-            <div class="warning">
-
-                ⚠️ Make sure you send the payment to the
-                correct address and cryptocurrency network.
-                Sending to the wrong address or network may
-                result in permanent loss of funds.
-
-            </div>
-
-
-            <!-- FORM -->
-
-            <div class="form">
-
-                <div class="input-group">
-
-                    <label class="label">
-                        Amount in USD
-                    </label>
-
-                    <input
-                        type="number"
-                        id="amount"
-                        class="input"
-                        placeholder="Example: 50"
-                        min="1"
-                        step="0.01"
-                    >
-
-                </div>
-
-
-                <div class="input-group">
-
-                    <label class="label">
-                        Sender Wallet Address
-                    </label>
-
-                    <input
-                        type="text"
-                        id="senderAddress"
-                        class="input"
-                        placeholder="Enter the wallet address you sent from"
-                    >
-
-                </div>
-
-
-                <button
-                    class="submit-btn"
-                    id="submitBtn"
-                >
-                    Submit Payment
-                </button>
-
-
-                <div
-                    class="success"
-                    id="successMessage"
-                >
-
-                    <strong>
-                        Payment submitted successfully.
-                    </strong>
-
-                    <br>
-
-                    Your deposit is now pending verification.
-                    Your Zavixbulk wallet will be credited after
-                    the payment has been verified.
-
-                </div>
-
-            </div>
-
+        <div class="method" data-method="ethereum">
+            <div class="icon">♦</div>
+            <div class="name">Ethereum</div>
+            <div class="text">ETH Deposit</div>
         </div>
 
     </div>
 
 </main>
 
-
 <script type="module">
 
-import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
 
 import {
     getFirestore,
     doc,
-    getDoc,
-    addDoc,
-    collection,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+    getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
-
-const firebaseConfig = {
-
+const firebaseConfig={
     apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
-
     authDomain:"zavixbulk.firebaseapp.com",
-
     projectId:"zavixbulk",
-
     storageBucket:"zavixbulk.firebasestorage.app",
-
     messagingSenderId:"819994897169",
-
     appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
-
     measurementId:"G-GJ8RY0WYBL"
-
 };
 
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
 
-const app =
-    initializeApp(firebaseConfig);
+const userName=document.getElementById("userName");
 
-const auth =
-    getAuth(app);
+onAuthStateChanged(auth,async user=>{
 
-const db =
-    getFirestore(app);
+    if(!user){
+        location.href="login.html";
+        return;
+    }
 
+    try{
 
-let currentUser = null;
+        const snap=await getDoc(
+            doc(db,"users",user.uid)
+        );
 
-let selectedMethod = null;
+        if(snap.exists()){
 
+            const data=snap.data();
 
-/*
-    YOUR RECEIVING ADDRESSES
-*/
+            userName.textContent=
+                data.fullname||
+                data.username||
+                "Customer";
+        }
 
-const wallets = {
+    }catch(error){
+        console.error(error);
+    }
 
-    bitcoin:
-        "bc1q3e4sq5p04tpad7xav4p04qyua5l7p3uxctqlxk",
+});
 
-    litecoin:
-        "ltc1q44hg0s3psaadzdme4anvq8alcv0gypcvcaey9r",
-
-    ethereum:
-        "0xE55D8cB2Bd9b7EF8C6F396E6e2A89Eb92C6c793"
-
-};
-
-
-const names = {
-
-    bitcoin:"Bitcoin",
-
-    litecoin:"Litecoin",
-
-    ethereum:"Ethereum"
-
-};
-
-
-const methods =
-    document.querySelectorAll(".method");
-
-const depositBox =
-    document.getElementById("depositBox");
-
-const coinTitle =
-    document.getElementById("coinTitle");
-
-const generateBtn =
-    document.getElementById("generateBtn");
-
-const countdown =
-    document.getElementById("countdown");
-
-const countNumber =
-    document.getElementById("countNumber");
-
-const addressBox =
-    document.getElementById("addressBox");
-
-const walletAddress =
-    document.getElementById("walletAddress");
-
-const copyBtn =
-    document.getElementById("copyBtn");
-
-const amountInput =
-    document.getElementById("amount");
-
-const senderAddressInput =
-    document.getElementById("senderAddress");
-
-const submitBtn =
-    document.getElementById("submitBtn");
-
-const successMessage =
-    document.getElementById("successMessage");
-
-const userName =
-    document.getElementById("userName");
-
-
-/*
-    SELECT COIN
-*/
-
-methods.forEach(method => {
+document.querySelectorAll(".method").forEach(method=>{
 
     method.addEventListener("click",()=>{
 
-        methods.forEach(item =>
-            item.classList.remove("active")
-        );
+        const coin=method.dataset.method;
 
-        method.classList.add("active");
-
-        selectedMethod =
-            method.dataset.method;
-
-        const coin =
-            names[selectedMethod];
-
-
-        depositBox.classList.add("show");
-
-        coinTitle.textContent =
-            coin + " Deposit";
-
-
-        generateBtn.textContent =
-            "Generate " + coin + " Address";
-
-
-        addressBox.classList.remove("show");
-
-        countdown.classList.remove("show");
-
-        successMessage.classList.remove("show");
-
-        amountInput.value = "";
-
-        senderAddressInput.value = "";
+        location.href=
+            "deposit-generate.html?coin="+
+            encodeURIComponent(coin);
 
     });
 
 });
-
-
-/*
-    GENERATE ADDRESS
-*/
-
-generateBtn.addEventListener(
-    "click",
-    ()=>{
-
-        if(!selectedMethod){
-            return;
-        }
-
-
-        generateBtn.disabled = true;
-
-        countdown.classList.add("show");
-
-        addressBox.classList.remove("show");
-
-
-        let number = 3;
-
-        countNumber.textContent =
-            number;
-
-
-        const timer =
-            setInterval(()=>{
-
-                number--;
-
-                countNumber.textContent =
-                    number;
-
-
-                if(number <= 0){
-
-                    clearInterval(timer);
-
-                    countdown.classList.remove(
-                        "show"
-                    );
-
-
-                    walletAddress.textContent =
-                        wallets[selectedMethod];
-
-
-                    addressBox.classList.add(
-                        "show"
-                    );
-
-
-                    generateBtn.disabled =
-                        false;
-
-                }
-
-            },1000);
-
-    }
-);
-
-
-/*
-    COPY ADDRESS
-*/
-
-copyBtn.addEventListener(
-    "click",
-    async ()=>{
-
-        try{
-
-            await navigator.clipboard.writeText(
-                walletAddress.textContent
-            );
-
-            copyBtn.textContent =
-                "Copied ✓";
-
-
-            setTimeout(()=>{
-
-                copyBtn.textContent =
-                    "Copy";
-
-            },2000);
-
-        }catch(error){
-
-            alert(
-                "Unable to copy address. Please copy it manually."
-            );
-
-        }
-
-    }
-);
-
-
-/*
-    SUBMIT PAYMENT
-*/
-
-submitBtn.addEventListener(
-    "click",
-    async ()=>{
-
-        if(!currentUser){
-
-            alert(
-                "Please login first."
-            );
-
-            return;
-
-        }
-
-
-        const amount =
-            Number(amountInput.value);
-
-        const senderAddress =
-            senderAddressInput.value.trim();
-
-
-        if(!amount || amount <= 0){
-
-            alert(
-                "Please enter the amount you paid."
-            );
-
-            return;
-
-        }
-
-
-        if(!senderAddress){
-
-            alert(
-                "Please enter your sender wallet address."
-            );
-
-            return;
-
-        }
-
-
-        if(!selectedMethod){
-
-            alert(
-                "Please select a payment method."
-            );
-
-            return;
-
-        }
-
-
-        submitBtn.disabled =
-            true;
-
-        submitBtn.textContent =
-            "Submitting...";
-
-
-        try{
-
-            const userSnapshot =
-                await getDoc(
-                    doc(
-                        db,
-                        "users",
-                        currentUser.uid
-                    )
-                );
-
-
-            let userData = {};
-
-            if(userSnapshot.exists()){
-
-                userData =
-                    userSnapshot.data();
-
-            }
-
-
-            await addDoc(
-                collection(
-                    db,
-                    "deposits"
-                ),
-                {
-
-                    userId:
-                        currentUser.uid,
-
-                    customerName:
-                        userData.fullname ||
-                        userData.username ||
-                        "Customer",
-
-                    username:
-                        userData.username ||
-                        "",
-
-                    method:
-                        selectedMethod,
-
-                    cryptocurrency:
-                        names[selectedMethod],
-
-                    amountUSD:
-                        amount,
-
-                    senderWallet:
-                        senderAddress,
-
-                    receivingWallet:
-                        wallets[selectedMethod],
-
-                    status:
-                        "pending",
-
-                    createdAt:
-                        serverTimestamp()
-
-                }
-            );
-
-
-            successMessage.classList.add(
-                "show"
-            );
-
-
-            amountInput.value = "";
-
-            senderAddressInput.value = "";
-
-
-        }catch(error){
-
-            console.error(error);
-
-            alert(
-                "Unable to submit payment. Please try again."
-            );
-
-        }finally{
-
-            submitBtn.disabled =
-                false;
-
-            submitBtn.textContent =
-                "Submit Payment";
-
-        }
-
-    }
-);
-
-
-/*
-    AUTH
-*/
-
-onAuthStateChanged(
-    auth,
-    async user => {
-
-        if(!user){
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-
-        currentUser =
-            user;
-
-
-        try{
-
-            const snapshot =
-                await getDoc(
-                    doc(
-                        db,
-                        "users",
-                        user.uid
-                    )
-                );
-
-
-            if(snapshot.exists()){
-
-                const data =
-                    snapshot.data();
-
-
-                userName.textContent =
-                    data.fullname ||
-                    data.username ||
-                    "Customer";
-
-            }
-
-        }catch(error){
-
-            console.error(error);
-
-        }
-
-    }
-);
 
 </script>
 
