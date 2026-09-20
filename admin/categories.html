@@ -64,6 +64,7 @@ body{
     background:none;
     color:#fff;
     font-size:25px;
+    cursor:pointer;
 }
 
 /* SIDEBAR */
@@ -98,6 +99,7 @@ body{
     color:#91a0bd;
     text-decoration:none;
     font-size:14px;
+    cursor:pointer;
 }
 
 .nav-link:hover{
@@ -118,7 +120,6 @@ body{
 .logout{
     margin-top:20px;
     color:#ff7180;
-    cursor:pointer;
 }
 
 /* MAIN */
@@ -140,7 +141,7 @@ body{
     margin-bottom:25px;
 }
 
-/* LAYOUT */
+/* GRID */
 
 .grid{
     display:grid;
@@ -244,7 +245,7 @@ textarea::placeholder{
     cursor:pointer;
 }
 
-/* CATEGORY HEADER */
+/* LIST */
 
 .list-header{
     display:flex;
@@ -257,8 +258,6 @@ textarea::placeholder{
     color:#6f809f;
     font-size:12px;
 }
-
-/* CATEGORY */
 
 .category-list{
     display:flex;
@@ -318,7 +317,7 @@ textarea::placeholder{
 .category-right{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:7px;
     flex-shrink:0;
 }
 
@@ -358,6 +357,8 @@ textarea::placeholder{
     border-color:#e05262;
     color:#ff7785;
 }
+
+/* EMPTY */
 
 .empty{
     text-align:center;
@@ -499,6 +500,7 @@ textarea::placeholder{
     }
 
 }
+
 </style>
 </head>
 
@@ -511,7 +513,7 @@ textarea::placeholder{
     <div class="spinner"></div>
 
     <div style="color:#8192b4;font-size:13px;">
-        Loading categories...
+        Checking admin access...
     </div>
 
 </div>
@@ -621,7 +623,7 @@ textarea::placeholder{
 
     <div class="grid">
 
-        <!-- ADD CATEGORY -->
+        <!-- FORM -->
 
         <section class="card">
 
@@ -630,8 +632,7 @@ textarea::placeholder{
             </h2>
 
             <p class="card-description">
-                Create a category such as Google Voice, Instagram,
-                Facebook, VPN, or any other marketplace category.
+                Add a marketplace category. You can edit or disable it later.
             </p>
 
             <form id="categoryForm">
@@ -645,7 +646,7 @@ textarea::placeholder{
                     <input
                         type="text"
                         id="categoryName"
-                        placeholder="e.g. Google Voice"
+                        placeholder="e.g. Facebook"
                         required
                     >
 
@@ -661,7 +662,7 @@ textarea::placeholder{
                     <input
                         type="text"
                         id="categoryIcon"
-                        placeholder="e.g. 📱"
+                        placeholder="e.g. 📘"
                         value="📦"
                     >
 
@@ -676,7 +677,7 @@ textarea::placeholder{
 
                     <textarea
                         id="categoryDescription"
-                        placeholder="Short description of this category"
+                        placeholder="Short description"
                     ></textarea>
 
                 </div>
@@ -715,7 +716,10 @@ textarea::placeholder{
                         Your Categories
                     </h2>
 
-                    <div class="count" id="categoryCount">
+                    <div
+                        class="count"
+                        id="categoryCount"
+                    >
                         0 categories
                     </div>
 
@@ -730,7 +734,7 @@ textarea::placeholder{
             >
 
                 <div class="empty">
-                    No categories yet.
+                    Loading categories...
                 </div>
 
             </div>
@@ -745,19 +749,17 @@ textarea::placeholder{
 <div class="toast" id="toast"></div>
 
 
-<!-- FIREBASE -->
-
 <script type="module">
 
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged,
     signOut
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 import {
     getFirestore,
@@ -771,11 +773,11 @@ import {
     serverTimestamp,
     query,
     orderBy
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
 /* =========================
-   FIREBASE CONFIG
+   FIREBASE
 ========================= */
 
 const firebaseConfig = {
@@ -819,65 +821,40 @@ const db =
 ========================= */
 
 const loadingScreen =
-    document.getElementById(
-        "loadingScreen"
-    );
+    document.getElementById("loadingScreen");
 
 const categoryForm =
-    document.getElementById(
-        "categoryForm"
-    );
+    document.getElementById("categoryForm");
 
 const categoryName =
-    document.getElementById(
-        "categoryName"
-    );
+    document.getElementById("categoryName");
 
 const categoryIcon =
-    document.getElementById(
-        "categoryIcon"
-    );
+    document.getElementById("categoryIcon");
 
 const categoryDescription =
-    document.getElementById(
-        "categoryDescription"
-    );
+    document.getElementById("categoryDescription");
 
 const categoryList =
-    document.getElementById(
-        "categoryList"
-    );
+    document.getElementById("categoryList");
 
 const categoryCount =
-    document.getElementById(
-        "categoryCount"
-    );
+    document.getElementById("categoryCount");
 
 const saveBtn =
-    document.getElementById(
-        "saveBtn"
-    );
+    document.getElementById("saveBtn");
 
 const cancelBtn =
-    document.getElementById(
-        "cancelBtn"
-    );
+    document.getElementById("cancelBtn");
 
 const formTitle =
-    document.getElementById(
-        "formTitle"
-    );
+    document.getElementById("formTitle");
 
 const adminName =
-    document.getElementById(
-        "adminName"
-    );
+    document.getElementById("adminName");
 
 const toast =
-    document.getElementById(
-        "toast"
-    );
-
+    document.getElementById("toast");
 
 let editingCategoryId = null;
 
@@ -886,21 +863,16 @@ let editingCategoryId = null;
    TOAST
 ========================= */
 
-function showToast(
-    message,
-    type = "success"
-){
+function showToast(message,type="success"){
 
-    toast.textContent =
-        message;
+    toast.textContent = message;
 
     toast.className =
         "toast show " + type;
 
     setTimeout(() => {
 
-        toast.className =
-            "toast";
+        toast.className = "toast";
 
     },3000);
 
@@ -908,7 +880,7 @@ function showToast(
 
 
 /* =========================
-   ESCAPE HTML
+   ESCAPE
 ========================= */
 
 function escapeHTML(value){
@@ -928,54 +900,31 @@ function escapeHTML(value){
 ========================= */
 
 const menuBtn =
-    document.getElementById(
-        "menuBtn"
-    );
+    document.getElementById("menuBtn");
 
 const sidebar =
-    document.getElementById(
-        "sidebar"
-    );
+    document.getElementById("sidebar");
 
 const overlay =
-    document.getElementById(
-        "overlay"
-    );
+    document.getElementById("overlay");
 
 
-function closeMenu(){
+menuBtn.addEventListener("click",()=>{
 
-    sidebar.classList.remove(
-        "open"
-    );
+    sidebar.classList.toggle("open");
 
-    overlay.classList.remove(
-        "show"
-    );
+    overlay.classList.toggle("show");
 
-}
+});
 
 
-menuBtn.addEventListener(
-    "click",
-    () => {
+overlay.addEventListener("click",()=>{
 
-        sidebar.classList.toggle(
-            "open"
-        );
+    sidebar.classList.remove("open");
 
-        overlay.classList.toggle(
-            "show"
-        );
+    overlay.classList.remove("show");
 
-    }
-);
-
-
-overlay.addEventListener(
-    "click",
-    closeMenu
-);
+});
 
 
 /* =========================
@@ -986,23 +935,37 @@ async function loadCategories(){
 
     try{
 
-        const categoriesQuery =
-            query(
-                collection(
-                    db,
-                    "categories"
-                ),
-                orderBy(
-                    "createdAt",
-                    "desc"
-                )
-            );
+        let snapshot;
 
+        try{
 
-        const snapshot =
-            await getDocs(
-                categoriesQuery
-            );
+            const categoriesQuery =
+                query(
+                    collection(db,"categories"),
+                    orderBy("createdAt","desc")
+                );
+
+            snapshot =
+                await getDocs(
+                    categoriesQuery
+                );
+
+        }catch(orderError){
+
+            /*
+             Fallback if older categories do not
+             have createdAt yet.
+            */
+
+            snapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "categories"
+                    )
+                );
+
+        }
 
 
         categoryCount.textContent =
@@ -1019,7 +982,7 @@ async function loadCategories(){
             categoryList.innerHTML = `
                 <div class="empty">
                     No categories yet.<br>
-                    Add your first category.
+                    Add your first category above.
                 </div>
             `;
 
@@ -1031,119 +994,111 @@ async function loadCategories(){
         let html = "";
 
 
-        snapshot.forEach(
-            (categoryDoc) => {
+        snapshot.forEach(categoryDoc => {
 
-                const data =
-                    categoryDoc.data();
+            const data =
+                categoryDoc.data();
 
-
-                const active =
-                    data.active !== false;
+            const active =
+                data.active !== false;
 
 
-                html += `
+            html += `
 
-                    <div
-                        class="category"
-                        data-id="${categoryDoc.id}"
-                    >
+                <div
+                    class="category"
+                    data-id="${categoryDoc.id}"
+                >
 
-                        <div class="category-left">
+                    <div class="category-left">
 
-                            <div class="category-icon">
-
-                                ${escapeHTML(
-                                    data.icon || "📦"
-                                )}
-
-                            </div>
-
-
-                            <div class="category-info">
-
-                                <div class="category-name">
-
-                                    ${escapeHTML(
-                                        data.name ||
-                                        "Unnamed Category"
-                                    )}
-
-                                </div>
-
-
-                                <div class="category-description">
-
-                                    ${escapeHTML(
-                                        data.description ||
-                                        "No description"
-                                    )}
-
-                                </div>
-
-                            </div>
-
+                        <div class="category-icon">
+                            ${escapeHTML(
+                                data.icon || "📦"
+                            )}
                         </div>
 
+                        <div class="category-info">
 
-                        <div class="category-right">
+                            <div class="category-name">
+                                ${escapeHTML(
+                                    data.name ||
+                                    "Unnamed Category"
+                                )}
+                            </div>
 
-                            <span
-                                class="status ${
-                                    active
-                                    ? "active"
-                                    : "disabled"
-                                }"
-                            >
-                                ${
-                                    active
-                                    ? "Active"
-                                    : "Disabled"
-                                }
-                            </span>
-
-
-                            <button
-                                class="small-btn edit-btn"
-                                data-id="${categoryDoc.id}"
-                            >
-                                Edit
-                            </button>
-
-
-                            <button
-                                class="small-btn toggle-btn"
-                                data-id="${categoryDoc.id}"
-                                data-active="${active}"
-                            >
-                                ${
-                                    active
-                                    ? "Disable"
-                                    : "Enable"
-                                }
-                            </button>
-
-
-                            <button
-                                class="small-btn delete delete-btn"
-                                data-id="${categoryDoc.id}"
-                            >
-                                Delete
-                            </button>
+                            <div class="category-description">
+                                ${escapeHTML(
+                                    data.description ||
+                                    "No description"
+                                )}
+                            </div>
 
                         </div>
 
                     </div>
 
-                `;
 
-            }
-        );
+                    <div class="category-right">
+
+                        <span class="status ${
+                            active
+                            ? "active"
+                            : "disabled"
+                        }">
+
+                            ${
+                                active
+                                ? "Active"
+                                : "Disabled"
+                            }
+
+                        </span>
 
 
-        categoryList.innerHTML =
-            html;
+                        <button
+                            type="button"
+                            class="small-btn edit-btn"
+                            data-id="${categoryDoc.id}"
+                        >
+                            Edit
+                        </button>
 
+
+                        <button
+                            type="button"
+                            class="small-btn toggle-btn"
+                            data-id="${categoryDoc.id}"
+                            data-active="${active}"
+                        >
+
+                            ${
+                                active
+                                ? "Disable"
+                                : "Enable"
+                            }
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="small-btn delete delete-btn"
+                            data-id="${categoryDoc.id}"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+
+        categoryList.innerHTML = html;
 
         attachCategoryEvents();
 
@@ -1155,11 +1110,10 @@ async function loadCategories(){
             error
         );
 
-
         categoryList.innerHTML = `
             <div class="empty">
-                Unable to load categories.
-                Check your Firestore rules.
+                Unable to load categories.<br><br>
+                ${escapeHTML(error.message)}
             </div>
         `;
 
@@ -1169,24 +1123,20 @@ async function loadCategories(){
 
 
 /* =========================
-   CATEGORY EVENTS
+   BUTTON EVENTS
 ========================= */
 
 function attachCategoryEvents(){
 
     document
         .querySelectorAll(".edit-btn")
-        .forEach((button) => {
+        .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
-
-                    editCategory(
-                        button.dataset.id
-                    );
-
-                }
+                () => editCategory(
+                    button.dataset.id
+                )
             );
 
         });
@@ -1194,18 +1144,14 @@ function attachCategoryEvents(){
 
     document
         .querySelectorAll(".toggle-btn")
-        .forEach((button) => {
+        .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
-
-                    toggleCategory(
-                        button.dataset.id,
-                        button.dataset.active === "true"
-                    );
-
-                }
+                () => toggleCategory(
+                    button.dataset.id,
+                    button.dataset.active === "true"
+                )
             );
 
         });
@@ -1213,17 +1159,13 @@ function attachCategoryEvents(){
 
     document
         .querySelectorAll(".delete-btn")
-        .forEach((button) => {
+        .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
-
-                    deleteCategory(
-                        button.dataset.id
-                    );
-
-                }
+                () => deleteCategory(
+                    button.dataset.id
+                )
             );
 
         });
@@ -1232,12 +1174,12 @@ function attachCategoryEvents(){
 
 
 /* =========================
-   ADD / EDIT CATEGORY
+   ADD / UPDATE
 ========================= */
 
 categoryForm.addEventListener(
     "submit",
-    async (event) => {
+    async event => {
 
         event.preventDefault();
 
@@ -1269,8 +1211,8 @@ categoryForm.addEventListener(
 
         saveBtn.textContent =
             editingCategoryId
-            ? "Saving..."
-            : "Adding...";
+            ? "Saving Changes..."
+            : "Adding Category...";
 
 
         try{
@@ -1310,6 +1252,8 @@ categoryForm.addEventListener(
                         description:description,
                         active:true,
                         createdAt:
+                            serverTimestamp(),
+                        updatedAt:
                             serverTimestamp()
                     }
                 );
@@ -1335,19 +1279,17 @@ categoryForm.addEventListener(
             );
 
             showToast(
-                "Unable to save category.",
+                "Unable to save category: " +
+                error.message,
                 "error"
             );
 
         }finally{
 
-            saveBtn.disabled =
-                false;
+            saveBtn.disabled = false;
 
             saveBtn.textContent =
-                editingCategoryId
-                ? "Save Changes"
-                : "Add Category";
+                "Add Category";
 
         }
 
@@ -1356,30 +1298,27 @@ categoryForm.addEventListener(
 
 
 /* =========================
-   EDIT CATEGORY
+   EDIT
 ========================= */
 
 async function editCategory(id){
 
     try{
 
-        const categoryRef =
-            doc(
-                db,
-                "categories",
-                id
-            );
-
         const snapshot =
             await getDoc(
-                categoryRef
+                doc(
+                    db,
+                    "categories",
+                    id
+                )
             );
 
 
         if(!snapshot.exists()){
 
             showToast(
-                "Category no longer exists.",
+                "Category not found.",
                 "error"
             );
 
@@ -1392,8 +1331,7 @@ async function editCategory(id){
             snapshot.data();
 
 
-        editingCategoryId =
-            id;
+        editingCategoryId = id;
 
 
         categoryName.value =
@@ -1424,13 +1362,10 @@ async function editCategory(id){
 
     }catch(error){
 
-        console.error(
-            "Edit category error:",
-            error
-        );
+        console.error(error);
 
         showToast(
-            "Unable to open category.",
+            "Unable to edit category.",
             "error"
         );
 
@@ -1440,24 +1375,16 @@ async function editCategory(id){
 
 
 /* =========================
-   CANCEL EDIT
+   RESET
 ========================= */
-
-cancelBtn.addEventListener(
-    "click",
-    resetForm
-);
-
 
 function resetForm(){
 
-    editingCategoryId =
-        null;
+    editingCategoryId = null;
 
     categoryForm.reset();
 
-    categoryIcon.value =
-        "📦";
+    categoryIcon.value = "📦";
 
     formTitle.textContent =
         "Add Category";
@@ -1469,6 +1396,12 @@ function resetForm(){
         "none";
 
 }
+
+
+cancelBtn.addEventListener(
+    "click",
+    resetForm
+);
 
 
 /* =========================
@@ -1489,8 +1422,7 @@ async function toggleCategory(
                 id
             ),
             {
-                active:
-                    !currentlyActive,
+                active:!currentlyActive,
                 updatedAt:
                     serverTimestamp()
             }
@@ -1509,13 +1441,11 @@ async function toggleCategory(
 
     }catch(error){
 
-        console.error(
-            "Toggle category error:",
-            error
-        );
+        console.error(error);
 
         showToast(
-            "Unable to change category status.",
+            "Unable to change category: " +
+            error.message,
             "error"
         );
 
@@ -1525,14 +1455,15 @@ async function toggleCategory(
 
 
 /* =========================
-   DELETE CATEGORY
+   DELETE
 ========================= */
 
 async function deleteCategory(id){
 
     const confirmed =
         confirm(
-            "Delete this category?\n\nThis will remove the category from the marketplace."
+            "Delete this category?\n\n" +
+            "This will permanently remove it."
         );
 
 
@@ -1552,6 +1483,11 @@ async function deleteCategory(id){
         );
 
 
+        if(editingCategoryId === id){
+            resetForm();
+        }
+
+
         showToast(
             "Category deleted."
         );
@@ -1562,13 +1498,11 @@ async function deleteCategory(id){
 
     }catch(error){
 
-        console.error(
-            "Delete category error:",
-            error
-        );
+        console.error(error);
 
         showToast(
-            "Unable to delete category.",
+            "Unable to delete category: " +
+            error.message,
             "error"
         );
 
@@ -1578,12 +1512,12 @@ async function deleteCategory(id){
 
 
 /* =========================
-   ADMIN AUTHENTICATION
+   ADMIN AUTH
 ========================= */
 
 onAuthStateChanged(
     auth,
-    async (user) => {
+    async user => {
 
         if(!user){
 
@@ -1597,16 +1531,13 @@ onAuthStateChanged(
 
         try{
 
-            const userRef =
-                doc(
-                    db,
-                    "users",
-                    user.uid
-                );
-
             const userSnapshot =
                 await getDoc(
-                    userRef
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
                 );
 
 
@@ -1626,9 +1557,15 @@ onAuthStateChanged(
                 userSnapshot.data();
 
 
+            /*
+             IMPORTANT:
+             Your Firebase user document must contain:
+
+             role: "admin"
+            */
+
             if(
-                userData.role !==
-                "admin"
+                userData.role !== "admin"
             ){
 
                 alert(
@@ -1648,6 +1585,7 @@ onAuthStateChanged(
             adminName.textContent =
                 userData.fullname ||
                 userData.username ||
+                user.email ||
                 "Admin";
 
 
@@ -1661,15 +1599,15 @@ onAuthStateChanged(
         }catch(error){
 
             console.error(
-                "Admin authentication error:",
+                "Admin verification error:",
                 error
             );
 
 
             alert(
-                "Unable to verify admin account."
+                "Unable to verify admin account: " +
+                error.message
             );
-
 
             await signOut(auth);
 
@@ -1692,21 +1630,10 @@ document
         "click",
         async () => {
 
-            try{
+            await signOut(auth);
 
-                await signOut(auth);
-
-                window.location.href =
-                    "../login.html";
-
-            }catch(error){
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
-            }
+            window.location.href =
+                "../login.html";
 
         }
     );
