@@ -1,9 +1,20 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Zavixbulk | Order History</title><style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+<title>Zavixbulk | Order History</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
     font-family:Inter,Arial,sans-serif;
@@ -24,10 +35,17 @@ body{
     top:0;
     left:0;
     right:0;
+    z-index:100;
 }
 
-.logo{font-size:22px;font-weight:900}
-.logo span{color:#4f8cff}
+.logo{
+    font-size:22px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#4f8cff;
+}
 
 .header-right{
     color:#9cacc9;
@@ -79,13 +97,14 @@ body{
 .order-id{
     color:#566987;
     font-size:10px;
+    word-break:break-all;
 }
 
 .price{
     color:#5d8dff;
     font-size:17px;
     font-weight:850;
-    margin-top:5px;
+    margin-top:7px;
 }
 
 .status{
@@ -153,314 +172,547 @@ body{
     color:#7182a1;
 }
 
+.loading{
+    text-align:center;
+    padding:60px 20px;
+    color:#7182a1;
+}
+
 @media(max-width:600px){
 
-    .header{padding:0 16px}
-    .header-right{display:none}
-    .main{padding:90px 15px 35px}
+    .header{
+        padding:0 16px;
+    }
+
+    .header-right{
+        display:none;
+    }
+
+    .main{
+        padding:90px 15px 35px;
+    }
 
     .order-top{
         flex-direction:column;
     }
 
 }
-</style></head><body><header class="header"><div class="logo">
-    ZAVIX<span>BULK</span>
-</div>
 
-<div class="header-right" id="headerName">
-    Customer
-</div>
+</style>
 
-</header><main class="main"><a href="dashboard.html" class="back">
-    ← Back to Dashboard
-</a><div class="title">
-    Order History
-</div><div id="list"><div class="empty">
-    Loading orders...
-</div>
+</head>
 
-</div></main><script type="module">
+<body>
 
-import {initializeApp}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+<header class="header">
+
+    <div class="logo">
+        ZAVIX<span>BULK</span>
+    </div>
+
+    <div
+        class="header-right"
+        id="headerName"
+    >
+        Customer
+    </div>
+
+</header>
+
+
+<main class="main">
+
+    <a
+        href="dashboard.html"
+        class="back"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+    <div class="title">
+        Order History
+    </div>
+
+
+    <div id="list">
+
+        <div class="loading">
+            Loading orders...
+        </div>
+
+    </div>
+
+</main>
+
+
+<script type="module">
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
 
 import {
     getAuth,
     onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
 
 import {
     getFirestore,
     collection,
+    getDocs,
     query,
     where,
-    orderBy,
-    onSnapshot,
     doc,
     getDoc
-}
-from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
-const firebaseConfig={
+
+const firebaseConfig = {
+
     apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+
     authDomain:"zavixbulk.firebaseapp.com",
+
     projectId:"zavixbulk",
+
     storageBucket:"zavixbulk.firebasestorage.app",
+
     messagingSenderId:"819994897169",
+
     appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+
     measurementId:"G-GJ8RY0WYBL"
+
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
 
-const list=document.getElementById("list");
-const headerName=document.getElementById("headerName");
+const app =
+    initializeApp(firebaseConfig);
+
+const auth =
+    getAuth(app);
+
+const db =
+    getFirestore(app);
+
+
+const list =
+    document.getElementById("list");
+
+const headerName =
+    document.getElementById("headerName");
+
 
 function money(value){
-    return "$"+Number(value||0).toLocaleString(
-        "en-US",
-        {
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        }
-    );
+
+    return "$" +
+        Number(value || 0).toLocaleString(
+            "en-US",
+            {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            }
+        );
+
 }
+
 
 function dateText(value){
 
-    if(!value) return "Processing";
-
-    const date=value.toDate
-        ? value.toDate()
-        : new Date(value);
-
-    return date.toLocaleString();
-
-}
-
-function statusLabel(status){
-
-    if(status==="delivered" || status==="approved"){
-        return "Delivered";
-    }
-
-    if(status==="processing"){
+    if(!value){
         return "Processing";
     }
 
-    if(status==="rejected"){
-        return "Rejected";
+    try{
+
+        const date =
+            value.toDate
+                ? value.toDate()
+                : new Date(value);
+
+        return date.toLocaleString();
+
+    }catch(error){
+
+        return "Processing";
+
     }
+
+}
+
+
+function statusLabel(status){
+
+    status =
+        String(
+            status || "pending"
+        ).toLowerCase();
+
+
+    if(
+        status === "delivered" ||
+        status === "approved"
+    ){
+
+        return "Delivered";
+
+    }
+
+
+    if(status === "processing"){
+
+        return "Processing";
+
+    }
+
+
+    if(
+        status === "rejected" ||
+        status === "failed"
+    ){
+
+        return "Rejected";
+
+    }
+
 
     return "Pending";
 
 }
 
+
 function statusClass(status){
 
-    if(status==="delivered" || status==="approved"){
+    status =
+        String(
+            status || "pending"
+        ).toLowerCase();
+
+
+    if(
+        status === "delivered" ||
+        status === "approved"
+    ){
+
         return "delivered";
+
     }
 
-    if(status==="processing"){
+
+    if(status === "processing"){
+
         return "processing";
+
     }
 
-    if(status==="rejected"){
+
+    if(
+        status === "rejected" ||
+        status === "failed"
+    ){
+
         return "rejected";
+
     }
+
 
     return "";
 
 }
 
-onAuthStateChanged(auth,async user=>{
 
-    if(!user){
+function escapeHTML(value){
 
-        location.href="login.html";
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
 
-        return;
-
-    }
-
-    const userSnap=await getDoc(
-        doc(db,"users",user.uid)
-    );
-
-    if(userSnap.exists()){
-
-        const data=userSnap.data();
-
-        headerName.textContent=
-            data.fullname||
-            data.username||
-            "Customer";
-
-    }
+}
 
 
-    const q=query(
-        collection(db,"orders"),
-        where("userId","==",user.uid),
-        orderBy("createdAt","desc")
-    );
+onAuthStateChanged(
+    auth,
+    async user => {
 
+        if(!user){
 
-    onSnapshot(q,snapshot=>{
-
-        if(snapshot.empty){
-
-            list.innerHTML=`
-
-                <div class="empty">
-
-                    📦<br><br>
-
-                    You have not placed any orders yet.
-
-                </div>
-
-            `;
+            location.href =
+                "login.html";
 
             return;
 
         }
 
 
-        list.innerHTML="";
+        try{
+
+            /* CUSTOMER NAME */
+
+            const userSnap =
+                await getDoc(
+                    doc(
+                        db,
+                        "users",
+                        user.uid
+                    )
+                );
 
 
-        snapshot.forEach(item=>{
+            if(userSnap.exists()){
 
-            const data=item.data();
+                const data =
+                    userSnap.data();
 
-            const status=
-                data.status||"pending";
+                headerName.textContent =
+                    data.fullname ||
+                    data.username ||
+                    "Customer";
 
-            const delivered=
-                status==="delivered" ||
-                status==="approved";
+            }
 
 
-            const order=document.createElement(
-                "div"
+            /*
+             * Only filter by userId.
+             * Sorting is done locally.
+             */
+
+            const q =
+                query(
+                    collection(db,"orders"),
+                    where(
+                        "userId",
+                        "==",
+                        user.uid
+                    )
+                );
+
+
+            const snapshot =
+                await getDocs(q);
+
+
+            if(snapshot.empty){
+
+                list.innerHTML = `
+
+                    <div class="empty">
+
+                        📦<br><br>
+
+                        You have not placed any orders yet.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            const orders = [];
+
+
+            snapshot.forEach(item => {
+
+                orders.push({
+
+                    id:item.id,
+
+                    ...item.data()
+
+                });
+
+            });
+
+
+            /* NEWEST FIRST */
+
+            orders.sort(
+                (a,b) => {
+
+                    const aTime =
+                        a.createdAt?.toMillis
+                            ? a.createdAt.toMillis()
+                            : 0;
+
+                    const bTime =
+                        b.createdAt?.toMillis
+                            ? b.createdAt.toMillis()
+                            : 0;
+
+                    return bTime - aTime;
+
+                }
             );
 
-            order.className="order";
+
+            list.innerHTML = "";
 
 
-            let deliveryHTML="";
+            orders.forEach(
+                data => {
+
+                    const status =
+                        String(
+                            data.status ||
+                            "pending"
+                        ).toLowerCase();
 
 
-            if(delivered){
+                    const delivered =
+                        status === "delivered" ||
+                        status === "approved";
 
-                deliveryHTML=`
 
-                    <div class="delivery">
+                    let deliveryHTML = "";
 
-                        <div class="delivery-title">
-                            ✓ DELIVERY DETAILS
+
+                    if(delivered){
+
+                        deliveryHTML = `
+
+                            <div class="delivery">
+
+                                <div class="delivery-title">
+                                    ✓ DELIVERY DETAILS
+                                </div>
+
+                                <div class="delivery-text">
+                                    ${escapeHTML(
+                                        data.deliveryDetails ||
+                                        "Delivery details have not been added yet."
+                                    )}
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+
+                    else if(
+                        status === "rejected" ||
+                        status === "failed"
+                    ){
+
+                        deliveryHTML = `
+
+                            <div class="waiting">
+                                This order was rejected by admin.
+                            </div>
+
+                        `;
+
+                    }
+
+                    else{
+
+                        deliveryHTML = `
+
+                            <div class="waiting">
+                                Your order is being processed.
+                                Delivery will appear here when available.
+                            </div>
+
+                        `;
+
+                    }
+
+
+                    const order =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    order.className =
+                        "order";
+
+
+                    order.innerHTML = `
+
+                        <div class="order-top">
+
+                            <div>
+
+                                <div class="product-name">
+                                    ${escapeHTML(
+                                        data.productName ||
+                                        "Product"
+                                    )}
+                                </div>
+
+                                <div class="order-id">
+                                    Order ID: ${escapeHTML(data.id)}
+                                </div>
+
+                                <div class="price">
+                                    ${money(data.price)}
+                                </div>
+
+                            </div>
+
+
+                            <div class="status ${statusClass(status)}">
+
+                                ${statusLabel(status)}
+
+                            </div>
+
                         </div>
 
-                        <div class="delivery-text">
-                            ${data.deliveryDetails||"Delivery details have not been added yet."}
+
+                        <div class="date">
+
+                            ${dateText(
+                                data.createdAt
+                            )}
+
                         </div>
 
-                    </div>
 
-                `;
+                        ${deliveryHTML}
 
-            }
-
-            else if(status==="rejected"){
-
-                deliveryHTML=`
-
-                    <div class="waiting">
-                        This order was rejected by admin.
-                    </div>
-
-                `;
-
-            }
-
-            else{
-
-                deliveryHTML=`
-
-                    <div class="waiting">
-                        Your payment has been received.
-                        Your order is waiting for admin approval.
-                        Delivery details will appear here after approval.
-                    </div>
-
-                `;
-
-            }
+                    `;
 
 
-            order.innerHTML=`
+                    list.appendChild(order);
 
-                <div class="order-top">
+                }
+            );
 
-                    <div>
 
-                        <div class="product-name">
-                            ${data.productName||"Product"}
-                        </div>
+        }catch(error){
 
-                        <div class="order-id">
-                            Order ID: ${item.id}
-                        </div>
+            console.error(
+                "Order history error:",
+                error
+            );
 
-                        <div class="price">
-                            ${money(data.price)}
-                        </div>
 
-                    </div>
+            list.innerHTML = `
 
-                    <div class="status ${statusClass(status)}">
-                        ${statusLabel(status)}
-                    </div>
+                <div class="empty">
+
+                    Unable to load your order history.<br><br>
+
+                    Please refresh the page and try again.
 
                 </div>
-
-
-                <div class="date">
-                    ${dateText(data.createdAt)}
-                </div>
-
-
-                ${deliveryHTML}
 
             `;
 
+        }
 
-            list.appendChild(order);
+    }
+);
 
-        });
+</script>
 
-
-    },error=>{
-
-        console.error(error);
-
-        list.innerHTML=`
-
-            <div class="empty">
-                Unable to load your order history.
-            </div>
-
-        `;
-
-    });
-
-});
-
-</script></body>
+</body>
 </html>
