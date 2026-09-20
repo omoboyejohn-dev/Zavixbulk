@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Zavixbulk | Payment History</title>
 
 <style>
+
 *{
     box-sizing:border-box;
     margin:0;
@@ -18,6 +22,10 @@ body{
     color:#fff;
     min-height:100vh;
 }
+
+/* =========================
+   HEADER
+========================= */
 
 .header{
     height:70px;
@@ -37,6 +45,7 @@ body{
 .logo{
     font-size:22px;
     font-weight:900;
+    letter-spacing:.5px;
 }
 
 .logo span{
@@ -48,8 +57,12 @@ body{
     font-size:13px;
 }
 
+/* =========================
+   MAIN
+========================= */
+
 .main{
-    max-width:950px;
+    max-width:1050px;
     margin:auto;
     padding:105px 20px 50px;
 }
@@ -62,11 +75,56 @@ body{
     margin-bottom:20px;
 }
 
+.back:hover{
+    color:#fff;
+}
+
 .title{
     font-size:25px;
     font-weight:850;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    color:#7182a1;
+    font-size:13px;
+    margin-bottom:22px;
+}
+
+/* =========================
+   SUMMARY
+========================= */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
     margin-bottom:20px;
 }
+
+.summary-card{
+    background:#0a1024;
+    border:1px solid #1b2542;
+    border-radius:14px;
+    padding:17px;
+}
+
+.summary-label{
+    color:#6f819f;
+    font-size:10px;
+    font-weight:800;
+    text-transform:uppercase;
+    margin-bottom:7px;
+}
+
+.summary-value{
+    font-size:20px;
+    font-weight:900;
+}
+
+/* =========================
+   TABLE
+========================= */
 
 .table-box{
     background:#0a1024;
@@ -77,7 +135,7 @@ body{
 
 .row{
     display:grid;
-    grid-template-columns:1.5fr 1fr 1fr 1fr;
+    grid-template-columns:1.5fr 1fr 1fr 1.2fr;
     gap:15px;
     padding:16px 18px;
     border-bottom:1px solid #18223b;
@@ -98,6 +156,18 @@ body{
 .cell{
     font-size:12px;
     color:#a7b6cd;
+    min-width:0;
+}
+
+.description{
+    color:#fff;
+    font-weight:700;
+}
+
+.crypto{
+    color:#7184a7;
+    font-size:10px;
+    margin-top:4px;
 }
 
 .amount{
@@ -105,27 +175,58 @@ body{
     font-weight:800;
 }
 
+/* =========================
+   STATUS
+========================= */
+
 .status{
     display:inline-block;
-    padding:5px 9px;
+    padding:6px 10px;
     border-radius:20px;
     font-size:10px;
     font-weight:800;
-    background:#102d20;
-    color:#62d99a;
     text-transform:capitalize;
 }
 
-.pending{
+.status.pending{
     background:#302713;
     color:#e6c66b;
 }
 
-.failed,
-.rejected{
+.status.completed{
+    background:#102d20;
+    color:#62d99a;
+}
+
+.status.rejected{
     background:#321820;
     color:#ff7888;
 }
+
+.status.failed{
+    background:#321820;
+    color:#ff7888;
+}
+
+.status.processing{
+    background:#17243d;
+    color:#7da5ff;
+}
+
+/* =========================
+   DETAILS
+========================= */
+
+.receiving{
+    margin-top:5px;
+    color:#617493;
+    font-size:9px;
+    word-break:break-all;
+}
+
+/* =========================
+   EMPTY / LOADING
+========================= */
 
 .empty{
     text-align:center;
@@ -139,6 +240,10 @@ body{
     padding:60px 20px;
     color:#7182a1;
 }
+
+/* =========================
+   MOBILE
+========================= */
 
 @media(max-width:700px){
 
@@ -154,18 +259,35 @@ body{
         padding:90px 12px 35px;
     }
 
+    .title{
+        font-size:22px;
+    }
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
     .table-box{
         overflow-x:auto;
     }
 
     .row{
-        min-width:650px;
+        min-width:760px;
     }
+
 }
+
 </style>
+
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header class="header">
 
@@ -173,31 +295,125 @@ body{
         ZAVIX<span>BULK</span>
     </div>
 
-    <div class="header-right" id="headerName">
+    <div
+        class="header-right"
+        id="headerName"
+    >
         Customer
     </div>
 
 </header>
 
 
+<!-- =========================
+     MAIN
+========================= -->
+
 <main class="main">
 
-    <a href="dashboard.html" class="back">
+
+    <a
+        href="dashboard.html"
+        class="back"
+    >
         ← Back to Dashboard
     </a>
+
 
     <div class="title">
         Payment History
     </div>
 
+
+    <div class="subtitle">
+        View all your cryptocurrency payment submissions and their current status.
+    </div>
+
+
+    <!-- =========================
+         SUMMARY
+    ========================== -->
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Payments
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Pending
+            </div>
+
+            <div
+                class="summary-value"
+                id="pendingCount"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Completed
+            </div>
+
+            <div
+                class="summary-value"
+                id="completedCount"
+            >
+                0
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PAYMENT TABLE
+    ========================== -->
+
     <div class="table-box">
 
+
         <div class="row head">
-            <div>DESCRIPTION</div>
-            <div>AMOUNT</div>
-            <div>STATUS</div>
-            <div>DATE</div>
+
+            <div>
+                DESCRIPTION
+            </div>
+
+            <div>
+                AMOUNT
+            </div>
+
+            <div>
+                STATUS
+            </div>
+
+            <div>
+                DATE
+            </div>
+
         </div>
+
 
         <div id="list">
 
@@ -207,21 +423,34 @@ body{
 
         </div>
 
+
     </div>
+
 
 </main>
 
 
 <script type="module">
 
+
+/* =====================================================
+   FIREBASE
+===================================================== */
+
 import {
     initializeApp
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+}
+from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-app.js";
+
 
 import {
     getAuth,
     onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+}
+from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-auth.js";
+
 
 import {
     getFirestore,
@@ -231,27 +460,44 @@ import {
     where,
     doc,
     getDoc
-} from "https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
+}
+from
+"https://www.gstatic.com/firebasejs/12.2.0/firebase-firestore.js";
 
+
+/* =====================================================
+   FIREBASE CONFIG
+===================================================== */
 
 const firebaseConfig = {
 
-    apiKey:"AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
+    apiKey:
+        "AIzaSyBybvzMgbJjxRggSV-p9cabPwhv3zvQlJs",
 
-    authDomain:"zavixbulk.firebaseapp.com",
+    authDomain:
+        "zavixbulk.firebaseapp.com",
 
-    projectId:"zavixbulk",
+    projectId:
+        "zavixbulk",
 
-    storageBucket:"zavixbulk.firebasestorage.app",
+    storageBucket:
+        "zavixbulk.firebasestorage.app",
 
-    messagingSenderId:"819994897169",
+    messagingSenderId:
+        "819994897169",
 
-    appId:"1:819994897169:web:4aab1bcc15fbe439f6fab0",
+    appId:
+        "1:819994897169:web:4aab1bcc15fbe439f6fab0",
 
-    measurementId:"G-GJ8RY0WYBL"
+    measurementId:
+        "G-GJ8RY0WYBL"
 
 };
 
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
 
 const app =
     initializeApp(firebaseConfig);
@@ -263,17 +509,38 @@ const db =
     getFirestore(app);
 
 
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
 const list =
     document.getElementById("list");
 
 const headerName =
     document.getElementById("headerName");
 
+const totalCount =
+    document.getElementById("totalCount");
+
+const pendingCount =
+    document.getElementById("pendingCount");
+
+const completedCount =
+    document.getElementById("completedCount");
+
+
+/* =====================================================
+   MONEY
+===================================================== */
 
 function money(value){
 
+    const number =
+        Number(value || 0);
+
+
     return "$" +
-        Number(value || 0).toLocaleString(
+        number.toLocaleString(
             "en-US",
             {
                 minimumFractionDigits:2,
@@ -284,11 +551,18 @@ function money(value){
 }
 
 
+/* =====================================================
+   DATE
+===================================================== */
+
 function dateText(value){
 
     if(!value){
+
         return "Processing";
+
     }
+
 
     try{
 
@@ -297,7 +571,17 @@ function dateText(value){
                 ? value.toDate()
                 : new Date(value);
 
-        return date.toLocaleString();
+
+        return date.toLocaleString(
+            "en-US",
+            {
+                year:"numeric",
+                month:"short",
+                day:"numeric",
+                hour:"numeric",
+                minute:"2-digit"
+            }
+        );
 
     }catch(error){
 
@@ -308,33 +592,101 @@ function dateText(value){
 }
 
 
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
 function statusClass(status){
 
-    status =
-        String(status || "").toLowerCase();
+    const value =
+        String(
+            status || "pending"
+        ).toLowerCase();
+
 
     if(
-        status === "pending" ||
-        status === "processing"
+        value === "pending"
     ){
 
         return "pending";
 
     }
 
+
     if(
-        status === "failed" ||
-        status === "rejected"
+        value === "completed" ||
+        value === "approved" ||
+        value === "success"
     ){
 
-        return "failed";
+        return "completed";
 
     }
 
-    return "";
+
+    if(
+        value === "rejected" ||
+        value === "failed"
+    ){
+
+        return "rejected";
+
+    }
+
+
+    if(
+        value === "processing"
+    ){
+
+        return "processing";
+
+    }
+
+
+    return "pending";
 
 }
 
+
+/* =====================================================
+   DISPLAY STATUS
+===================================================== */
+
+function displayStatus(status){
+
+    const value =
+        String(
+            status || "pending"
+        ).toLowerCase();
+
+
+    if(
+        value === "approved" ||
+        value === "success"
+    ){
+
+        return "completed";
+
+    }
+
+
+    if(
+        value === "failed"
+    ){
+
+        return "rejected";
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
 function escapeHTML(value){
 
@@ -348,13 +700,18 @@ function escapeHTML(value){
 }
 
 
+/* =====================================================
+   AUTH
+===================================================== */
+
 onAuthStateChanged(
     auth,
     async user => {
 
+
         if(!user){
 
-            location.href =
+            window.location.href =
                 "login.html";
 
             return;
@@ -364,7 +721,10 @@ onAuthStateChanged(
 
         try{
 
-            /* CUSTOMER NAME */
+
+            /* =========================================
+               LOAD CUSTOMER
+            ========================================= */
 
             const userSnap =
                 await getDoc(
@@ -376,33 +736,46 @@ onAuthStateChanged(
                 );
 
 
-            if(userSnap.exists()){
+            if(
+                userSnap.exists()
+            ){
 
-                const data =
+                const userData =
                     userSnap.data();
 
+
                 headerName.textContent =
-                    data.fullname ||
-                    data.username ||
+                    userData.fullname ||
+                    userData.username ||
+                    user.email ||
+                    "Customer";
+
+            }else{
+
+                headerName.textContent =
+                    user.email ||
                     "Customer";
 
             }
 
 
-            /*
-             * IMPORTANT:
-             * We only use where(userId == current user).
-             * We sort the records ourselves.
-             *
-             * This avoids the Firestore composite-index
-             * problem caused by where + orderBy.
-             */
+            /* =========================================
+               IMPORTANT
 
-            const q =
+               PAYMENT SUBMISSIONS ARE STORED IN:
+
+               deposits
+
+               NOT:
+
+               transactions
+            ========================================= */
+
+            const depositsQuery =
                 query(
                     collection(
                         db,
-                        "transactions"
+                        "deposits"
                     ),
                     where(
                         "userId",
@@ -413,10 +786,28 @@ onAuthStateChanged(
 
 
             const snapshot =
-                await getDocs(q);
+                await getDocs(
+                    depositsQuery
+                );
 
 
-            if(snapshot.empty){
+            /* =========================================
+               NO PAYMENTS
+            ========================================= */
+
+            if(
+                snapshot.empty
+            ){
+
+                totalCount.textContent =
+                    "0";
+
+                pendingCount.textContent =
+                    "0";
+
+                completedCount.textContent =
+                    "0";
+
 
                 list.innerHTML = `
 
@@ -424,7 +815,10 @@ onAuthStateChanged(
 
                         💳<br><br>
 
-                        No payment history yet.
+                        No payment history yet.<br>
+
+                        Your submitted cryptocurrency payments
+                        will appear here.
 
                     </div>
 
@@ -435,38 +829,60 @@ onAuthStateChanged(
             }
 
 
-            const transactions = [];
+            /* =========================================
+               CONVERT TO ARRAY
+            ========================================= */
+
+            const payments = [];
 
 
-            snapshot.forEach(item => {
+            snapshot.forEach(
+                item => {
 
-                transactions.push({
+                    payments.push({
 
-                    id:item.id,
+                        id:
+                            item.id,
 
-                    ...item.data()
+                        ...item.data()
 
-                });
+                    });
 
-            });
+                }
+            );
 
 
-            /*
-             * Newest first
-             */
+            /* =========================================
+               NEWEST FIRST
+            ========================================= */
 
-            transactions.sort(
+            payments.sort(
                 (a,b) => {
+
 
                     const aTime =
                         a.createdAt?.toMillis
                             ? a.createdAt.toMillis()
-                            : 0;
+                            : (
+                                a.createdAt
+                                ? new Date(
+                                    a.createdAt
+                                ).getTime()
+                                : 0
+                            );
+
 
                     const bTime =
                         b.createdAt?.toMillis
                             ? b.createdAt.toMillis()
-                            : 0;
+                            : (
+                                b.createdAt
+                                ? new Date(
+                                    b.createdAt
+                                ).getTime()
+                                : 0
+                            );
+
 
                     return bTime - aTime;
 
@@ -474,17 +890,120 @@ onAuthStateChanged(
             );
 
 
-            list.innerHTML = "";
+            /* =========================================
+               COUNTERS
+            ========================================= */
+
+            let pending = 0;
+
+            let completed = 0;
 
 
-            transactions.forEach(
-                data => {
+            payments.forEach(
+                payment => {
+
 
                     const status =
                         String(
-                            data.status ||
-                            "completed"
+                            payment.status ||
+                            "pending"
                         ).toLowerCase();
+
+
+                    if(
+                        status === "pending" ||
+                        status === "processing"
+                    ){
+
+                        pending++;
+
+                    }
+
+
+                    if(
+                        status === "completed" ||
+                        status === "approved" ||
+                        status === "success"
+                    ){
+
+                        completed++;
+
+                    }
+
+                }
+            );
+
+
+            totalCount.textContent =
+                payments.length;
+
+
+            pendingCount.textContent =
+                pending;
+
+
+            completedCount.textContent =
+                completed;
+
+
+            /* =========================================
+               DISPLAY
+            ========================================= */
+
+            list.innerHTML = "";
+
+
+            payments.forEach(
+                payment => {
+
+
+                    const rawStatus =
+                        String(
+                            payment.status ||
+                            "pending"
+                        ).toLowerCase();
+
+
+                    const status =
+                        displayStatus(
+                            rawStatus
+                        );
+
+
+                    const cssClass =
+                        statusClass(
+                            rawStatus
+                        );
+
+
+                    /*
+                       Your deposit page saves:
+
+                       amountUSD
+
+                       cryptocurrency
+
+                       method
+
+                       receivingWallet
+
+                       senderWallet
+                    */
+
+                    const amount =
+                        payment.amountUSD ??
+                        payment.amount ??
+                        0;
+
+
+                    const cryptocurrency =
+                        payment.cryptocurrency ||
+                        payment.method ||
+                        "Cryptocurrency";
+
+
+                    const description =
+                        "Crypto Deposit";
 
 
                     const row =
@@ -501,28 +1020,60 @@ onAuthStateChanged(
 
                         <div class="cell">
 
-                            ${escapeHTML(
-                                data.description ||
-                                data.type ||
-                                data.coin ||
-                                "Wallet Deposit"
-                            )}
+                            <div class="description">
+
+                                ${escapeHTML(
+                                    description
+                                )}
+
+                            </div>
+
+
+                            <div class="crypto">
+
+                                ${escapeHTML(
+                                    cryptocurrency
+                                )}
+
+                            </div>
+
+
+                            ${
+                                payment.receivingWallet
+                                ?
+                                `
+                                <div class="receiving">
+
+                                    To:
+                                    ${escapeHTML(
+                                        payment.receivingWallet
+                                    )}
+
+                                </div>
+                                `
+                                :
+                                ""
+                            }
 
                         </div>
 
 
                         <div class="cell amount">
 
-                            ${money(data.amount)}
+                            ${money(amount)}
 
                         </div>
 
 
                         <div class="cell">
 
-                            <span class="status ${statusClass(status)}">
+                            <span
+                                class="status ${cssClass}"
+                            >
 
-                                ${escapeHTML(status)}
+                                ${escapeHTML(
+                                    status
+                                )}
 
                             </span>
 
@@ -532,7 +1083,7 @@ onAuthStateChanged(
                         <div class="cell">
 
                             ${dateText(
-                                data.createdAt
+                                payment.createdAt
                             )}
 
                         </div>
@@ -540,7 +1091,9 @@ onAuthStateChanged(
                     `;
 
 
-                    list.appendChild(row);
+                    list.appendChild(
+                        row
+                    );
 
                 }
             );
